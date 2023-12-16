@@ -63,6 +63,11 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 }
 	
 	
+	
+	//파라미터값으로 상품에대한 페이지,카테고리등 정보를 받고 requestScope에 저장함 (setattribute)
+	//이유는 detail.jsp 에서 목록으로 돌아갈떄 el로 꺼내고 , 최근본상품에서 디테일로 바로 넘어갈떄 el이용해서 넘어가야 하기때문
+	//parameter값으로 넘기면 jsp에서 자바를 사용해야한다
+	//여기서는 요청처리후 detail.jsp로 이동
 	@RequestMapping("product/productDetail.do")
 	public String productDetail(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -119,6 +124,8 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 			}
 			
 			
+			return "../main/main.jsp";
+		}
 			
 			
 			
@@ -127,10 +134,8 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 			
 			
 			
-		
-		return "../main/main.jsp";
-	}
 	
+	//리스트에서 상세보기 클릭하면 거침 쿠키설정후 쿠키를 보내고 파라미터값으로 페이지,카테고리등등정보보냄(목록으로 돌아가기 위함)=> detail.do로이동
 	@RequestMapping("product/DetailBefore.do")
 	public String DetailBefore(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -161,6 +166,10 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 		return "redirect:../product/productDetail.do?pno="+pno+"&rt="+rt+"&page="+strpage+"&ct="+ct+"&count="+count;
 	}
 	
+	
+	
+	//목록 돌아가기 최근 상품 디테일에선 디폴트 목록 , 일반 디테일에선 보던 목록으로 돌아감
+	//detailback.do 수행후 파라미터값이 있냐 없냐 를 따져서 productlist.do 메소드로 이동
 	
 	@RequestMapping("product/DetailListBack.do")
 	public String DetailListBack(HttpServletRequest request, HttpServletResponse response) {

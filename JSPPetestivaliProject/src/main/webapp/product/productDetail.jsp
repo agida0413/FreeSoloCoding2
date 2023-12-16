@@ -102,7 +102,19 @@ function requestPay() {
                             <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
                             <li><b>카테고리</b> <span>${vo.p_category }</span></li>
                             <li><b>Share on</b>
+                            
                                 <div class="share">
+                                <!--  
+                                목록으로 돌아가기 위함으로 DetailListBack.do 에 파라미터 값으로 
+                             	현재 보는 상세보기가 최근본상품을 통한 상세보기인건지 단순 목록에서 본 상세보기인지 구분
+                             	(lcount==null 이면 단순 목록에서 본 상품 , lcount가 1이면 최근본 상품에서 선택한 상세보기)
+                             	최근본상품에서 본 상세보기일경우 디폴트값 리스트 목록으로 이동한다 . 단순 목록에서 본 상품상세보기 이면 보던 목록으로 
+                             	넘어가게 한다 . = > 이처리는 DetailListBack.do 에서 처리한다
+                             	ct=>카테고리정보
+                             	rt=>조회수순,후기개수순 등정보
+                             	page=> 페이지정보
+                             	등을 이용해서 보던 목록으로 넘어가야하기 때문에 el로 값을 받는다.
+                                -->
                                 <c:url value="DetailListBack.do" var="url">
               				<c:param name="lcount" value="${lcount }"/>
               				<c:param name="ct" value="${ct}"/>
@@ -218,6 +230,15 @@ function requestPay() {
                 <div class="col-lg-3 col-md-4 col-sm-6">
                
                     <div class="product__item">
+                    <!--
+                    현재 코드는 상세보기 하단에 최근본 상품을 출력하고 있는데 
+                    클릭시 바로 상세보기로 넘어가게 한다 . 다만 일반 목록에서 출력하는것과 차별성을 둔
+                     DetailBefore.do?count=1 => count 값을 1을 줬는데 
+                     나중에  상세보기에서 DetailListBack.do (목록이동) 클릭시 기존보던 페이지로 이동하지않고
+                     디폴트 리스트로 이동하기 위함이다 .
+                     나머지ct,rt,page값은 목록으로 돌아가기에는 필요없는 값이지만 detailbefore.do(쿠키저장)메소드에서 detail.do
+                     메소드로 넘겨주는과정에서 파라미터값으로 요청하고 있기때문에 통일성을 위해서 준다. 
+                     -->
                     		<c:url value="DetailBefore.do?count=1" var="url">
               				<c:param name="pno" value="${cvo.pno }"/>
               				<c:param name="ct" value="${ct}"/>
