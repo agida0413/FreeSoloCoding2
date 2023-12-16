@@ -107,6 +107,7 @@ public class AnimalDAO {
 	}
 	public int animalTotalPage()
 	{
+		System.out.println("dsd");
 		int total=0;
 		try
 		{
@@ -160,6 +161,7 @@ public class AnimalDAO {
 			dbconn.disConnection(conn, ps);
 		}
 		return vo;
+
 	}
 
 	
