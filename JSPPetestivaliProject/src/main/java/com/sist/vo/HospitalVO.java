@@ -2,7 +2,15 @@ package com.sist.vo;
 
 public class HospitalVO {
 	private int no;
-	private String hospital_name,hospital_phone,hospital_address;
+	private String hospital_name,hospital_phone,hospital_address, state;
+	
+	
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 	public int getNo() {
 		return no;
 	}

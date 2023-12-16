@@ -17,7 +17,7 @@ public class HospitalDAO {
 			dao=new HospitalDAO();
 		return dao;
 	}
-	
+	// 병원 전체 리스트 출력
 	public List<HospitalVO> HsptFindList(int page)
 	{
 		List<HospitalVO> list=new ArrayList<HospitalVO>();
@@ -57,6 +57,7 @@ public class HospitalDAO {
 		
 		return list;
 	}
+	// 전체 페이지 
 	public int totalPage(int no)
 	{
 		int total=0;
@@ -81,6 +82,38 @@ public class HospitalDAO {
 		}
 		return total;
 	}
+	// 시도 검색
+	public List<HospitalVO> HsptSearchData()
+	{
+		List<HospitalVO> list=new ArrayList<HospitalVO>();
+		try
+		{
+			conn=dbconn.getConnection();
+			String sql="SELECT DISTINCT state "
+					+ "FROM hospital_search";
+			 ps=conn.prepareStatement(sql);
+			 ResultSet rs=ps.executeQuery();
+			   
+			   while(rs.next())
+			   {
+				   HospitalVO vo=new HospitalVO();
+				   vo.setState(rs.getString(1));
+				   list.add(vo);
+			   }
+			   rs.close();
+			 
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			dbconn.disConnection(conn, ps);
+		}
+		return list;
+	}
+	// 상세페이지 출력
 	public HospitalVO hsptDetailList(int no)
 	{
 		HospitalVO vo=new HospitalVO();

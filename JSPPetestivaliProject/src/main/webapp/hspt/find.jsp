@@ -17,6 +17,9 @@
         color: #fff;
         border: 1px solid #007bff;
     }
+    .blog__sidebar__search button[type="text"] {
+    margin-right: 140px;
+}
     </style>
 
     <!-- Google Font -->
@@ -43,17 +46,21 @@
     <section class="blog-details spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-5 order-md-1 order-2">
-                    <div class="blog__sidebar">
-                       <div class="blog__sidebar__search" style=" width: 300px; margin-right: 500px;">
-           
-                <input type="text" placeholder="Search..." name="ss" value=""style="height:40px; width:230px;">
-                <button type="submit"><span class="icon_search"></span></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-9 col-md-7 order-md-1 order-1">
+				<div class="col-lg-3 col-md-5 order-md-1 order-1">
+					<div class="blog__sidebar__search">
+						<form action="#"></form>
+							<select id="searchOptions" name="sct">
+							<label for="state" style="font-size: 18px; margin-left: 25px;"> 시도 </label>
+							<select id="state" name="state" size="1">
+								<option value="${list2 }">${list2 }</option>
+							</select> <input type="text" >
+							<button type="submit">
+								<span class="icon_search"></span>
+							</button>
+						</form>
+					</div>
+				</div>
+				<div class="col-lg-9 col-md-7 order-md-1 order-2">
                     <div class="blog__details__text">
 						<h4 style="text-align: center;">병원 목록</h4>
 						<br>
