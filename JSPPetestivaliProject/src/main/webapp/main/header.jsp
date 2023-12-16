@@ -48,18 +48,18 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="../product/ProductMain.do">SHOP</a>
+                            <li class="active"><a href="../product/ProductList.do">SHOP</a>
                                <ul class="header__menu__dropdown">
-                                   <li><a href="../product/ProductMain.do">전체상품</a></li>
-                                    <li><a href="../product/ProductMain.do?ct=사료">사료</a></li>
-                                    <li><a href="../product/ProductMain.do?ct=간식">간식</a></li>
-                                    <li><a href="../product/ProductMain.do?ct=배변/위생">배변/위생</a></li>
-                                    <li><a href="../product/ProductMain.do?ct=목욕/미용">목욕/미용</a></li>
-                                    <li><a href="../product/ProductMain.do?ct=장난감">장난감</a></li>
-                                    <li><a href="../product/ProductMain.do?ct=건강관리">건강관리</a></li>
-                                    <li><a href="../product/ProductMain.do?ct=식기">식기</a></li>
-                                    <li><a href="../product/ProductMain.do?ct=산책/이동장">산책/이동장</a></li>
-                                    <li><a href="../product/ProductMain.do?ct=하우스/울타리">하우스/울타리</a></li>
+                                   <li><a href="../product/ProductList.do">전체상품</a></li>
+                                    <li><a href="../product/ProductList.do?ct=사료">사료</a></li>
+                                    <li><a href="../product/ProductList.do?ct=간식">간식</a></li>
+                                    <li><a href="../product/ProductList.do?ct=배변/위생">배변/위생</a></li>
+                                    <li><a href="../product/ProductList.do?ct=목욕/미용">목욕/미용</a></li>
+                                    <li><a href="../product/ProductList.do?ct=장난감">장난감</a></li>
+                                    <li><a href="../product/ProductList.do?ct=건강관리">건강관리</a></li>
+                                    <li><a href="../product/ProductList.do?ct=식기">식기</a></li>
+                                    <li><a href="../product/ProductList.do?ct=산책/이동장">산책/이동장</a></li>
+                                    <li><a href="../product/ProductList.do?ct=하우스/울타리">하우스/울타리</a></li>
                                 </ul>
                             </li>
                             <li><a href="./shop-grid.html">HOSPITAL</a>

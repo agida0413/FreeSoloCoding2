@@ -14,7 +14,7 @@ import com.sist.vo.ProductVO;
 
 public class ProductModel {
 
-	@RequestMapping("product/ProductMain.do")
+	@RequestMapping("product/ProductList.do")
 public String productList(HttpServletRequest request, HttpServletResponse response) {
 	String strpage=request.getParameter("page");
 	String ct=request.getParameter("ct");

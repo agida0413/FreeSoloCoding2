@@ -94,15 +94,15 @@
                     <div class="product__pagination">
                     <center>
                     <c:if test="${start > 1}">
-                        <a href="../product/ProductMain.do?page=${start-1 }&ct=${ct}&rt=${rt}">&lt;</a>
+                        <a href="../product/ProductList.do?page=${start-1 }&ct=${ct}&rt=${rt}">&lt;</a>
                         </c:if>
                         <c:forEach var="i" begin="${start }" end="${end }">
                         
-                        <a href="../product/ProductMain.do?page=${i }&ct=${ct}&rt=${rt}"">${i }</a>
+                        <a href="../product/ProductList.do?page=${i }&ct=${ct}&rt=${rt}"">${i }</a>
                        </c:forEach>
                         
                         <c:if test="${end < totalpage}">
-                       <a href="../product/ProductMain.do?page=${end + 1}&ct=${ct}&rt=${rt}""><i class="fa fa-long-arrow-right"></i></a>
+                       <a href="../product/ProductList.do?page=${end + 1}&ct=${ct}&rt=${rt}""><i class="fa fa-long-arrow-right"></i></a>
                         </c:if>
                         </center>
                     </div>
