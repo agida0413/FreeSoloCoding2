@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -57,6 +58,7 @@
 							</tr>
 							<c:forEach var="vo" items="${list }">
 								<tr>
+								
 									<td width=10% class="text-center">${vo.no }</td>
 									<td width=30% class="text-center"><a
 										href="../hspt/detail.do?no=${vo.no }">${vo.hospital_name }</a></td>
