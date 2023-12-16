@@ -200,4 +200,33 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 		
 		return send;
 	}
+	
+	
+	
+	@RequestMapping("product/ProductSearchList.do")
+	public String ProductSearchList(HttpServletRequest request, HttpServletResponse response) {
+		
+				String sct=request.getParameter("sct");
+				String page=request.getParameter("page");
+				String ss=request.getParameter("ss");
+				if (sct==null) {
+					sct="전체";
+				}
+				if (page==null) {
+					page="1";
+				}
+				if (ss==null) {
+					ss="";
+				}
+				
+		
+
+	
+	
+		
+	
+		
+		
+		return "";
+	}
 }
