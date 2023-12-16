@@ -4,4 +4,5 @@
    <bean id="funeralDetail" class="com.sist.model.FuneralDetailModel"></bean>
    <bean id="animal" class="com.sist.model.AnimalModel"></bean>
    <bean id="product" class="com.sist.model.ProductModel"></bean>
+   <bean id="Hospital" class="com.sist.model.HospitalModel"></bean>
 </beans>

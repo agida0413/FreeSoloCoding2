@@ -64,7 +64,7 @@
                             </li>
                             <li><a href="./shop-grid.html">HOSPITAL</a>
                                <ul class="header__menu__dropdown">
-                                    <li><a href="#">병원 검색하기</a></li>
+                                    <li><a href="../hspt/find.do">병원 검색하기</a></li>
                                 </ul>
                             </li>
                             <li><a href="#">HOTEL</a></li>
