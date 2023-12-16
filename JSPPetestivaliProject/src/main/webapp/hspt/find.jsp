@@ -11,6 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ogani | Template</title>
+    <style type="text/css">
+    	.product__pagination a.selected {
+        background-color: #007bff;
+        color: #fff;
+        border: 1px solid #007bff;
+    }
+    </style>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -36,19 +43,19 @@
     <section class="blog-details spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-md-5 order-md-1 order-2">
+                <div class="col-lg-3 col-md-5 order-md-1 order-2">
                     <div class="blog__sidebar">
-                        <div class="blog__sidebar__search">
-                            <form action="#">
-                                <input type="text" placeholder="Search...">
-                                <button type="submit"><span class="icon_search"></span></button>
+                       <div class="blog__sidebar__search" style=" width: 300px; margin-right: 500px;">
+           
+                <input type="text" placeholder="Search..." name="ss" value=""style="height:40px; width:230px;">
+                <button type="submit"><span class="icon_search"></span></button>
                             </form>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8 col-md-7 order-md-1 order-1">
+                <div class="col-lg-9 col-md-7 order-md-1 order-1">
                     <div class="blog__details__text">
-						<h4 style="text-align: center;">병원찾기 목록</h4>
+						<h4 style="text-align: center;">병원 목록</h4>
 						<br>
 						<table class="table">
 							<tr class="success">
@@ -70,71 +77,29 @@
 						</table>
 					</div>
             </div>
-        </div>
+            <div class="order-3" style="margin: 0 auto;">
+            <div class="product__pagination">
+                       <c:if test="${startPage>1 }">
+								<a href="find.do?page=${startPage-1}"><i class="fa fa-long-arrow-left"></i></a>
+							</c:if>
+							<c:forEach var="i" begin="${startPage }" end="${endPage }">
+								<c:choose>
+									<c:when test="${i eq curpage}">
+										<a href="find.do?page=${i}" class="selected">${i}</a>
+									</c:when>
+									<c:otherwise>
+										<a href="find.do?page=${i}">${i}</a>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						<c:if test="${endPage<totalpage }">
+                        <a href="find.do?page=${endPage+1}"><i class="fa fa-long-arrow-right"></i></a>
+                        </c:if>
+                    </div>
+			</div>
+			</div>
     </section>
     <!-- Blog Details Section End -->
-
-    <!-- Related Blog Section Begin -->
-    <section class="related-blog spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title related-blog-title">
-                        <h2>Post You May Like</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic">
-                            <img src="img/blog/blog-1.jpg" alt="">
-                        </div>
-                        <div class="blog__item__text">
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
-                            </ul>
-                            <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic">
-                            <img src="img/blog/blog-2.jpg" alt="">
-                        </div>
-                        <div class="blog__item__text">
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
-                            </ul>
-                            <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
-                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic">
-                            <img src="img/blog/blog-3.jpg" alt="">
-                        </div>
-                        <div class="blog__item__text">
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
-                            </ul>
-                            <h5><a href="#">Visit the clean farm in the US</a></h5>
-                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Related Blog Section End -->
-
 
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>
