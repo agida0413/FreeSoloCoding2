@@ -32,6 +32,9 @@
     color:black;
     
     }
+    .selected{
+    background-color: blue;
+    }
     </style>
 </head>
 
@@ -87,7 +90,15 @@
                               
                         
                         
-                              
+                              <c:choose>
+									<c:when test="${i eq page}">
+									<a href="../product/ProductSearchList.do?page=${i }&ct=${ct}&rt=${rt}" class="selected">${i }</a>
+										
+									</c:when>
+									<c:otherwise>
+									   <a href="../product/ProductSearchList.do?page=${i }&ct=${ct}&rt=${rt}">${i }</a>
+									</c:otherwise>
+								</c:choose>
                            
                   
                         
@@ -96,14 +107,22 @@
                                 
                             
                                
-                    <div class="product__pagination">
+                    <div class="product__pagination">   
                     <center>
                     <c:if test="${start > 1}">
-                        <a href="../product/ProductSearchList.do?page=${start-1 }&sct=${sct}&rt=${ss}">&lt;</a>
+                        <a href="../product/ProductSearchList.do?page=${start-1 }&sct=${sct}&rt=${ss}"><i class="fa fa-long-arrow-left"></i></a>
                         </c:if>
                         <c:forEach var="i" begin="${start }" end="${end }">
                         
-                        <a href="../product/ProductSearchList.do?page=${i }&ct=${ct}&rt=${rt}"">${i }</a>
+                        <c:choose>
+									<c:when test="${i eq page}">
+									<a href="../product/ProductSearchList.do?page=${i }&sct=${sct}&ss=${ss}" class="selected">${i }</a>
+										
+									</c:when>
+									<c:otherwise>
+									   <a href="../product/ProductSearchList.do?page=${i }&sct=${sct}&ss=${ss}">${i }</a>
+									</c:otherwise>
+								</c:choose>
                        </c:forEach>
                         
                         <c:if test="${end < sTotalPage}">
@@ -112,8 +131,16 @@
                         </center>
                     </div>
                 </div>
+                
+                
+                
                 <c:if test="${ size eq 0}">
-                <h2>검색결과가 없습니다.</h2>
+                  
+                <div class="container" style="width:800px; height:800px;">
+                <h2 class="text-center">검색결과가 없습니다.</h2>
+                  </div>
+             
+                
                 </c:if>
     
     <!-- Product Section End -->

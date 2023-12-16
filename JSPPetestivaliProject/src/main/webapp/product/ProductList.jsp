@@ -8,6 +8,7 @@
 
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="description" content="Ogani Template">
     <meta name="keywords" content="Ogani, unica, creative, html">
@@ -32,6 +33,12 @@
     color:black;
     
     }
+    .selected{
+    background-color:aqua;
+    }
+    .cust{
+    color:black;
+    }
     </style>
 </head>
 
@@ -47,9 +54,9 @@
         
         
            
-                <div style="height:30px;margin-left: 310px; margin-bottom: 50px; ">
+                <div style="height:30px;margin-left: 310px; margin-bottom: 50px;" class="cust">
         <ul class="nav nav-pills" style="margin-left:; margin-bottom: 50px;">
-  	  <li class="active"><a href="ProductList.do?ct=${ct }&rt=p_intprice">가격순</a></li>
+  	  <li ><a href="ProductList.do?ct=${ct }&rt=p_intprice">가격순</a></li>
  	  <li><a href="ProductList.do?ct=${ct }&rt=p_hit"  style="margin-left: 50px;">조회수</a></li>
   	  <li><a href="ProductList.do?ct=${ct }&rt=p_review_num" style="margin-left: 50px;">후기개수</a></li>
      <li><a href="ProductList.do?ct=${ct }&rt=p_stack" style="margin-left: 50px;">품절임박</a></li>
@@ -99,7 +106,7 @@
                               
                            
                   
-                        
+                      
                         
                                 
                                 
@@ -108,15 +115,23 @@
                     <div class="product__pagination">
                     <center>
                     <c:if test="${start > 1}">
-                        <a href="../product/ProductList.do?page=${start-1 }&ct=${ct}&rt=${rt}">&lt;</a>
+                        <a href="../product/ProductList.do?page=${start-1 }&ct=${ct}&rt=${rt}"><i class="fa fa-long-arrow-left"></i></a>
                         </c:if>
                         <c:forEach var="i" begin="${start }" end="${end }">
                         
-                        <a href="../product/ProductList.do?page=${i }&ct=${ct}&rt=${rt}"">${i }</a>
+                          <c:choose>
+									<c:when test="${i eq page}">
+									 <a href="../product/ProductList.do?page=${i }&ct=${ct}&rt=${rt}" class="selected">${i }</a>
+										
+									</c:when>
+									<c:otherwise>
+									  <a href="../product/ProductList.do?page=${i }&ct=${ct}&rt=${rt}">${i }</a>
+									</c:otherwise>
+								</c:choose>
                        </c:forEach>
                         
                         <c:if test="${end < totalpage}">
-                       <a href="../product/ProductList.do?page=${end + 1}&ct=${ct}&rt=${rt}""><i class="fa fa-long-arrow-right"></i></a>
+                       <a href="../product/ProductList.do?page=${end + 1}&ct=${ct}&rt=${rt}"><i class="fa fa-long-arrow-right"></i></a>
                         </c:if>
                         </center>
                     </div>
