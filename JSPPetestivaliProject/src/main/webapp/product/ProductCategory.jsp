@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="col-lg-3 col-md-5">
+<div class="col-lg-3 col-md-5"  style="float:left; margin-right:0px; margin-top:100px; width:200px;">
                     <div class="sidebar">
                         <div class="sidebar__item">
                             <h4>카테고리</h4>

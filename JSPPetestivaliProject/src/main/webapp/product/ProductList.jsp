@@ -47,7 +47,15 @@
         
         
            
-                
+                <div style="height:30px;margin-left: 310px; margin-bottom: 50px; ">
+        <ul class="nav nav-pills" style="margin-left:; margin-bottom: 50px;">
+  	  <li class="active"><a href="ProductList.do?ct=${ct }&rt=p_intprice">가격순</a></li>
+ 	  <li><a href="ProductList.do?ct=${ct }&rt=p_hit"  style="margin-left: 50px;">조회수</a></li>
+  	  <li><a href="ProductList.do?ct=${ct }&rt=p_review_num" style="margin-left: 50px;">후기개수</a></li>
+     <li><a href="ProductList.do?ct=${ct }&rt=p_stack" style="margin-left: 50px;">품절임박</a></li>
+	    </ul> 
+	    
+        </div>
                
               <div class="col-lg-9 col-md-7">
                     <div class="row">

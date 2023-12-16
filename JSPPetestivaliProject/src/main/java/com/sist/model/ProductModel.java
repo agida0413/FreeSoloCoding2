@@ -14,6 +14,8 @@ import com.sist.vo.ProductVO;
 import com.sist.vo.ProductVO;
 
 public class ProductModel {
+	
+	
 
 	@RequestMapping("product/ProductList.do")
 public String productList(HttpServletRequest request, HttpServletResponse response) {

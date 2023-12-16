@@ -29,11 +29,41 @@
     </section>
 
 <section class="product spad">
-        <div class="container">
-		<jsp:include page="ProductHeader.jsp"></jsp:include>
-		<div class="row">
+
+        <div class="container" style="width:1200px;" >
+     
+		<div class="container" style=" width: 430px; display: flex; justify-content: space-between; align-items: flex-start; margin-left:0px;">
+    <div style=" margin-right: 0px; margin-top: 2px; width:120px;">
+        <select id="searchOptions" name="sct">
+            <option value="전체">전체</option>
+            <option value="사료">사료</option>
+            <option value="간식">간식</option>
+             <option value="배변/위생">배변/위생</option>
+            <option value="목욕/미용">목욕/미용</option>
+            <option value="장난감">장난감</option>
+             <option value="건강관리">건광관리</option>
+            <option value="식기">식기</option>
+            <option value="산책/이동장">산책/이동장</option>
+            <option value="하우스/울타리">하우스/울타리</option>
+        </select>
+    </div>
+
+    <div style="width:330px;">
+        <div class="blog__sidebar__search" style=" width: 300px; margin-right: 500px; ">
+            <form action="#">
+                <input type="text" placeholder="Search...">
+                <button type="submit"><span class="icon_search"></span></button>
+            </form>
+        </div>
+    </div>
+</div>
 		<jsp:include page="ProductCategory.jsp"></jsp:include>
+		<div class="row">
+		
+		
 		<jsp:include page="${product_jsp }"></jsp:include>
+		
+		
 		 </div>
 		 
 		
