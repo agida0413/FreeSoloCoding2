@@ -36,23 +36,23 @@
     
        
         <select id="searchOptions" name="sct">
-            <option value="전체">전체</option>
-            <option value="사료">사료</option>
-            <option value="간식">간식</option>
-             <option value="배변/위생">배변/위생</option>
-            <option value="목욕/미용">목욕/미용</option>
-            <option value="장난감">장난감</option>
-             <option value="건강관리">건광관리</option>
-            <option value="식기">식기</option>
-            <option value="산책/이동장">산책/이동장</option>
-            <option value="하우스/울타리">하우스/울타리</option>
+            <option value="전체" ${sct eq "전체"?"selected":""}>전체</option>
+            <option value="사료" ${sct eq "사료"?"selected":""}>사료</option>
+            <option value="간식" ${sct eq "간식"?"selected":""}>간식</option>
+             <option value="배변/위생" ${sct eq "배변/위생"?"selected":""}>배변/위생</option>
+            <option value="목욕/미용" ${sct eq "목욕/미용"?"selected":""}>목욕/미용</option>
+            <option value="장난감" ${sct eq "장난감"?"selected":""}>장난감</option>
+             <option value="건강관리" ${sct eq "건강관리"?"selected":""}>건강관리</option>
+            <option value="식기" ${sct eq "식기"?"selected":""}>식기</option>
+            <option value="산책/이동장" ${sct eq "산책/이동장"?"selected":""}>산책/이동장</option>
+            <option value="하우스/울타리" ${sct eq "하우스/울타리"?"selected":""}>하우스/울타리</option>
         </select>
    
 
     <div style="width:330px;">
         <div class="blog__sidebar__search" style=" width: 300px; margin-right: 500px;">
            
-                <input type="text" placeholder="Search..." name="ss" value="" style="height:40px; width:230px;">
+                <input type="text" placeholder="Search..." name="ss" value="${ss eq null?"":ss }" style="height:40px; width:230px;">
                 <button type="submit"><span class="icon_search"></span></button>
             </form>
         </div>
