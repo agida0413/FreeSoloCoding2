@@ -48,7 +48,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 		
 		
 		
-		request.setAttribute("product_jsp","../product/ProductList.jsp");
+		request.setAttribute("product_jsp", "../product/ProductList.jsp");
 		request.setAttribute("main_jsp", "../product/ProductMain.jsp");
 		request.setAttribute("list", list);
 		request.setAttribute("page", strpage);
