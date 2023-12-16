@@ -39,43 +39,14 @@
   
 	
     <!-- Product Section Begin -->
-    <section class="product spad">
-        <div class="container">
+    
         
-        <div>
-        <ul class="nav nav-pills" style="margin-left: 765px; margin-bottom: 50px;">
-  	  <li class="active"><a href="productList.do?ct=${ct }&rt=p_intprice">가격순</a></li>
- 	  <li><a href="productList.do?ct=${ct }&rt=p_hit"  style="margin-left: 50px;">조회수</a></li>
-  	  <li><a href="productList.do?ct=${ct }&rt=p_review_num" style="margin-left: 50px;">후기개수</a></li>
-     <li><a href="productList.do?ct=${ct }&rt=p_stack" style="margin-left: 50px;">품절임박</a></li>
-	    </ul> 
-	    
-        </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-5">
-                    <div class="sidebar">
-                        <div class="sidebar__item">
-                            <h4>카테고리</h4>
-                            <ul>
-                                <li><a href="productList.do?ct=전체">전체</a></li>
-                                <li><a href="productList.do?ct=사료">사료</a></li>
-                                <li><a href="productList.do?ct=간식">간식</a></li>
-                                <li><a href="productList.do?ct=배변/위생">배변/위생</a></li>
-                                <li><a href="productList.do?ct=목욕/미용">목욕/미용</a></li>
-                                <li><a href="productList.do?ct=장난감">장난감</a></li>
-                                <li><a href="productList.do?ct=건강관리">건강관리</a></li>
-                                <li><a href="productList.do?ct=식기">식기</a></li>
-                                <li><a href="productList.do?ct=산책/이동장">산책/이동장</a></li>
-                                <li><a href="productList.do?ct=하우스/울타리">하우스/울타리</a></li>
-                                
-                            </ul>
-                        </div>
-                        
-                        
-                      
-                     
-                    </div>
-                </div>
+       
+        
+        
+        
+        
+           
                 
                
               <div class="col-lg-9 col-md-7">
@@ -123,22 +94,20 @@
                     <div class="product__pagination">
                     <center>
                     <c:if test="${start > 1}">
-                        <a href="../product/productList.do?page=${start-1 }&ct=${ct}&rt=${rt}">&lt;</a>
+                        <a href="../product/ProductMain.do?page=${start-1 }&ct=${ct}&rt=${rt}">&lt;</a>
                         </c:if>
                         <c:forEach var="i" begin="${start }" end="${end }">
                         
-                        <a href="../product/productList.do?page=${i }&ct=${ct}&rt=${rt}"">${i }</a>
+                        <a href="../product/ProductMain.do?page=${i }&ct=${ct}&rt=${rt}"">${i }</a>
                        </c:forEach>
                         
                         <c:if test="${end < totalpage}">
-                       <a href="../product/productList.do?page=${end + 1}&ct=${ct}&rt=${rt}""><i class="fa fa-long-arrow-right"></i></a>
+                       <a href="../product/ProductMain.do?page=${end + 1}&ct=${ct}&rt=${rt}""><i class="fa fa-long-arrow-right"></i></a>
                         </c:if>
                         </center>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+    
     <!-- Product Section End -->
 
    

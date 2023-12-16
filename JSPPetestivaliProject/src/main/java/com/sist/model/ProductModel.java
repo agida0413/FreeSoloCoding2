@@ -14,7 +14,7 @@ import com.sist.vo.ProductVO;
 
 public class ProductModel {
 
-	@RequestMapping("product/productList.do")
+	@RequestMapping("product/ProductMain.do")
 public String productList(HttpServletRequest request, HttpServletResponse response) {
 	String strpage=request.getParameter("page");
 	String ct=request.getParameter("ct");
@@ -48,8 +48,8 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 		
 		
 		
-		
-		request.setAttribute("main_jsp", "../product/productList.jsp");
+		request.setAttribute("product_jsp","../product/ProductList.jsp");
+		request.setAttribute("main_jsp", "../product/ProductMain.jsp");
 		request.setAttribute("list", list);
 		request.setAttribute("page", strpage);
 		request.setAttribute("ct", ct);
