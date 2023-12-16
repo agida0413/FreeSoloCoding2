@@ -48,11 +48,10 @@
             <div class="row">
 				<div class="col-lg-3 col-md-5 order-md-1 order-1">
 					<div class="blog__sidebar__search">
-						<form action="#"></form>
-							<select id="searchOptions" name="sct">
-							<label for="state" style="font-size: 18px; margin-left: 25px;"> 시도 </label>
-							<select id="state" name="state" size="1">
-								<option value="${list2 }">${list2 }</option>
+						<form action=""></form>\
+							<select id="state" name="state" size="10">
+							<label for="state"> 시도 </label>
+								<c:forEach var="vo" items="${list2}"> <option value="${vo.state }">${vo.state}</option> </c:forEach>
 							</select> <input type="text" >
 							<button type="submit">
 								<span class="icon_search"></span>

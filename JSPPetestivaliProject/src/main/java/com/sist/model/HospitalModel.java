@@ -32,8 +32,7 @@ public class HospitalModel {
 	List<HospitalVO> list=dao.HsptFindList(curpage);
 	int totalpage=dao.totalPage(Integer.parseInt(page));
 	List<HospitalVO> list2=dao.HsptSearchData();
-	
-	
+
 	
 	final int BLOCK=10;
 	int startPage=((curpage-1)/BLOCK*BLOCK)+1;
