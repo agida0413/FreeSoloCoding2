@@ -49,6 +49,7 @@
                 <div class="col-lg-8 col-md-7 order-md-1 order-1">
                     <div class="blog__details__text">
 						<h4 style="text-align: center;">병원찾기 목록</h4>
+						<br>
 						<table class="table">
 							<tr class="success">
 								<th width=10% class="text-center">번호</th>

@@ -9,10 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ogani | Template</title>
-    <style>
-    .breadcrumb__text {
-      color: black; /* 텍스트의 색상을 블랙으로 지정 */
-    }
+    <style type="text/css">
+    .primary-btn{
+    	width: 95px;
+    	height: 40px;
+    	margin-bottom: 10px;
+    	margin-left: 1060px;
+        }
     </style>
 
     <!-- Google Font -->
@@ -37,9 +40,6 @@
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
                         <h2>${vo.hospital_name }</h2>
-                        <div class="breadcrumb__option">
-                            <a href="../hspt/find.do">목록</a>
-                            <span></span>
                         </div>
                     </div>
                 </div>
@@ -48,21 +48,21 @@
     </section>
     <!-- Breadcrumb Section End -->
     <!-- Contact Section Begin -->
-    <section class="contact spad">
-        <div class="container">
-        <div class="row">
-        <table class="table">
-    <tr>
-        <td width="35%" height="45%" align="left">
-            <span class="icon_phone"></span>
-            <h4>Phone</h4>
-            <p>${vo.hospital_phone }</p>
-        </td>
-        <td width="65%"  align="center" rowspan="4">
-            <div id="map" style="width: 500px%; height: 450px;"></div>
-            <script type="text/javascript"
-					src="//dapi.kakao.com/v2/maps/sdk.js?appkey=23e8040d553778eeeb77f0900cb92322&libraries=services"></script>
-				<script>
+	<section class="contact spad">
+		<div class="container">
+			<div class="row">
+				<table class="table">
+					<tr>
+						<td width="35%" height="45%" align="center" >
+						<span class="icon_phone"></span>
+							<h4>Phone</h4>
+							<p>${vo.hospital_phone }</p>
+						</td>
+						<td width="65%" align="center" rowspan="4">
+							<div id="map" style="width: 500px%; height: 450px;"></div> <script
+								type="text/javascript"
+								src="//dapi.kakao.com/v2/maps/sdk.js?appkey=23e8040d553778eeeb77f0900cb92322&libraries=services"></script>
+							<script>
 					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 					mapOption = {
 						center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -107,26 +107,23 @@
 										}
 									});
 				</script>
-        </td>
-    </tr>
-    <tr>
-        <td width="35%" height="45%" align="left">
-            <span class="icon_pin_alt"></span>
-             <h4>Address</h4>
-             <p>${vo.hospital_address }</p>
-        </td>
-    </tr>
-    <tr>
-        <td width="35%" align="left">
-            <span class="icon_clock_alt"></span>
-            <h4>Open time</h4>
-            <p>10:00 am to 23:00 pm</p>
-        </td>
-			</table>
+						</td>
+					</tr>
+					<tr>
+						<td width="35%" height="45%" align="center"><span
+							class="icon_pin_alt"></span>
+							<h4>Address</h4>
+							<p>${vo.hospital_address }</p></td>
+					</tr>
+					<tr>
+						<td width="35%" align="center"><span class="icon_clock_alt"></span>
+							<h4>Reservation</h4> <a href="#">예약하기</a></td>
+				</table>
+				<a href="../hspt/find.do" class="primary-btn">목 록</a>
+			</div>
 		</div>
-		</div>
-    </section>
-    <!-- Contact Section End -->
+	</section>
+	<!-- Contact Section End -->
 
     <!-- Map Begin -->
       
