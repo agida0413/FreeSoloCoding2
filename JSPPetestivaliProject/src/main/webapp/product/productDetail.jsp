@@ -119,6 +119,7 @@ function requestPay() {
               				<c:param name="lcount" value="${lcount }"/>
               				<c:param name="ct" value="${ct}"/>
               				<c:param name="rt" value="${rt}"/>
+              				<c:param name="ss" value="${ss}"/>
               				<c:param name="page" value="${page}"/>
               				</c:url>
                                 

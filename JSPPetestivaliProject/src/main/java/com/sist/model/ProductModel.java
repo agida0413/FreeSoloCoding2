@@ -84,7 +84,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 		String rt=request.getParameter("rt");
 		String pno=request.getParameter("pno");
 		String lcount=request.getParameter("count");
-		
+		String ss=request.getParameter("ss");
 		
 			ProductDAO dao=ProductDAO.newInstace();
 			ProductVO vo =dao.productDetail(Integer.parseInt(pno));
@@ -94,6 +94,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 			request.setAttribute("ct", ct);
 			request.setAttribute("rt", rt);
 			request.setAttribute("lcount",lcount);//목록으로 돌아가는 카운트
+			request.setAttribute("ss", ss);
 			
 			List<ProductVO>clist=new ArrayList<ProductVO>();
 			try {
@@ -151,11 +152,17 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 		String strpage=request.getParameter("page");
 		String ct=request.getParameter("ct");
 		String rt=request.getParameter("rt");
+		String ss=request.getParameter("ss");
+		
 		try {
-			ct=java.net.URLEncoder.encode(ct,"UTF-8");
+		    if (ct != null) {
+		        ct = java.net.URLEncoder.encode(ct, "UTF-8");
+		    }
+		    if (ss != null) {
+		        ss = java.net.URLEncoder.encode(ss, "UTF-8");
+		    }
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		    e.printStackTrace();
 		}
 		
 			Cookie cookie=new Cookie("pno_"+pno, pno);
@@ -165,7 +172,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 			
 				
 		
-		return "redirect:../product/productDetail.do?pno="+pno+"&rt="+rt+"&page="+strpage+"&ct="+ct+"&count="+count;
+		return "redirect:../product/productDetail.do?pno="+pno+"&rt="+rt+"&page="+strpage+"&ct="+ct+"&count="+count+"&ss="+ss;
 	}
 	
 	
@@ -176,9 +183,12 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 	@RequestMapping("product/DetailListBack.do")
 	public String DetailListBack(HttpServletRequest request, HttpServletResponse response) {
 		String ct=request.getParameter("ct");
-	
+		String ss=request.getParameter("ss");
+		
 		try {
+			ss=java.net.URLEncoder.encode(ss,"UTF-8");
 			ct=java.net.URLEncoder.encode(ct,"UTF-8");
+			System.out.println(ct);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -194,9 +204,11 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 	if (lcount.equals("1")) {
 		send="redirect:../product/ProductList.do";
 	}
-		
+	else if(lcount.equals("2")) {	
+		System.out.println(ss);
+	send="redirect:../product/ProductSearchList.do?page="+strpage+"&sct="+ct+"&ss="+ss;
 	
-		
+	}
 		
 		return send;
 	}
@@ -205,7 +217,13 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 	
 	@RequestMapping("product/ProductSearchList.do")
 	public String ProductSearchList(HttpServletRequest request, HttpServletResponse response) {
-				ProductDAO dao=ProductDAO.newInstace();
+				try {
+					request.setCharacterEncoding("UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			ProductDAO dao=ProductDAO.newInstace();
 		
 				String sct=request.getParameter("sct");
 				String strpage=request.getParameter("page");
@@ -221,16 +239,30 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 				}
 				
 				int curpage=Integer.parseInt(strpage);
-				
+				int sTotalPage=dao.productSearchTotalPage(sct, ss);
 				List<ProductVO>list=dao.productSearchList(sct, ss, curpage);
+				
+				final int block=10;
+				int start = ((curpage-1)/block*block)+1;
+				int end = ((curpage-1)/block*block)+10;
+				if(end>sTotalPage) {
+					end=sTotalPage;
+				}
+				
+				request.setAttribute("page", strpage);
+				request.setAttribute("sct", sct);
+				request.setAttribute("ss", ss);
+				request.setAttribute("sTotalPage", sTotalPage);
+				request.setAttribute("searchList", list);
+				request.setAttribute("start", start);
+				request.setAttribute("end", end);
+				request.setAttribute("size", list.size());
+				
+				request.setAttribute("product_jsp", "../product/ProductSearchList.jsp");
+				request.setAttribute("main_jsp", "../product/ProductMain.jsp");
+				
 		
-
-	
-	
 		
-	
-		
-		
-		return "";
+		return "../main/main.jsp";
 	}
 }

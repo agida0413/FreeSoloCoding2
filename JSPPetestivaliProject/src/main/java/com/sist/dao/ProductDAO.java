@@ -278,7 +278,7 @@ public List<ProductVO> productSearchList(String sct,String ss,int page){
 				   +"FROM (SELECT pno,p_name,p_image,p_lower_price,rownum as num "
 				   +"FROM (SELECT pno,p_name,p_image,p_lower_price "
 				   +"FROM PRODUCT_DETAIL "
-				   +msg +")) ORDER BY p_name "
+				   +msg +")) "
 				   +"WHERE num BETWEEN ? AND ?";
 		ps=conn.prepareStatement(sql);
 		
