@@ -51,6 +51,7 @@ function requestPay() {
 <title>Insert title here</title>
 </head>
 <body>
+
   <!-- Product Details Section Begin -->
     <section class="product-details spad">
         <div class="container">
@@ -86,7 +87,7 @@ function requestPay() {
                         </div>
                         <div id="price" class="product__details__price" data-price="${vo.p_intprice }">${vo.p_lower_price }</div>
                         <p>${vo.p_percent }</p>
-                         <p style="color:blue">조회수:${vo.p_hit }</p>
+                         <p style="color:blue">조회수:${vo.p_hit}</p>
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
@@ -97,12 +98,19 @@ function requestPay() {
                         <a href="#" class="primary-btn">ADD TO CARD</a>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
-                            <li><b>Availability</b> <span>In Stock</span></li>
+                            <li><b>몰라</b> <span>몰라</span></li>
                             <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
                             <li><b>카테고리</b> <span>${vo.p_category }</span></li>
                             <li><b>Share on</b>
                                 <div class="share">
-                                  <span><button onclick="history.back()">목록</button></span>
+                                <c:url value="DetailListBack.do" var="url">
+              				<c:param name="lcount" value="${lcount }"/>
+              				<c:param name="ct" value="${ct}"/>
+              				<c:param name="rt" value="${rt}"/>
+              				<c:param name="page" value="${page}"/>
+              				</c:url>
+                                
+                                  <span><a href="<c:out value="${url}" />">목록</a></span>
                                 </div>
                                 </li>
                             <li><b>Shipping</b><span><button onclick="requestPay()">구매</button></span></li>
@@ -210,7 +218,14 @@ function requestPay() {
                 <div class="col-lg-3 col-md-4 col-sm-6">
                
                     <div class="product__item">
-                        <div class="product__item__pic set-bg"><a href="DetailBefore.do?pno=${cvo.pno }"><img src="${cvo.p_image }">
+                    		<c:url value="DetailBefore.do?count=1" var="url">
+              				<c:param name="pno" value="${cvo.pno }"/>
+              				<c:param name="ct" value="${ct}"/>
+              				<c:param name="rt" value="${rt}"/>
+              				<c:param name="page" value="${page}"/>
+              				</c:url>
+                    
+                        <div class="product__item__pic set-bg"><a href="<c:out value="${url}" />"><img src="${cvo.p_image }">
                             <ul class="product__item__pic__hover">
                                 <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li>

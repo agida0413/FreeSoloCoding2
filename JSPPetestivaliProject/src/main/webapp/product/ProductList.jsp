@@ -52,8 +52,14 @@
               <div class="col-lg-9 col-md-7">
                     <div class="row">
               				<c:forEach var="vo" items="${list }">
+              				<c:url value="DetailBefore.do" var="url">
+              				<c:param name="pno" value="${vo.pno }"/>
+              				<c:param name="ct" value="${ct}"/>
+              				<c:param name="rt" value="${rt}"/>
+              				<c:param name="page" value="${page}"/>
+              				</c:url>
              						 <div class="col-lg-4 col-md-6 col-sm-6">
-             						  <a href="DetailBefore.do?pno=${vo.pno }">
+             						 <a href="<c:out value="${url}" />">
              						  <img src="${vo.p_image }">
                        					 <div class="product__item">
                     		  	 	  <div class="product__item__text">

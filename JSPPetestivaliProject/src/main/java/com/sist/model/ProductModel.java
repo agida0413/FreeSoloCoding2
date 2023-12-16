@@ -1,5 +1,6 @@
 package com.sist.model;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,12 +65,29 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 	
 	@RequestMapping("product/productDetail.do")
 	public String productDetail(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		String strpage=request.getParameter("page");
+		String ct=request.getParameter("ct");
+		String rt=request.getParameter("rt");
 		String pno=request.getParameter("pno");
+		String lcount=request.getParameter("count");
+		
+		
 			ProductDAO dao=ProductDAO.newInstace();
 			ProductVO vo =dao.productDetail(Integer.parseInt(pno));
 			request.setAttribute("vo", vo);
 			request.setAttribute("main_jsp", "../product/productDetail.jsp");
+			request.setAttribute("page", strpage);
+			request.setAttribute("ct", ct);
+			request.setAttribute("rt", rt);
+			request.setAttribute("lcount",lcount);//목록으로 돌아가는 카운트
+			
 			List<ProductVO>clist=new ArrayList<ProductVO>();
 			try {
 			
@@ -87,7 +105,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 							count ++;
 							
 							request.setAttribute("clist", clist);
-							request.setAttribute("count", clist.size());
+							request.setAttribute("count", clist.size());//쿠키목록출력카운트
 							if(count==5) {
 								break;
 							}
@@ -115,8 +133,24 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 	
 	@RequestMapping("product/DetailBefore.do")
 	public String DetailBefore(HttpServletRequest request, HttpServletResponse response) {
-		
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String count=request.getParameter("count");
 		String pno=request.getParameter("pno");
+		String strpage=request.getParameter("page");
+		String ct=request.getParameter("ct");
+		String rt=request.getParameter("rt");
+		try {
+			ct=java.net.URLEncoder.encode(ct,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 			Cookie cookie=new Cookie("pno_"+pno, pno);
 			cookie.setPath("/");
 			cookie.setMaxAge(60*60*24);
@@ -124,6 +158,35 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 			
 				
 		
-		return "redirect:../product/productDetail.do?pno="+pno;
+		return "redirect:../product/productDetail.do?pno="+pno+"&rt="+rt+"&page="+strpage+"&ct="+ct+"&count="+count;
+	}
+	
+	
+	@RequestMapping("product/DetailListBack.do")
+	public String DetailListBack(HttpServletRequest request, HttpServletResponse response) {
+		String ct=request.getParameter("ct");
+	
+		try {
+			ct=java.net.URLEncoder.encode(ct,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String strpage=request.getParameter("page");
+		String rt=request.getParameter("rt");
+		String send="redirect:../product/ProductList.do?page="+strpage+"&ct="+ct+"&rt="+rt;
+	String lcount=request.getParameter("lcount");
+	
+
+	
+	if (lcount.equals("1")) {
+		send="redirect:../product/ProductList.do";
+	}
+		
+	
+		
+		
+		return send;
 	}
 }
