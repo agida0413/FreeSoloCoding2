@@ -317,5 +317,45 @@ public List<ProductVO> productSearchList(String sct,String ss,int page){
 	
 }
 
+public int productSearchTotalPage(String sct,String ss) {
+	int total=0;
+	String msg="";
+	if (sct.equals("전체")) {
+		msg="WHERE p_name LIKE '%'||?||'%'";
+	}
+	else {
+		msg="WHERE p_category=? AND p_name LIKE '%'||?||'%'";
+	}
+	
+	
+	try {
+		conn=dbconn.getConnection();
+		String sql="SELECT CEIL(COUNT(*)/"+ROW_SIZE+") FROM PRODUCT_DETAIL "+msg;
+		ps=conn.prepareStatement(sql);
+		if (sct.equals("전체")) {
+			ps.setString(1, ss);
+		}
+		else {
+			ps.setString(1, sct);
+			ps.setString(2, ss);
+		}
+		
+		ResultSet rs=ps.executeQuery();
+		rs.next();
+		total=rs.getInt(1);
+		rs.close();
+					
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	
+	return total;
+	
+}
+
 
 }

@@ -205,20 +205,24 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 	
 	@RequestMapping("product/ProductSearchList.do")
 	public String ProductSearchList(HttpServletRequest request, HttpServletResponse response) {
+				ProductDAO dao=ProductDAO.newInstace();
 		
 				String sct=request.getParameter("sct");
-				String page=request.getParameter("page");
+				String strpage=request.getParameter("page");
 				String ss=request.getParameter("ss");
 				if (sct==null) {
 					sct="전체";
 				}
-				if (page==null) {
-					page="1";
+				if (strpage==null) {
+					strpage="1";
 				}
 				if (ss==null) {
 					ss="";
 				}
 				
+				int curpage=Integer.parseInt(strpage);
+				
+				List<ProductVO>list=dao.productSearchList(sct, ss, curpage);
 		
 
 	
