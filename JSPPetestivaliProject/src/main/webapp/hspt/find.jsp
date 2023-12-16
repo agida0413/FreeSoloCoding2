@@ -59,7 +59,7 @@
 							<c:forEach var="vo" items="${list }">
 								<tr>
 								
-									<td width=10% class="text-center">${vo.no }</td>
+									<td width=10% class="text-center">${vo.no}</td>
 									<td width=30% class="text-center"><a
 										href="../hspt/detail.do?no=${vo.no }">${vo.hospital_name }</a></td>
 									<td width=40% class="text-center">${vo.hospital_address }</td>
