@@ -101,7 +101,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 			}
 			
 			
-			System.out.println(clist.size());
+			
 			
 			
 			
