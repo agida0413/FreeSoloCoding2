@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <style type="text/css">
 .latest-product__slider.owl-carousel .owl-nav {
     position: absolute;

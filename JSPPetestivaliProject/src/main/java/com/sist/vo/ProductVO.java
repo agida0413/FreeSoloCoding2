@@ -24,7 +24,13 @@ public class ProductVO {
 		this.pno = pno;
 	}
 	private double p_grade;
-	private String p_name,p_price,p_image,p_percent,p_lower_price,p_shipment,p_category,p_expiredate,p_detail_image;
+	private String p_name,p_price,p_image,p_percent,p_lower_price,p_shipment,p_category,p_expire_date,p_detail_image,p_detail_text;
+	public String getP_detail_text() {
+		return p_detail_text;
+	}
+	public void setP_detail_text(String p_detail_text) {
+		this.p_detail_text = p_detail_text;
+	}
 	public int getP_stack() {
 		return p_stack;
 	}
@@ -98,11 +104,11 @@ public class ProductVO {
 	public void setP_category(String p_category) {
 		this.p_category = p_category;
 	}
-	public String getP_expiredate() {
-		return p_expiredate;
+	public String getP_expire_date() {
+		return p_expire_date;
 	}
-	public void setP_expiredate(String p_expiredate) {
-		this.p_expiredate = p_expiredate;
+	public void setP_expire_date(String p_expiredate) {
+		this.p_expire_date = p_expiredate;
 	}
 	public String getP_detail_image() {
 		return p_detail_image;
