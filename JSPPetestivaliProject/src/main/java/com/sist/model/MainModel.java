@@ -11,7 +11,11 @@ import com.sist.vo.*;
 public class MainModel {
 	@RequestMapping("main/main.do")
 	public String main_main(HttpServletRequest request, HttpServletResponse response)
-	{
+	{	
+		String LogoutMsg=(String)request.getAttribute("LogoutMsg");
+		if (LogoutMsg!=null) {
+			request.setAttribute("LogoutMsg", LogoutMsg);
+		}
 		
 		String fd=request.getParameter("fd");
 		if(fd==null) {

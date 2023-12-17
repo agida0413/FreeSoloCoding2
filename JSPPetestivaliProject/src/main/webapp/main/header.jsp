@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,13 +24,29 @@
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
+                        
+                        <c:if test="${not empty sessionScope.id}">
                             <div class="header__top__right__auth">
                             <a href="#"><i class="fa fa-user"></i> Mypage</a>
                             </div>
                             &nbsp;&nbsp;
                             <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
+                                <a href="../user/userLogout.do"><i class="fa fa-user"></i> Logout</a>
                             </div>
+                        </c:if>		
+                        
+                           
+                            <c:if test="${sessionScope.id eq null }">
+                            <div class="header__top__right__auth">
+                            <a href="../user/join.jsp"><i class="fa fa-user"></i> Join</a>
+                            </div>
+                            &nbsp;&nbsp;
+                            <div class="header__top__right__auth">
+                                <a href="../user/login.jsp"><i class="fa fa-user"></i> Login</a>
+                            </div>
+                            </c:if>
+                            
+                            
                         </div>
                     </div>
 
@@ -140,9 +157,9 @@
                             </form>
                         </div>
                         <div class="hero__search__phone">
-                            <c:if test="${sessionScope.id ne null }">
+                            <c:if test="${not empty sessionScope.id}">
                             <div class="hero__search__phone__text">
-                                <h5>${sessionScope.id }님 환영합니다.</h5>
+                                <h5>${sessionScope.name }님 환영합니다.</h5>
                            </c:if>
                             </div>
                         </div>
@@ -152,5 +169,15 @@
         </div>
     </section>
     <!-- Hero Section End -->
+    
+    
+    <c:if test="${not empty LogoutMsg}">
+    <script>
+        var loutmsg = "${LogoutMsg}";
+        if (loutmsg !== null && loutmsg.trim().length > 0) {
+            alert(loutmsg);
+        }
+    </script>
+</c:if>
 </body>
 </html>

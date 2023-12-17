@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ko">
 
 <head>
@@ -139,25 +140,32 @@ body {
 </head>
 
 <body style="background-image: url('별이.jpg'); background-repeat: no-repeat;">
-  <form action="doJoin" method="POST" class="joinForm" onsubmit="DoJoinForm__submit(this); return false;">
-                                                                                               
+
+  <form action="userJoin.do" method="POST" class="joinForm">
+             <div class="top_link" style="margin-right:270px;"><a href="../main/main.do"><img src="left.png.svg" alt="">Return home</a></div>   
+             <c:if test="${not empty msg}">
+    <script>
+        alert("${msg}");
+    </script>
+</c:if>	                                                            
       <h2>회원가입</h2>
       <div class="textForm">
-        <input name="loginId" type="text" class="id" placeholder="아이디">
+        <input name="id" type="text" class="id" placeholder="아이디" required>
         </input>
       </div>
       <div class="textForm">
-        <input name="loginPw" type="password" class="pw" placeholder="비밀번호">
+        <input name="pwd" type="password" class="pw" placeholder="비밀번호" required>
       </div>
        
       <div class="textForm">
-        <input name="name" type="password" class="name" placeholder="이름">
+        <input name="name" type="text" class="name" placeholder="이름" required>
       </div>
        
      
      
       <input type="submit" class="btn" value="J O I N"/>
     </form>
+    
 </body>
 
 </html>
