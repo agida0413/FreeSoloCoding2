@@ -22,7 +22,8 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 	String strpage=request.getParameter("page");
 	String ct=request.getParameter("ct");
 	String rt=request.getParameter("rt");
-	List<ProductVO>list = new ArrayList<ProductVO>();
+	
+
 	ProductDAO dao=ProductDAO.newInstace();
 	if (strpage==null) {
 		strpage="1";
@@ -45,8 +46,8 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 		end=totalpage;
 	}
 		
-		list =dao.productList(ct, curpage,rt);
-		
+	List<ProductVO>list  =dao.productList(ct, curpage,rt);
+	List<Integer>catenumList=dao.ProductCateNum();	
 		
 		
 		
@@ -60,6 +61,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 		request.setAttribute("start", start);
 		request.setAttribute("end", end);
 		request.setAttribute("rt", rt);
+		request.setAttribute("cateNumList", catenumList);
 	
 	return "../main/main.jsp";
 }
@@ -241,7 +243,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 				int curpage=Integer.parseInt(strpage);
 				int sTotalPage=dao.productSearchTotalPage(sct, ss);
 				List<ProductVO>list=dao.productSearchList(sct, ss, curpage);
-				
+				List<Integer>catenumList=dao.ProductCateNum();	
 				final int block=10;
 				int start = ((curpage-1)/block*block)+1;
 				int end = ((curpage-1)/block*block)+10;
@@ -257,7 +259,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 				request.setAttribute("start", start);
 				request.setAttribute("end", end);
 				request.setAttribute("size", list.size());
-				
+				request.setAttribute("cateNumList", catenumList);
 				request.setAttribute("product_jsp", "../product/ProductSearchList.jsp");
 				request.setAttribute("main_jsp", "../product/ProductMain.jsp");
 				

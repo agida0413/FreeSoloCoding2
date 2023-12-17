@@ -357,5 +357,36 @@ public int productSearchTotalPage(String sct,String ss) {
 	
 }
 
+public List<Integer> ProductCateNum(){
+	List<Integer>list= new ArrayList<Integer>();
+	try {
+		conn=dbconn.getConnection();
+		
+		String sql="SELECT COUNT(*) FROM PRODUCT_DETAIL ";
+		ps=conn.prepareStatement(sql);
+		ResultSet rs=ps.executeQuery();
+		rs.next();
+		list.add(rs.getInt(1));
+		rs.close();
+		
+		 sql="SELECT COUNT(*) FROM PRODUCT_DETAIL GROUP BY P_CATEGORY";
+		ps=conn.prepareStatement(sql);
+		 rs=ps.executeQuery();
+		while(rs.next()) {
+			list.add(rs.getInt(1));
+			
+		}
+		rs.close();
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	
+	return list;
+}
+
 
 }

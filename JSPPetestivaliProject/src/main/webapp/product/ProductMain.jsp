@@ -46,6 +46,7 @@
             <option value="식기" ${sct eq "식기"?"selected":""}>식기</option>
             <option value="산책/이동장" ${sct eq "산책/이동장"?"selected":""}>산책/이동장</option>
             <option value="하우스/울타리" ${sct eq "하우스/울타리"?"selected":""}>하우스/울타리</option>
+            <option value="의류/악세서리" ${sct eq "의류/악세서리"?"selected":""}>의류/악세서리</option>
         </select>
    
 
