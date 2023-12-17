@@ -29,25 +29,16 @@ public class HospitalModel {
 		page="1";
 	int curpage=Integer.parseInt(page);
 	String fd=request.getParameter("fd");
-	
 	if(fd==null)
-		fd="hospital_address";
-	String ss=request.getParameter("ss");
-	if(ss==null)
-		ss="서울";
-	
-	if ("address".equals(fd))
-	{
-        fd="hospital_address";
-    } 
-	else if ("name".equals(fd))
-	{
-    	fd="hospital_name";
-    }
+		fd="";
+	String st=request.getParameter("st");
+	if(st==null)
+		st="전체";
+
 
 	HospitalDAO dao=HospitalDAO.newInstance();
-	List<HospitalVO> list=dao.HsptFindList(curpage,fd,ss);
-	int totalpage=dao.totalPage(Integer.parseInt(page),fd,ss);
+	List<HospitalVO> list=dao.HsptFindList(curpage,fd,st);
+	int totalpage=dao.totalPage(Integer.parseInt(page),fd,st);
 	List<HospitalVO> list2=dao.HsptSearchData();
 
 	
@@ -60,12 +51,15 @@ public class HospitalModel {
 		endPage=totalpage;
 	}
 	
+	request.setAttribute("fd", fd);
+	request.setAttribute("st", st);
 	request.setAttribute("curpage", curpage);
 	request.setAttribute("totalpage", totalpage);
 	request.setAttribute("startPage", startPage);
 	request.setAttribute("endPage", endPage);
 	request.setAttribute("list", list);
 	request.setAttribute("list2", list2);
+//	request.setAttribute("hspt_jsp", "../hspt/hsptsearchList.jsp");
 	request.setAttribute("main_jsp", "../hspt/find.jsp");
 
 		return "../main/main.jsp";

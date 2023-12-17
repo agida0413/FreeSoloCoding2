@@ -21,33 +21,60 @@ public class HospitalDAO {
 	public List<HospitalVO> HsptFindList(int page,String fd,String st)
 	{
 		List<HospitalVO> list=new ArrayList<HospitalVO>();
+		int start=(page*row_size)-(row_size-1);
+		int end=(page*row_size);
 		try
 		{
 			conn=dbconn.getConnection();
-			String sql="SELECT no,hospital_name,hospital_address,hospital_phone,num "
-					+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone,ROWNUM AS num "
-					+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone "
-					+ "FROM hospital_search "
-					+ "WHERE "+fd+ " LIKE '%'||?||'%' "
-					+ "ORDER BY no ASC)) "
-					+ "WHERE num BETWEEN ? AND ?";
-			int start=(page*row_size)-(row_size-1);
-			int end=(page*row_size);
-			ps=conn.prepareStatement(sql);
-			ps.setString(1, st);
-			ps.setInt(2, start);
-			ps.setInt(3, end);
-			ResultSet rs=ps.executeQuery();
-			while(rs.next())
+			if(st.equals("전체"))
 			{
-				HospitalVO vo=new HospitalVO();
-				vo.setNo(rs.getInt(1));
-				vo.setHospital_name(rs.getString(2));
-				vo.setHospital_address(rs.getString(3));
-				vo.setHospital_phone(rs.getString(4));
-				list.add(vo);
+				String sql="SELECT no,hospital_name,hospital_address,hospital_phone,num "
+						+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone,ROWNUM AS num "
+						+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone "
+						+ "FROM hospital_search WHERE hospital_name LIKE '%'||?||'%' ORDER BY no ASC)) "
+						+ "WHERE num BETWEEN ? AND ?";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, fd);
+				ps.setInt(2, start);
+				ps.setInt(3, end);
+				ResultSet rs=ps.executeQuery();
+				while(rs.next())
+				{
+					HospitalVO vo=new HospitalVO();
+					vo.setNo(rs.getInt(1));
+					vo.setHospital_name(rs.getString(2));
+					vo.setHospital_address(rs.getString(3));
+					vo.setHospital_phone(rs.getString(4));
+					list.add(vo);
+				}
+				rs.close();
+				
 			}
-			rs.close();
+			else
+			{
+				String sql="SELECT no,hospital_name,hospital_address,hospital_phone,num "
+						+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone,ROWNUM AS num "
+						+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone "
+						+ "FROM hospital_search WHERE state=? AND hospital_name LIKE '%'||?||'%' " 
+						+ "ORDER BY no ASC)) "
+						+ "WHERE num BETWEEN ? AND ?";
+				ps=conn.prepareStatement(sql);
+				ps.setString(1, st);
+				ps.setString(2, fd);
+				ps.setInt(3, start);
+				ps.setInt(4, end);
+				ResultSet rs=ps.executeQuery();
+				while(rs.next())
+				{
+					HospitalVO vo=new HospitalVO();
+					vo.setNo(rs.getInt(1));
+					vo.setHospital_name(rs.getString(2));
+					vo.setHospital_address(rs.getString(3));
+					vo.setHospital_phone(rs.getString(4));
+					list.add(vo);
+				}
+				rs.close();
+			}
 		}
 		catch(Exception ex)
 		{
@@ -60,18 +87,20 @@ public class HospitalDAO {
 		
 		return list;
 	}
+
 	// 병원 전체 페이지 
-	public int totalPage(int no,String fd, String ss)
+	public int totalPage(int no,String fd, String st)
 	{
 		int total=0;
 		try
 		{
 			conn=dbconn.getConnection();
 			String sql="SELECT CEIL(COUNT(*)/"+row_size+") "
-					+"FROM hospital_search "
-					+ "WHERE "+fd+" LIKE '%'||?||'%'";
+		            +"FROM hospital_search "
+		            +"WHERE state=? OR hospital_name LIKE '%'||?||'%'";
 			ps=conn.prepareStatement(sql);
-			ps.setString(1, ss);
+		    ps.setString(1,st);
+	        ps.setString(2,fd);
 			ResultSet rs=ps.executeQuery();
 			rs.next();
 			total=rs.getInt(1);
@@ -87,7 +116,7 @@ public class HospitalDAO {
 		}
 		return total;
 	}
-	// 병원 시도 검색
+	// 병원 시도 정보 (Model=>list2)
 	public List<HospitalVO> HsptSearchData()
 	{
 		List<HospitalVO> list=new ArrayList<HospitalVO>();
