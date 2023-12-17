@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -139,12 +140,10 @@
                             </form>
                         </div>
                         <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
+                            <c:if test="${sessionScope.id ne null }">
                             <div class="hero__search__phone__text">
-                                <h5>02-3333-3333</h5>
-                                <span>support 24/7 time</span>
+                                <h5>${sessionScope.id }님 환영합니다.</h5>
+                           </c:if>
                             </div>
                         </div>
                     </div>
