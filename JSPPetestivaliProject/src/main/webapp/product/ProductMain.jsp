@@ -18,6 +18,12 @@
   background-color: #a9a9a9; /* 호버 시 약간 진한 회색 */
   color: #fff; /* 호버 시 텍스트 색상 */
 }
+.customimage {
+    border: 2px solid rgba(52, 152, 219, 0.1); /* 매우 투명한 파란색 실선 테두리 */
+  border-radius: 20px; /* 둥근 테두리 설정 */
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1); /* 더 투명하고 부드러운 그림자 효과 */
+}
+
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>

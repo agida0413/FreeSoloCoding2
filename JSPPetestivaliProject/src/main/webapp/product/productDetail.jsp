@@ -96,6 +96,11 @@
       filter: hue-rotate(360deg);
     }
   }
+  .customimage {
+    border: 2px solid rgba(52, 152, 219, 0.1); /* 매우 투명한 파란색 실선 테두리 */
+  border-radius: 20px; /* 둥근 테두리 설정 */
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1); /* 더 투명하고 부드러운 그림자 효과 */
+}
    
 
   
@@ -178,7 +183,7 @@ function requestPay() {
 						</p>
 
                 <div class="product__details__pic__item">
-                            <img class="product__details__pic__item--large"
+                            <img class="product__details__pic__item--large customimage"
                                 src="${vo.p_image }" alt=""><a href="${url}" class="back-to-list">목록으로 돌아가기</a>
                         </div>
                        

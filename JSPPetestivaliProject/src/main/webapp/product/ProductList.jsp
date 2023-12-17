@@ -97,9 +97,9 @@
               				<c:param name="rt" value="${rt}"/>
               				<c:param name="page" value="${page}"/>
               				</c:url>
-             						 <div class="col-lg-4 col-md-6 col-sm-6">
+             						 <div class="col-lg-4 col-md-6 col-sm-6 image-container">
              						 <a href="<c:out value="${url}" />">
-             						  <img src="${vo.p_image }">
+             						  <img src="${vo.p_image }" class="customimage">
                        					 <div class="product__item">
                     		  	 	  <div class="product__item__text">
                                			  <h5>${vo.p_name }</h5>
