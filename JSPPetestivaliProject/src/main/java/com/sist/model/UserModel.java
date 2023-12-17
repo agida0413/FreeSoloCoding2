@@ -23,6 +23,7 @@ public class UserModel {
 		String id=request.getParameter("id");
 		String pwd=request.getParameter("pwd");
 		String name=request.getParameter("name");
+		System.out.println(id);
 		String send="";
 		UserDAO dao=UserDAO.newInstance();
 		boolean joinCheck=false;
@@ -35,6 +36,7 @@ public class UserModel {
 		else {
 			UserVO vo =new UserVO();
 			vo.setId(id);
+			System.out.println(vo.getId());
 			vo.setPwd(pwd);
 			vo.setName(name);
 			dao.userJoin(vo);
