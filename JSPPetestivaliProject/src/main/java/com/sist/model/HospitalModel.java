@@ -29,11 +29,22 @@ public class HospitalModel {
 		page="1";
 	int curpage=Integer.parseInt(page);
 	String fd=request.getParameter("fd");
+	
 	if(fd==null)
 		fd="hospital_address";
 	String ss=request.getParameter("ss");
 	if(ss==null)
 		ss="서울";
+	
+	if ("address".equals(fd))
+	{
+        fd="hospital_address";
+    } 
+	else if ("name".equals(fd))
+	{
+    	fd="hospital_name";
+    }
+
 	HospitalDAO dao=HospitalDAO.newInstance();
 	List<HospitalVO> list=dao.HsptFindList(curpage,fd,ss);
 	int totalpage=dao.totalPage(Integer.parseInt(page),fd,ss);
@@ -71,6 +82,23 @@ public String hsptDetailList(HttpServletRequest request,HttpServletResponse resp
 	request.setAttribute("vo", vo);
 	
 	request.setAttribute("main_jsp", "../hspt/detail.jsp");
+	return "../main/main.jsp";
+}
+
+@RequestMapping("hspt/newsmain.do")
+public String hsptNewsMain(HttpServletRequest request, HttpServletResponse response)
+{
+	String page=request.getParameter("page");
+	if(page==null)
+		page="1";
+	int curpage=Integer.parseInt(page);
+	
+	HospitalDAO dao=new HospitalDAO();
+	List<HospitalVO> list3=dao.hsptNewsList(curpage);
+	
+	request.setAttribute("curpage", curpage);
+	request.setAttribute("list3", list3);
+	request.setAttribute("main_jsp", "../hspt/newsmain.jsp");
 	return "../main/main.jsp";
 }
 

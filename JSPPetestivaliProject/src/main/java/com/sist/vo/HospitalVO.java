@@ -4,7 +4,28 @@ public class HospitalVO {
 	private int no;
 	private String hospital_name,hospital_phone,hospital_address, state;
 	
-	
+	private int no2;
+	private String news_subject, news_img;
+
+	public int getNo2() {
+		return no2;
+	}
+	public void setNo2(int no2) {
+		this.no2 = no2;
+	}
+
+	public String getNews_subject() {
+		return news_subject;
+	}
+	public void setNews_subject(String news_subject) {
+		this.news_subject = news_subject;
+	}
+	public String getNews_img() {
+		return news_img;
+	}
+	public void setNews_img(String news_img) {
+		this.news_img = news_img;
+	}
 	public String getState() {
 		return state;
 	}

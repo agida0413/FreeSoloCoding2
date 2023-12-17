@@ -46,23 +46,28 @@
 	<section class="blog-details spad">
 		<div class="container">
 			<div class="row">
+			<div class="blog__sidebar__search">
 				<div class="col-lg-4 col-md-5 order-md-1 order-1">
-					<div class="blog__sidebar__search">
-						<form method="post "action="find.do" >
-						<select id="state" name="fd" size="2">
-							<option value="fd" ${fd.equals("fd")?"selected":""}>
-							<c:forEach var="vo" items="${list2}"> 
-							<option value="${vo.state }">${vo.state}</option>
-							 </c:forEach>
-							 </option>
-						</select>
-						<input type="text" name=ss size=20 class="input-sm" value="" ${ss.equals("ss")?"selected":""}>
-							<button>
-							<span class="icon_search"></span>
+						<form method="post" action="find.do">
+							<select id="state" name="ss" size="2">
+								<option value="address"
+									${ss eq "${hospital_address}"?"selected":""}>
+									<c:forEach var="vo" items="${list2}">
+										<option value="${vo.state }">${vo.state}</option>
+									</c:forEach>
+								</option>
+							</select> 
+							
+							 <div class="blog__sidebar__search" style=" width: 300px; margin-right: 500px;">
+								 <input type="text" placeholder="Search..." name="name" value="name" ${ss eq "${hospital_address}"?"selected":""} style="height:40px; width:230px;">
+							<button type="submit">
+								<span class="icon_search"></span>
 							</button>
+							</div>
 						</form>
 					</div>
 					</div>
+				</div>
 					<div class="col-lg-8 col-md-7 order-md-1 order-2">
 				<div class="blog__details__text">
 					<h4 style="text-align: center;">병원 목록</h4>
