@@ -28,9 +28,15 @@ public class HospitalModel {
 	if(page==null)
 		page="1";
 	int curpage=Integer.parseInt(page);
+	String fd=request.getParameter("fd");
+	if(fd==null)
+		fd="hospital_address";
+	String ss=request.getParameter("ss");
+	if(ss==null)
+		ss="서울";
 	HospitalDAO dao=HospitalDAO.newInstance();
-	List<HospitalVO> list=dao.HsptFindList(curpage);
-	int totalpage=dao.totalPage(Integer.parseInt(page));
+	List<HospitalVO> list=dao.HsptFindList(curpage,fd,ss);
+	int totalpage=dao.totalPage(Integer.parseInt(page),fd,ss);
 	List<HospitalVO> list2=dao.HsptSearchData();
 
 	

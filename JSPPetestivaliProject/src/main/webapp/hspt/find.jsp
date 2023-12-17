@@ -43,69 +43,74 @@
 
 
     <!-- Blog Details Section Begin -->
-    <section class="blog-details spad">
-        <div class="container">
-            <div class="row">
-				<div class="col-lg-3 col-md-5 order-md-1 order-1">
+	<section class="blog-details spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-5 order-md-1 order-1">
 					<div class="blog__sidebar__search">
-						<form action=""></form>\
-							<select id="state" name="state" size="10">
-							<label for="state"> 시도 </label>
-								<c:forEach var="vo" items="${list2}"> <option value="${vo.state }">${vo.state}</option> </c:forEach>
-							</select> <input type="text" >
-							<button type="submit">
-								<span class="icon_search"></span>
+						<form method="post "action="find.do" >
+						<select id="state" name="fd" size="2">
+							<option value="fd" ${fd.equals("fd")?"selected":""}>
+							<c:forEach var="vo" items="${list2}"> 
+							<option value="${vo.state }">${vo.state}</option>
+							 </c:forEach>
+							 </option>
+						</select>
+						<input type="text" name=ss size=20 class="input-sm" value="" ${ss.equals("ss")?"selected":""}>
+							<button>
+							<span class="icon_search"></span>
 							</button>
 						</form>
 					</div>
-				</div>
-				<div class="col-lg-9 col-md-7 order-md-1 order-2">
-                    <div class="blog__details__text">
-						<h4 style="text-align: center;">병원 목록</h4>
-						<br>
-						<table class="table">
-							<tr class="success">
-								<th width=10% class="text-center">번호</th>
-								<th width=30% class="text-center">병원명</th>
-								<th width=40% class="text-center">주소</th>
-								<th width=20% class="text-center">전화번호</th>
-							</tr>
-							<c:forEach var="vo" items="${list }">
-								<tr>
-								
-									<td width=10% class="text-center">${vo.no}</td>
-									<td width=30% class="text-center"><a
-										href="../hspt/detail.do?no=${vo.no }">${vo.hospital_name }</a></td>
-									<td width=40% class="text-center">${vo.hospital_address }</td>
-									<td width=20% class="text-center">${vo.hospital_phone }</td>
-								</tr>
-							</c:forEach>
-						</table>
 					</div>
-            </div>
-            <div class="order-3" style="margin: 0 auto;">
-            <div class="product__pagination">
-                       <c:if test="${startPage>1 }">
-								<a href="find.do?page=${startPage-1}"><i class="fa fa-long-arrow-left"></i></a>
-							</c:if>
-							<c:forEach var="i" begin="${startPage }" end="${endPage }">
-								<c:choose>
-									<c:when test="${i eq curpage}">
-										<a href="find.do?page=${i}" class="selected">${i}</a>
-									</c:when>
-									<c:otherwise>
-										<a href="find.do?page=${i}">${i}</a>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						<c:if test="${endPage<totalpage }">
-                        <a href="find.do?page=${endPage+1}"><i class="fa fa-long-arrow-right"></i></a>
-                        </c:if>
-                    </div>
+					<div class="col-lg-8 col-md-7 order-md-1 order-2">
+				<div class="blog__details__text">
+					<h4 style="text-align: center;">병원 목록</h4>
+					<br>
+					<table class="table">
+						<tr class="success">
+							<th width=10% class="text-center">번호</th>
+							<th width=30% class="text-center">병원명</th>
+							<th width=40% class="text-center">주소</th>
+							<th width=20% class="text-center">전화번호</th>
+						</tr>
+						<c:forEach var="vo" items="${list }">
+							<tr>
+								<td width=10% class="text-center">${vo.no}</td>
+								<td width=30% class="text-center"><a
+									href="../hspt/detail.do?no=${vo.no }">${vo.hospital_name }</a></td>
+								<td width=40% class="text-center">${vo.hospital_address }</td>
+								<td width=20% class="text-center">${vo.hospital_phone }</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
 			</div>
+			<div class="order-3" style="margin: 0 auto;">
+				<div class="product__pagination">
+					<c:if test="${startPage>1 }">
+						<a href="find.do?page=${startPage-1}"><i
+							class="fa fa-long-arrow-left"></i></a>
+					</c:if>
+					<c:forEach var="i" begin="${startPage }" end="${endPage }">
+						<c:choose>
+							<c:when test="${i eq curpage}">
+								<a href="find.do?page=${i}" class="selected">${i}</a>
+							</c:when>
+							<c:otherwise>
+								<a href="find.do?page=${i}">${i}</a>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:if test="${endPage<totalpage }">
+						<a href="find.do?page=${endPage+1}"><i
+							class="fa fa-long-arrow-right"></i></a>
+					</c:if>
+				</div>
 			</div>
-    </section>
-    <!-- Blog Details Section End -->
+		</div>
+	</section>
+	<!-- Blog Details Section End -->
 
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>

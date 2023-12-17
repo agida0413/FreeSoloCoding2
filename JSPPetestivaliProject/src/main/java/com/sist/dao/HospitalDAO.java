@@ -18,7 +18,7 @@ public class HospitalDAO {
 		return dao;
 	}
 	// 병원 전체 리스트 출력
-	public List<HospitalVO> HsptFindList(int page)
+	public List<HospitalVO> HsptFindList(int page,String fd,String st)
 	{
 		List<HospitalVO> list=new ArrayList<HospitalVO>();
 		try
@@ -27,13 +27,16 @@ public class HospitalDAO {
 			String sql="SELECT no,hospital_name,hospital_address,hospital_phone,num "
 					+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone,ROWNUM AS num "
 					+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone "
-					+ "FROM hospital_search ORDER BY no ASC)) "
+					+ "FROM hospital_search "
+					+ "WHERE "+fd+ " LIKE '%'||?||'%' "
+					+ "ORDER BY no ASC)) "
 					+ "WHERE num BETWEEN ? AND ?";
 			int start=(page*row_size)-(row_size-1);
 			int end=(page*row_size);
 			ps=conn.prepareStatement(sql);
-			ps.setInt(1, start);
-			ps.setInt(2, end);
+			ps.setString(1, st);
+			ps.setInt(2, start);
+			ps.setInt(3, end);
 			ResultSet rs=ps.executeQuery();
 			while(rs.next())
 			{
@@ -58,15 +61,17 @@ public class HospitalDAO {
 		return list;
 	}
 	// 전체 페이지 
-	public int totalPage(int no)
+	public int totalPage(int no,String fd, String ss)
 	{
 		int total=0;
 		try
 		{
 			conn=dbconn.getConnection();
-			String sql="SELECT CEIL(COUNT(*)/"+row_size+")"
-					+"FROM hospital_search";
+			String sql="SELECT CEIL(COUNT(*)/"+row_size+") "
+					+"FROM hospital_search "
+					+ "WHERE "+fd+" LIKE '%'||?||'%'";
 			ps=conn.prepareStatement(sql);
+			ps.setString(1, ss);
 			ResultSet rs=ps.executeQuery();
 			rs.next();
 			total=rs.getInt(1);

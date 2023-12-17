@@ -62,9 +62,10 @@
                                     <li><a href="../product/ProductList.do?ct=하우스/울타리">하우스/울타리</a></li>
                                 </ul>
                             </li>
-                            <li><a href="./shop-grid.html">HOSPITAL</a>
+                            <li><a href="#">HEALTH</a>
                                <ul class="header__menu__dropdown">
                                     <li><a href="../hspt/find.do">병원 검색하기</a></li>
+                                    <li><a href="#">강아지 지식정보</a></li>
                                 </ul>
                             </li>
                             <li><a href="#">HOTEL</a></li>
