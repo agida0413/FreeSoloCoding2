@@ -33,7 +33,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 	}
 	if(rt==null) {
 		
-		rt="p_hit";
+		rt="p_intprice";
 	}
 
 	int curpage=Integer.parseInt(strpage);

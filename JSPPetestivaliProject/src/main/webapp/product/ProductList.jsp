@@ -29,16 +29,40 @@
     <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../css/style.css" type="text/css">
     <style type="text/css">
-    .nav-pills{
-    color:black;
     
-    }
-    .selected{
-    background-color:aqua;
-    }
-    .cust{
-    color:black;
-    }
+  
+  
+    
+     .cust {
+    display: flex;
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px; /* 아래쪽 간격 */
+      margin-left:350px;
+  }
+
+  .nav-pills li {
+    display: inline;
+     /* 간격을 더 좁게 조정 */
+  }
+
+  .nav-pills li a {
+    display: inline-block;
+    padding: 8px 12px; /* 여백을 줄임 */
+    border: 2px solid transparent;
+    border-radius: 20px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .nav-pills li a:hover {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+  }
     </style>
 </head>
 
@@ -54,12 +78,12 @@
         
         
            
-                <div style="height:30px;margin-left: 310px; margin-bottom: 50px;" class="cust">
-        <ul class="nav nav-pills" style="margin-left:; margin-bottom: 50px;">
-  	  <li ><a href="ProductList.do?ct=${ct }&rt=p_intprice">가격순</a></li>
- 	  <li><a href="ProductList.do?ct=${ct }&rt=p_hit"  style="margin-left: 50px;">조회수</a></li>
-  	  <li><a href="ProductList.do?ct=${ct }&rt=p_review_num" style="margin-left: 50px;">후기개수</a></li>
-     <li><a href="ProductList.do?ct=${ct }&rt=p_stack" style="margin-left: 50px;">품절임박</a></li>
+                <div class="cust">
+        <ul class="nav nav-pills">
+  	  <li ><a href="ProductList.do?ct=${ct }&rt=p_intprice" class="${rt eq 'p_intprice'?'selected':'' }">가격순</a></li>
+ 	  <li><a href="ProductList.do?ct=${ct }&rt=p_hit" class="${rt eq 'p_hit'?'selected':'' }">조회수</a></li>
+  	  <li><a href="ProductList.do?ct=${ct }&rt=p_review_num" class="${rt eq 'p_review_num'?'selected':'' }">후기개수</a></li>
+     <li><a href="ProductList.do?ct=${ct }&rt=p_stack" class="${rt eq 'p_stack'?'selected':'' }">품절임박</a></li>
 	    </ul> 
 	    
         </div>
