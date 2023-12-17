@@ -59,7 +59,8 @@
 							</select> 
 							
 							 <div class="blog__sidebar__search" style=" width: 300px; margin-right: 500px;">
-								 <input type="text" placeholder="Search..." name="name" value="name" ${ss eq "${hospital_address}"?"selected":""} style="height:40px; width:230px;">
+								 
+								 <input type="text" placeholder="Search..." name="fd" value="name" ${ss eq "${hospital_name}"?"selected":""} style="height:40px; width:230px;">
 							<button type="submit">
 								<span class="icon_search"></span>
 							</button>
