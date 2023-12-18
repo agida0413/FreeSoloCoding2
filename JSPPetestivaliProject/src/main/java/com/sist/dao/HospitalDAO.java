@@ -95,17 +95,20 @@ public class HospitalDAO {
 			int start=(page*row_size)-(row_size-1);
 			int end=(page*row_size);
 	
-			if (st.equals("전체"))
+			if (st.equals("전체")&&(fd!=null))
 			{
 			   String sql="SELECT no,hospital_name,hospital_address,hospital_phone,num "
 						+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone,ROWNUM AS num "
 						+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone "
-						+ "FROM hospital_search ORDER BY no ASC)) "
+						+ "FROM hospital_search WHERE hospital_name LIKE '%'||?||'%' "
+						+ "ORDER BY no ASC)) "
 						+ "WHERE num BETWEEN ? AND ?";
-			   System.out.println("Executing SQL for 전체: " + sql);
+//			   System.out.println("Executing SQL for 전체: " + sql);
+			   System.out.println("전체 출력");
 			    ps=conn.prepareStatement(sql);
-				ps.setInt(1, start);
-				ps.setInt(2, end);
+	            ps.setString(1, fd);
+				ps.setInt(2, start);
+				ps.setInt(3, end);
 			}
 			else{
 	          String sql = "SELECT no, hospital_name, hospital_address, hospital_phone, num "
@@ -114,7 +117,8 @@ public class HospitalDAO {
 	                    + "FROM hospital_search WHERE state = ? AND hospital_name LIKE '%'||?||'%' "
 	                    + "ORDER BY no ASC)) "
 	                    + "WHERE num BETWEEN ? AND ?";
-	          System.out.println("Executing SQL for specific state: " + sql); 
+//	          System.out.println("Executing SQL for specific state: " + sql); 
+	          System.out.println("서울 출력");
 	           ps = conn.prepareStatement(sql);
 	            ps.setString(1, st);
 	            ps.setString(2, fd);
@@ -140,7 +144,7 @@ public class HospitalDAO {
 		{
 			dbconn.disConnection(conn, ps);
 		}
-		
+		System.out.println(list.size());
 		return list;
 	}
 	// 병원 검색 전체 페이지 
@@ -149,13 +153,25 @@ public class HospitalDAO {
 				int total=0;
 				try
 				{
+					if (st.equals("전체")&&(fd!=null))
+					{
+					conn=dbconn.getConnection();
+					String sql="SELECT CEIL(COUNT(*)/"+row_size+") "
+				            +"FROM hospital_search "
+				            +"WHERE hospital_name LIKE '%'||?||'%'";
+					ps=conn.prepareStatement(sql);
+				    ps.setString(1,fd);
+				    }
+					else
+					{
 					conn=dbconn.getConnection();
 					String sql="SELECT CEIL(COUNT(*)/"+row_size+") "
 				            +"FROM hospital_search "
 				            +"WHERE state=? AND hospital_name LIKE '%'||?||'%'";
 					ps=conn.prepareStatement(sql);
 				    ps.setString(1,st);
-			        ps.setString(2,fd);
+			        ps.setString(2,fd);	
+				    }
 					ResultSet rs=ps.executeQuery();
 					rs.next();
 					total=rs.getInt(1);

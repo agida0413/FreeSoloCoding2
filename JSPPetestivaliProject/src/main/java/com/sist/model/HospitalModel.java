@@ -39,7 +39,6 @@ public class HospitalModel {
 	
 	if(st==null && fd==null) // 검색하지 않았을 때
 	{	
-		st="전체";
 		totalpage=dao.hsptTotalPage();
 		list = dao.hsptTotalList(totalpage);
 	}
@@ -82,7 +81,7 @@ if(page==null)
 int curpage=Integer.parseInt(page); 
 String fd=request.getParameter("fd");
 String st=request.getParameter("st"); // 파라미터값을 받음
-
+System.out.println(st);
 HospitalDAO dao=new HospitalDAO(); 
 List<HospitalVO> list=new ArrayList<HospitalVO>();
 int totalpage=dao.hsptSearchTotalPage(fd, st);
@@ -93,6 +92,7 @@ if(st==null) // 검색하지 않았을 때
 }
 
 list=dao.hsptSearchList(curpage,fd, st);
+System.out.println(list.size());
 
 
 	
