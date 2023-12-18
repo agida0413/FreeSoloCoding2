@@ -32,7 +32,6 @@
 				<div class="row">
 
 			<!-- 검색바 -->
-			
 			<div class="blog__sidebar__item">
 		<h2 style="text-align: center;">병원찾기 목록</h2>
 		<table class="table">
@@ -57,21 +56,21 @@
 			<div class="order-3" style="margin: 0 auto;">
 				<div class="product__pagination">
 					<c:if test="${startPage>1 }">
-						<a href="find.do?page=${startPage-1}?fd="""><i
+						<a href="hsptsearch.do?page=${startPage-1}&st=${st }&fd=${fd }"><i
 							class="fa fa-long-arrow-left"></i></a>
 					</c:if>
 					<c:forEach var="i" begin="${startPage }" end="${endPage }">
 						<c:choose>
 							<c:when test="${i eq curpage}">
-								<a href="find.do?page=${i}" class="selected">${i}</a>
+								<a href="hsptsearch.do?page=${i}&st=${st }&fd=${fd }" class="selected">${i}</a>
 							</c:when>
 							<c:otherwise>
-								<a href="find.do?page=${i}">${i}</a>
+								<a href="hsptsearch.do?page=${i}&st=${st }&fd=${fd }">${i}</a>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
 					<c:if test="${endPage<totalpage }">
-						<a href="find.do?page=${endPage+1}"><i
+						<a href="hsptsearch.do?page=${endPage+1}&st=${st }&fd=${fd }"><i
 							class="fa fa-long-arrow-right"></i></a>
 					</c:if>
 				</div>
