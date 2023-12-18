@@ -92,7 +92,7 @@ if(st==null) // 검색하지 않았을 때
 {	
 	st="전체";
 	totalpage=dao.hsptTotalPage();
-	list = dao.hsptSearchList(totalpage, fd, st);
+	list=dao.hsptTotalList(totalpage);
 }
 
 	
