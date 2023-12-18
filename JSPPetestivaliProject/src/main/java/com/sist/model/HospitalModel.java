@@ -88,12 +88,14 @@ List<HospitalVO> list=new ArrayList<HospitalVO>();
 int totalpage=dao.hsptSearchTotalPage(fd, st);
 list=dao.hsptSearchList(curpage, fd, st);
 
-if(st==null && fd==null) // 검색하지 않았을 때
+if(st==null) // 검색하지 않았을 때
 {	
 	st="전체";
 	totalpage=dao.hsptTotalPage();
-	list = dao.hsptTotalList(totalpage);
+	list = dao.hsptSearchList(totalpage, fd, st);
 }
+
+	
 
 List<HospitalVO> statelist=dao.HsptStateData();
 

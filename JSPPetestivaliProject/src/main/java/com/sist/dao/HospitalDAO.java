@@ -87,6 +87,7 @@ public class HospitalDAO {
 	// 병원 검색 페이지 출력 
 	public List<HospitalVO> hsptSearchList(int page,String fd,String st)
 	{
+	
 		List<HospitalVO> list=new ArrayList<HospitalVO>();
 		try
 		{
@@ -115,6 +116,28 @@ public class HospitalDAO {
 					list.add(vo);
 				}
 				rs.close();
+			if(st=="전체")
+			{
+				sql="SELECT no,hospital_name,hospital_address,hospital_phone,num "
+						+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone,ROWNUM AS num "
+						+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone "
+						+ "FROM hospital_search ORDER BY no ASC)) "
+						+ "WHERE num BETWEEN ? AND ?";
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, start);
+				ps.setInt(2, end);
+				rs=ps.executeQuery();
+				while(rs.next())
+				{
+					HospitalVO vo=new HospitalVO();
+					vo.setNo(rs.getInt(1));
+					vo.setHospital_name(rs.getString(2));
+					vo.setHospital_address(rs.getString(3));
+					vo.setHospital_phone(rs.getString(4));
+					list.add(vo);
+				}
+				rs.close();
+			}
 			}
 		catch(Exception ex)
 		{
