@@ -94,50 +94,43 @@ public class HospitalDAO {
 			conn=dbconn.getConnection();
 			int start=(page*row_size)-(row_size-1);
 			int end=(page*row_size);
-				String sql="SELECT no,hospital_name,hospital_address,hospital_phone,num "
-						+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone,ROWNUM AS num "
-						+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone "
-						+ "FROM hospital_search WHERE state=? AND hospital_name LIKE '%'||?||'%' " 
-						+ "ORDER BY no ASC)) "
-						+ "WHERE num BETWEEN ? AND ?";
-				ps=conn.prepareStatement(sql);
-				ps.setString(1, st);
-				ps.setString(2, fd);
-				ps.setInt(3, start);
-				ps.setInt(4, end);
-				ResultSet rs=ps.executeQuery();
-				while(rs.next())
-				{
-					HospitalVO vo=new HospitalVO();
-					vo.setNo(rs.getInt(1));
-					vo.setHospital_name(rs.getString(2));
-					vo.setHospital_address(rs.getString(3));
-					vo.setHospital_phone(rs.getString(4));
-					list.add(vo);
-				}
-				rs.close();
-			if(st=="전체")
+	
+			if (st.equals("전체"))
 			{
-				sql="SELECT no,hospital_name,hospital_address,hospital_phone,num "
+			   String sql="SELECT no,hospital_name,hospital_address,hospital_phone,num "
 						+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone,ROWNUM AS num "
 						+ "FROM(SELECT no,hospital_name,hospital_address,hospital_phone "
 						+ "FROM hospital_search ORDER BY no ASC)) "
 						+ "WHERE num BETWEEN ? AND ?";
-				ps=conn.prepareStatement(sql);
+			   System.out.println("Executing SQL for 전체: " + sql);
+			    ps=conn.prepareStatement(sql);
 				ps.setInt(1, start);
 				ps.setInt(2, end);
-				rs=ps.executeQuery();
-				while(rs.next())
-				{
-					HospitalVO vo=new HospitalVO();
-					vo.setNo(rs.getInt(1));
-					vo.setHospital_name(rs.getString(2));
-					vo.setHospital_address(rs.getString(3));
-					vo.setHospital_phone(rs.getString(4));
-					list.add(vo);
-				}
-				rs.close();
 			}
+			else{
+	          String sql = "SELECT no, hospital_name, hospital_address, hospital_phone, num "
+	                    + "FROM (SELECT no, hospital_name, hospital_address, hospital_phone, ROWNUM AS num "
+	                    + "FROM (SELECT no, hospital_name, hospital_address, hospital_phone "
+	                    + "FROM hospital_search WHERE state = ? AND hospital_name LIKE '%'||?||'%' "
+	                    + "ORDER BY no ASC)) "
+	                    + "WHERE num BETWEEN ? AND ?";
+	          System.out.println("Executing SQL for specific state: " + sql); 
+	           ps = conn.prepareStatement(sql);
+	            ps.setString(1, st);
+	            ps.setString(2, fd);
+	            ps.setInt(3, start);
+	            ps.setInt(4, end);
+	        }
+			ResultSet rs = ps.executeQuery();
+	        while (rs.next()) {
+	            HospitalVO vo = new HospitalVO();
+	            vo.setNo(rs.getInt(1));
+	            vo.setHospital_name(rs.getString(2));
+	            vo.setHospital_address(rs.getString(3));
+	            vo.setHospital_phone(rs.getString(4));
+	            list.add(vo);
+	        }
+	        rs.close();
 			}
 		catch(Exception ex)
 		{

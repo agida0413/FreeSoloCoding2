@@ -86,14 +86,14 @@ String st=request.getParameter("st"); // 파라미터값을 받음
 HospitalDAO dao=new HospitalDAO(); 
 List<HospitalVO> list=new ArrayList<HospitalVO>();
 int totalpage=dao.hsptSearchTotalPage(fd, st);
-list=dao.hsptSearchList(curpage, fd, st);
 
 if(st==null) // 검색하지 않았을 때
 {	
 	st="전체";
-	totalpage=dao.hsptTotalPage();
-	list=dao.hsptTotalList(totalpage);
 }
+
+list=dao.hsptSearchList(curpage,fd, st);
+
 
 	
 

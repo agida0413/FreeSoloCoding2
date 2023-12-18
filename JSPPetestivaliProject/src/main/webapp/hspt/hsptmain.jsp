@@ -52,7 +52,7 @@
 							<select id="state" name="st" size="2">
 								<option value="전체">전체</option>
 								<c:forEach var="vo" items="${statelist}">
-									<option value="${vo.state }" ${vo.state eq "${vo.state}"?"selected":""}>
+									<option value="${vo.state }" ${vo.state eq st ? "selected" : ""}>
 									${vo.state}</option>
 								</c:forEach>
 							</select>
