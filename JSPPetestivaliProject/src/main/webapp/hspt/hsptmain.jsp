@@ -47,29 +47,31 @@
 		<div class="container">
 			<div class="row">
 				<div class="blog__sidebar__search">
+				<form method="post" action="hsptsearch.do">
+				 
 					<div class="col-lg-4 col-md-5 order-md-1 order-1">
-						<form method="post" action="hsptsearch.do">
-							<select id="state" name="st" size="2">
+						
+							<select id="state" name="st">
 								<option value="전체" ${st eq "전체"?"selected":""}>전체</option>
 								<c:forEach var="vo" items="${statelist}">
 									<option value="${vo.state }" ${st eq vo.state ? "selected" : ""}>
 									${vo.state}</option>
 								</c:forEach>
 							</select>
-
-							<div class="blog__sidebar__search"
-								style="width: 300px; margin-right: 500px;">
+							<div class="blog__sidebar__search">
 
 								<input type="text" placeholder="Search..." name="fd"
 									value="${fd eq null?"":fd }"
-											style="height: 40px; width: 230px;">
+											style="height: 40px; width: 300px;">
 								<button type="submit">
-									<span class="icon_search"></span>
+									<span class="icon_search" ></span>
 								</button>
 							</div>
-						</form>
+						
 					</div>
+					</form>
 				</div>
+				
 	
 	</div>
 	</div>
