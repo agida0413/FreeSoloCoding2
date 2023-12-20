@@ -260,7 +260,7 @@ public class HospitalDAO {
 			String sql="SELECT no,news_subject,news_img,num "
 					+ "FROM(SELECT no,news_subject,news_img,ROWNUM AS num "
 					+ "FROM(SELECT no,news_subject,news_img "
-					+ "FROM pet_news "
+					+ "FROM petnews "
 					+ "ORDER BY no ASC)) "
 					+ "WHERE num BETWEEN ? AND ?";
 			int start=(page*row_size)-(row_size-1);
@@ -289,5 +289,71 @@ public class HospitalDAO {
 		}
 		
 		return list;
+	}
+	// 뉴스 검색 전체 페이지 
+				public int newsearchTotalPage()
+				{
+					int total=0;
+					try
+					{
+						
+						conn=dbconn.getConnection();
+						String sql="SELECT CEIL(COUNT(*)/"+row_size+") "
+					            +"FROM petnews ";
+						ps=conn.prepareStatement(sql);
+
+//						else
+//						{
+//						conn=dbconn.getConnection();
+//						String sql="SELECT CEIL(COUNT(*)/"+row_size+") "
+//					            +"FROM hospital_search "
+//					            +"WHERE state=? AND hospital_name LIKE '%'||?||'%'";
+//						ps=conn.prepareStatement(sql);
+//					    ps.setString(1,st);
+//				        ps.setString(2,fd);	
+//					    }
+						ResultSet rs=ps.executeQuery();
+						rs.next();
+						total=rs.getInt(1);
+						rs.close();
+					}
+					catch(Exception ex)
+					{
+						ex.printStackTrace();
+					}
+					finally
+					{
+						dbconn.disConnection(conn, ps);
+					}
+					return total;
+				}
+
+	public HospitalVO NewsDetailList(int no)
+	{
+		HospitalVO vo=new HospitalVO();
+		try
+		{
+			conn=dbconn.getConnection();
+			String sql="SELECT * FROM petnews "
+					+ "WHERE no="+no;
+			ps=conn.prepareStatement(sql);
+			ResultSet rs=ps.executeQuery();
+			rs.next();
+			vo.setNo(rs.getInt(1));
+			vo.setNews_subject(rs.getString(2));
+			vo.setNews_img(rs.getString(3));
+			vo.setNews_content(rs.getString(4));
+			vo.setNews_subtitle(rs.getString(5));
+			rs.close();	
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			dbconn.disConnection(conn, ps);
+		}
+		return vo;
 	}
 }

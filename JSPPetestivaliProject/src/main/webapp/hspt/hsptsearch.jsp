@@ -17,9 +17,6 @@
 	border: 1px solid #007bff;
 }
 
-.blog__sidebar__search button[type="text"] {
-	margin-right: 140px;
-}
 </style>
 
 </head>
@@ -32,10 +29,13 @@
 				<div class="row">
 
 			<!-- 검색바 -->
-			<div class="blog__sidebar__item">
-		<h2 style="text-align: center;">병원찾기 목록</h2>
+			<div class="order-2">
+			<div class="blog__sidebar__item" style="margin: 0px auto; text-align: center;">
+			
+			
+		<h2 style="text-align">병원찾기 목록</h2>
 		<table class="table">
-			<tr class="success">
+			<tr class="success" align="center">
 				<th width=10% class="text-center">번호</th>
 				<th width=30% class="text-center">병원명</th>
 				<th width=40% class="text-center">주소</th>
@@ -51,9 +51,10 @@
 				</tr>
 			</c:forEach>
 		</table>
+		</div>
 	</div>
 			
-			<div class="order-3" style="margin: 0 auto;">
+			<div class="order-3" style="margin: 0px auto; text-align: center;">
 				<div class="product__pagination">
 					<c:if test="${startPage>1 }">
 						<a href="hsptsearch.do?page=${startPage-1}&st=${st }&fd=${fd }"><i

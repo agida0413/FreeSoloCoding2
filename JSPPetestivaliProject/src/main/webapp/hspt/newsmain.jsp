@@ -24,6 +24,13 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+	<style type="text/css">
+	.product__pagination a.selected {
+	background-color: #007bff;
+	color: #fff;
+	border: 1px solid #007bff;
+}
+	</style>
 </head>
 
 <body>
@@ -122,7 +129,7 @@
                                                 <a href="#">${vo.news_subject}</a>
                                             </h5>
                                         </div>
-                                        <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
+                                        <a href="../hspt/newsdetail.do" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
                                     </a>
                                 </div>
                             </div>
@@ -144,6 +151,29 @@
         </div>
     </div>
 </section>
+
+<div class="" style="margin: 0px auto; text-align: center;">
+				<div class="product__pagination">
+					<c:if test="${startPage>1 }">
+						<a href="newsmain.do?page=${startPage-1}"><i
+							class="fa fa-long-arrow-left"></i></a>
+					</c:if>
+					<c:forEach var="i" begin="${startPage }" end="${endPage }">
+						<c:choose>
+							<c:when test="${i eq curpage}">
+								<a href="newsmain.do?page=${i}" class="selected">${i}</a>
+							</c:when>
+							<c:otherwise>
+								<a href="newsmain.do?page=${i}">${i}</a>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:if test="${endPage<totalpage }">
+						<a href="newsmain.do?page=${endPage+1}"><i
+							class="fa fa-long-arrow-right"></i></a>
+					</c:if>
+				</div>
+			</div>
     <!-- Blog Section End -->
 
   

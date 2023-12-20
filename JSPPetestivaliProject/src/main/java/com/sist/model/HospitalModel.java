@@ -148,10 +148,41 @@ public String hsptNewsMain(HttpServletRequest request, HttpServletResponse respo
 	
 	HospitalDAO dao=new HospitalDAO();
 	List<HospitalVO> list3=dao.hsptNewsList(curpage);
+	int totalpage=dao.newsearchTotalPage();
 	
+	final int BLOCK=10;
+	int startPage=((curpage-1)/BLOCK*BLOCK)+1;
+	int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK;
+	
+	if(endPage>totalpage)
+	{
+		endPage=totalpage;
+	}
+
+	request.setAttribute("startPage", startPage);
+	request.setAttribute("endPage", endPage);
+	request.setAttribute("totalpage", totalpage);
 	request.setAttribute("curpage", curpage);
 	request.setAttribute("list3", list3);
 	request.setAttribute("main_jsp", "../hspt/newsmain.jsp");
+	return "../main/main.jsp";
+}
+@RequestMapping("hspt/newsdetail.do")
+public String newsDetailList(HttpServletRequest request,HttpServletResponse response)
+{
+	
+	
+	String no=request.getParameter("no");
+	HospitalDAO dao=HospitalDAO.newInstance();
+	HospitalVO vo=dao.NewsDetailList(Integer.parseInt(no));
+	
+	System.out.println(dao);
+	System.out.println(vo);
+	
+	request.setAttribute("no", no);
+	request.setAttribute("vo", vo);
+	
+	request.setAttribute("main_jsp", "../hspt/newsdetail.jsp");
 	return "../main/main.jsp";
 }
 

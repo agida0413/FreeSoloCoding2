@@ -11,14 +11,19 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Ogani | Template</title>
 <style type="text/css">
+
 .product__pagination a.selected {
 	background-color: #007bff;
 	color: #fff;
 	border: 1px solid #007bff;
 }
 
-.blog__sidebar__search button[type="text"] {
-	margin-right: 140px;
+
+.search_1 {
+	
+}
+.search_2 {
+	float: right;
 }
 </style>
 
@@ -45,35 +50,38 @@
     
 	<section class="blog-details spad">
 		<div class="container">
-			<div class="row">
+			
 				<div class="blog__sidebar__search">
 				<form method="post" action="hsptsearch.do">
 				 
-					<div class="col-lg-4 col-md-5 order-md-1 order-1">
-						
+					<div class="col-lg-4 col-md-5 order-md-1 order-1" style="margin-left: 550px;">
+							<div class="search_1">
 							<select id="state" name="st">
 								<option value="전체" ${st eq "전체"?"selected":""}>전체</option>
 								<c:forEach var="vo" items="${statelist}">
 									<option value="${vo.state }" ${st eq vo.state ? "selected" : ""}>
 									${vo.state}</option>
 								</c:forEach>
+								</div>
 							</select>
 							<div class="blog__sidebar__search">
-
+							<div class="search_2">
 								<input type="text" placeholder="Search..." name="fd"
 									value="${fd eq null?"":fd }"
-											style="height: 40px; width: 300px;">
-								<button type="submit">
+											style="width: 250px;">
+										
+								<button type="submit" style="height: ">
 									<span class="icon_search" ></span>
 								</button>
+								</div>
 							</div>
-						
-					</div>
+						</div>
+					
 					</form>
 				</div>
 				
 	
-	</div>
+	
 	</div>
 	<jsp:include page="${hspt_jsp }"></jsp:include>
 	</section>

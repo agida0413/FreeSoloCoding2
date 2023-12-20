@@ -5,8 +5,22 @@ public class HospitalVO {
 	private String hospital_name,hospital_phone,hospital_address, state;
 	
 	private int no2;
-	private String news_subject, news_img;
+	private String news_subject, news_img, news_content, news_subtitle;
+	
+	
 
+	public String getNews_content() {
+		return news_content;
+	}
+	public void setNews_content(String news_content) {
+		this.news_content = news_content;
+	}
+	public String getNews_subtitle() {
+		return news_subtitle;
+	}
+	public void setNews_subtitle(String news_subtitle) {
+		this.news_subtitle = news_subtitle;
+	}
 	public int getNo2() {
 		return no2;
 	}
