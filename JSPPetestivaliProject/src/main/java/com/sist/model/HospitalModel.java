@@ -173,11 +173,13 @@ public String newsDetailList(HttpServletRequest request,HttpServletResponse resp
 	
 	
 	String no=request.getParameter("no");
+	System.out.println(no);
 	HospitalDAO dao=HospitalDAO.newInstance();
 	HospitalVO vo=dao.NewsDetailList(Integer.parseInt(no));
 	
-	System.out.println(dao);
-	System.out.println(vo);
+	
+//	System.out.println(dao);
+//	System.out.println(vo);
 	
 	request.setAttribute("no", no);
 	request.setAttribute("vo", vo);

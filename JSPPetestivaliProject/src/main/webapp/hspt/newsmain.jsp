@@ -129,7 +129,8 @@
                                                 <a href="#">${vo.news_subject}</a>
                                             </h5>
                                         </div>
-                                        <a href="../hspt/newsdetail.do" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
+                                       
+                                        <a href="../hspt/newsdetail.do?no=${vo.no2 }" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
                                     </a>
                                 </div>
                             </div>
