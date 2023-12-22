@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JSPPetestivaliProject1
+Bundle-SymbolicName: JSPPetestivaliProject1
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Automatic-Module-Name: JSPPetestivaliProject1
+Export-Package: com.sist.dao,
+ com.sist.model,
+ com.sist.vo

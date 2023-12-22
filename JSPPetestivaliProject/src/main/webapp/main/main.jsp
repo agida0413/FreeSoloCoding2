@@ -6,6 +6,8 @@
 <head>
 
 <style type="text/css">
+
+
 .latest-product__slider.owl-carousel .owl-nav {
     position: absolute;
     left: -120px !important;

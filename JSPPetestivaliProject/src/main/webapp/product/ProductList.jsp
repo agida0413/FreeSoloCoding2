@@ -33,36 +33,7 @@
   
   
     
-     .cust {
-    display: flex;
-    justify-content: flex-end; /* 오른쪽 정렬 */
-    align-items: center;
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 20px; /* 아래쪽 간격 */
-      margin-left:350px;
-  }
-
-  .nav-pills li {
-    display: inline;
-     /* 간격을 더 좁게 조정 */
-  }
-
-  .nav-pills li a {
-    display: inline-block;
-    padding: 8px 12px; /* 여백을 줄임 */
-    border: 2px solid transparent;
-    border-radius: 20px;
-    color: #333;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-
-  .nav-pills li a:hover {
-    background-color: #333;
-    color: #fff;
-    border-color: #333;
-  }
+   
     </style>
 </head>
 
@@ -118,25 +89,7 @@
                       	 	
                     		 
                     		  
-                    		  
-                       
-                    	
-               
-                                  
-                                
-                              
-                        
-                        
-                              
-                           
-                  
-                      
-                        
-                                
-                                
-                            
-                               
-                    <div class="product__pagination">
+                    		   <div class="product__pagination">
                     <center>
                     <c:if test="${start > 1}">
                         <a href="../product/ProductList.do?page=${start-1 }&ct=${ct}&rt=${rt}"><i class="fa fa-long-arrow-left"></i></a>
@@ -159,6 +112,24 @@
                         </c:if>
                         </center>
                     </div>
+                       
+                    	
+               
+                                  
+                                
+                              
+                        
+                        
+                              
+                           
+                  
+                      
+                        
+                                
+                                
+                            
+                               
+                   
                 </div>
     
     <!-- Product Section End -->

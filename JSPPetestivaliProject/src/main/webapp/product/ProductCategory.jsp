@@ -5,26 +5,13 @@
 <head>
 <style type="text/css">
    
-   .selected {
-  background-color: #c0c0c0; /* 약간 흐릿한 회색 배경색 */
-  border-radius: 5px; /* 모서리를 둥글게 */
-  padding: 5px 10px; /* 여백 설정 */
-  color: #333; /* 텍스트 색상 */
-  font-weight: bold; /* 텍스트 굵게 */
-  text-decoration: none; /* 링크 텍스트의 밑줄 제거 */
-  transition: background-color 0.3s ease; /* 부드러운 전환 효과 */
-}
-
-.selected:hover {
-  background-color: #a9a9a9; /* 호버 시 약간 진한 회색 */
-  color: #fff; /* 호버 시 텍스트 색상을 흰색으로 변경 */
-}
+  
     </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-<div class="col-lg-3 col-md-5"  style="float:left; margin-right:0px; margin-top:100px; width:200px;">
+<div class="col-lg-3 col-md-5 p_category" >
                     <div class="sidebar">
                         <div class="sidebar__item">
                             <h4>카테고리</h4>

@@ -7,104 +7,7 @@
 <html>
 <head>
 
-<style type="text/css">
-.discounted-price {
-    display: flex;
-    align-items: center;
-}
-.product__details__discount {
-    margin-left: 10px; /* 할인율을 원래 가격과 좀 띄워 보이게 만듭니다. */
-    padding: 5px 8px;
-    background-color: #ff0000;
-    color: #fff;
-    border-radius: 5px;
-    font-size: 18px; /* 할인율의 폰트 크기를 크게 설정합니다. */
-        font-weight: bold; /* 더 강조된 글씨체로 보입니다. */
-}
 
-.product__details__price {
-    font-size: 40px; /* 텍스트 크기 더 크게 설정 */
-    color: #333; /* 색상 변경 */
-    font-weight: bold; /* 굵은 글씨체로 강조 */
-}
-
-   .hit-wrapper {
-    display: inline-block;
-    background: linear-gradient(135deg, #1E90FF, #00BFFF, #87CEFA, #00CED1);
-    padding: 8px 15px;
-    border-radius: 30px;
-    font-weight: bold;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    
-  }
-
-  .hit-number {
-    display: inline-block;
-    margin-left: 8px;
-    color: #FFD700;
-    font-size: 20px;
-  }
-  
-   .category-tag {
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #FF6347;
-    color: white;
-    border-radius: 25px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    font-size: 20px;
-  }
-   .back-to-list {
-    display: inline-block;
-    padding: 10px 20px;
-    background: linear-gradient(to right, #ff9a9e, #fecfef);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-   
-    margin-top:100px;
-  }
-
-  .back-to-list:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-  }
-   .product__details__stock {
-    font-weight: bold;
-    background-image: linear-gradient(to right, #FF6B6B, #FFD166); /* 그라데이션 배경 색상 */
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: rainbow 2s linear infinite; /* 무지개 애니메이션 효과 */
-    display: inline-block;
-      font-size: 3.0em;
-  }
-
-  @keyframes rainbow {
-    0% {
-      filter: hue-rotate(0deg);
-    }
-    100% {
-      filter: hue-rotate(360deg);
-    }
-  }
-  .customimage {
-    border: 2px solid rgba(52, 152, 219, 0.1); /* 매우 투명한 파란색 실선 테두리 */
-  border-radius: 20px; /* 둥근 테두리 설정 */
-  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1); /* 더 투명하고 부드러운 그림자 효과 */
-}
-   
-
-  
-</style>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
@@ -149,7 +52,11 @@ function requestPay() {
 </script>
 
 <style type="text/css">
-
+.customimage {
+    border: 2px solid rgba(52, 152, 219, 0.1); /* 매우 투명한 파란색 실선 테두리 */
+  border-radius: 20px; /* 둥근 테두리 설정 */
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1); /* 더 투명하고 부드러운 그림자 효과 */
+}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -174,30 +81,40 @@ function requestPay() {
               				
   <!-- Product Details Section Begin -->
     <section class="product-details spad">
+    <div class="container">
+   		 <table class="up_to_image" style="margin-left:20px;">
+   			 <tr>
+    			<td>
+     				<a href="${url}" class="back-to-list">목록으로</a>
+     			    <span class="category-tag"><a href="ProductList.do?ct=${vo.p_category }">${vo.p_category }</a></span>
+                    <span class="hit-wrapper hit-number">조회수${vo.p_hit}</span>
+                   </td>
+               </tr>
+           </table>
         <div class="container">
+       
             <div class="row">
                 <div class="col-lg-6 col-md-6">
+                
                     <div class="product__details__pic">
-                    <span><a href="ProductList.do?ct=${vo.p_category }"><div class="category-tag">${vo.p_category }</div></a></span>
-                   <div class="hit-wrapper">조회수<span class="hit-number">${vo.p_hit}</span></div>
-						</p>
-
+                  
+				
                 <div class="product__details__pic__item">
-                            <img class="product__details__pic__item--large customimage"
-                                src="${vo.p_image }" alt=""><a href="${url}" class="back-to-list">목록으로 돌아가기</a>
+                            <img class="customimage product__details__pic__item--large"
+                                src="${vo.p_image }" alt="">
                         </div>
                        
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <div class="product__details__text">
+                    <div class="product__details__text" style="padding-left:20px;" >
                     	
                         <h3 id="title">${vo.p_name }</h3>
                     
 
 
                         
-                        <div class="product__details__rating">
+                        <div class="product__details__rating ">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
@@ -210,11 +127,11 @@ function requestPay() {
                         <div id="price" class="product__details__price" data-price="${vo.p_intprice }">
                        <c:if test="${not empty vo.p_percent}">
     <div class="discounted-price">
-        <span style="text-decoration: line-through; color: #999999;">${vo.p_price}</span>
-        <span class="product__details__discount">${vo.p_percent}</span>
+        <span>${vo.p_price}</span>
+        <span>${vo.p_percent}</span>
     </div>
 </c:if>
-<div class="product__details__price">${vo.p_lower_price}</div>
+<div>${vo.p_lower_price}</div>
 						</div>
       							
       
@@ -245,6 +162,7 @@ function requestPay() {
                         </div>
                         <a href="#" class="primary-btn">장바구니</a>
                           <a href="#" class="primary-btn" onclick="requestPay()">구매하기</a>
+                          <button>좋아요 자리</button>
                           
 
                           
@@ -283,7 +201,7 @@ function requestPay() {
                                 <div class="product__details__tab__desc">
                                     <h6>상품상세정보</h6>
                                     <p>
-                                    <img src="${vo.p_detail_image }">
+                                    <img src="${vo.p_detail_image }" style="width:100%">
                                     </p>
                                 </div>
                             </div>
@@ -350,6 +268,7 @@ function requestPay() {
                 </c:forEach>
               
             </div>
+        </div>
         </div>
     </section>
     <!-- Related Product Section End -->

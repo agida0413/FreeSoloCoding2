@@ -62,57 +62,33 @@ public List<ProductVO> homeProduct(){
 
 
 
-public List<ProductVO> productList(String ct,int page,String rt){
-	String db_rt="'"+rt+"'";
+public List<ProductVO> productBystackList(String ct,int page){
+	
 	List< ProductVO> list= new ArrayList<ProductVO>();
 	String msg="";
-	if(ct.equals("전체")){
-		
-		if (rt.equals("p_stack")) {
-			msg="WHERE P_STACK <3 AND P_STACK>0 ORDER BY "+rt+" ASC";
-		}
-		else if (rt.equals("p_intprice")) {
-			msg=" ORDER BY "+rt+" ASC ";	
-		}
-		else {
-			msg=" ORDER BY "+rt+" DESC ";	
-		}
+	
+	if(!(ct.equals("전체"))){
+		ct="'"+ct+"'";
+		msg="AND p_category="+ct;
 	}
 	
-	else {
-		if (rt.equals("p_stack")) {
-			msg="WHERE P_STACK <3 AND P_STACK>0 AND p_category = ? ORDER BY "+rt+" ASC";
-		}
-		else if (rt.equals("p_intprice")) {
-			msg= "WHERE p_category = ? ORDER BY " +rt+ " ASC ";	
-		}
-		else {
-			msg= "WHERE p_category = ? ORDER BY " +rt+ " DESC ";	
-		}
-		 
-	}
+	
 	
 	try {
-		int start=(ROW_SIZE*page)-(ROW_SIZE-1);
-		int end= ROW_SIZE*page;
+		
 		conn= dbconn.getConnection();
 		String sql="SELECT pno,p_name,p_image,p_percent,p_lower_price,p_category,p_stack num "
 					+"FROM (SELECT pno,p_name,p_image,p_percent,p_lower_price,p_category,p_stack,rownum as num "
-					+"FROM (SELECT pno,p_name,p_image,p_percent,p_lower_price,p_category,p_stack FROM product_detail "+msg
+					+"FROM (SELECT pno,p_name,p_image,p_percent,p_lower_price,p_category,p_stack FROM product_detail "
+					+ "WHERE P_STACK <3 AND P_STACK>0 "+msg+" ORDER BY p_stack ASC"
 					+")) " +"WHERE num BETWEEN ? and ?";
 		ps=conn.prepareStatement(sql);
-		if(!(ct.equals("전체"))) {
-			ps.setString(1, ct); 
-			
-			ps.setInt(2, start);
-			ps.setInt(3, end);
-		}
-		else {
-			
-			ps.setInt(1, start);
-			ps.setInt(2, end);
-		}
 		
+		int start=(ROW_SIZE*page)-(ROW_SIZE-1);
+		int end= ROW_SIZE*page;
+		
+		ps.setInt(1, start);
+		ps.setInt(2, end);
 		
 		
 	
@@ -143,39 +119,190 @@ public List<ProductVO> productList(String ct,int page,String rt){
 }
 
 
-public int productTotalPage(String ct,String rt) {
+public List<ProductVO> productByASCList(String ct,int page,String rt){
+	
+	List< ProductVO> list= new ArrayList<ProductVO>();
 	String msg="";
-	if(ct.equals("전체")){
-		
-		if (rt.equals("p_stack")) {
-			msg="FROM product_detail WHERE p_stack<3 AND p_stack>0";
-		}
-		else {
-			msg=" FROM product_detail ";
-		}
+	
+	
+	
+	if(!(ct.equals("전체"))){
+		ct="'"+ct+"'";
+		msg= "WHERE p_category = "+ct; 
 	}
-	else {
-		
-		if (rt.equals("p_stack")) {
-			msg="FROM product_detail WHERE p_stack<3 AND p_stack>0 AND p_category=?";
-		}
-		else {
-			 msg= "FROM product_detail WHERE p_category=? ";	
-		}
-		
-	}
-	int total=0;
+	
+	
+	
 	try {
-		conn=dbconn.getConnection();
-		String sql= "Select CEIL(COUNT(*)/"+ROW_SIZE+") "+ msg; 
+		int start=(ROW_SIZE*page)-(ROW_SIZE-1);
+		int end= ROW_SIZE*page;
+		System.out.println(start);
+		System.out.println(end);
+		conn= dbconn.getConnection();
+		String sql="SELECT pno,p_name,p_image,p_percent,p_lower_price,p_category,p_stack num "
+					+"FROM (SELECT pno,p_name,p_image,p_percent,p_lower_price,p_category,p_stack,rownum as num "
+					+"FROM (SELECT pno,p_name,p_image,p_percent,p_lower_price,p_category,p_stack FROM product_detail "
+					+ msg+" ORDER BY "+rt+" ASC "
+					+")) " +"WHERE num BETWEEN ? and ? ";
 		ps=conn.prepareStatement(sql);
 		
-		if(!(ct.equals("전체"))) {
-			ps.setString(1, ct);
+		
+		
+		ps.setInt(1, start);
+		ps.setInt(2, end);
+		
+		
+	
+		ResultSet rs= ps.executeQuery();
+		while(rs.next()) {
+			ProductVO vo= new ProductVO();
+			vo.setPno(rs.getInt(1));
+			vo.setP_name(rs.getString(2));
+			vo.setP_image(rs.getString(3));
+			vo.setP_percent(rs.getString(4));
+			vo.setP_lower_price(rs.getString(5));
+			vo.setP_category(rs.getString(6));
+			vo.setP_stack(rs.getInt(7));
+			list.add(vo);
+			
 		}
+		rs.close();
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	
+	return list;
+}
+
+
+
+
+
+public List<ProductVO> productByDescList(String ct,int page,String rt){
+	System.out.println("호출");
+	List< ProductVO> list= new ArrayList<ProductVO>();
+	String msg="";
+	
+	
+	
+	if(!(ct.equals("전체"))){
+		ct="'"+ct+"'";
+		msg= "WHERE p_category = "+ct; 
+	}
+	
+	
+	
+	try {
+		
+		conn= dbconn.getConnection();
+		String sql="SELECT pno,p_name,p_image,p_percent,p_lower_price,p_category,p_stack num "
+					+"FROM (SELECT pno,p_name,p_image,p_percent,p_lower_price,p_category,p_stack,rownum as num "
+					+"FROM (SELECT pno,p_name,p_image,p_percent,p_lower_price,p_category,p_stack FROM product_detail "
+					+ msg+" ORDER BY "+rt+ " DESC "
+					+")) " +"WHERE num BETWEEN ? and ?";
+		ps=conn.prepareStatement(sql);
+		System.out.println(sql);
+		
+		int start=(ROW_SIZE*page)-(ROW_SIZE-1);
+		int end= ROW_SIZE*page;
+		
+		ps.setInt(1, start);
+		ps.setInt(2, end);
+		
+		
+	
+		ResultSet rs= ps.executeQuery();
+		while(rs.next()) {
+			ProductVO vo= new ProductVO();
+			vo.setPno(rs.getInt(1));
+			vo.setP_name(rs.getString(2));
+			vo.setP_image(rs.getString(3));
+			vo.setP_percent(rs.getString(4));
+			vo.setP_lower_price(rs.getString(5));
+			vo.setP_category(rs.getString(6));
+			vo.setP_stack(rs.getInt(7));
+			list.add(vo);
+			
+		}
+		rs.close();
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	
+	return list;
+}
+
+
+
+
+public int productByStackTotalPage(String ct) {
+	String msg="";
+	
+	if(!(ct.equals("전체"))){
+		ct="'"+ct+"'";
+		msg="AND p_category="+ct;
+	}
+	
+	
+	int total=0;
+	
+	try {
+		conn=dbconn.getConnection();
+		String sql= "Select CEIL(COUNT(*)/"+ROW_SIZE+") FROM product_detail WHERE P_STACK <3 AND P_STACK>0 "+msg; 
+		ps=conn.prepareStatement(sql);
+		
 		ResultSet rs= ps.executeQuery();
 		rs.next();
 		total = rs.getInt(1);
+		System.out.println("테스트"+total);
+		rs.close();
+		
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	
+	return total;
+	
+}
+
+
+
+public int productTotalPage(String ct) {
+	String msg="";
+	if(!(ct.equals("전체"))){
+		ct="'"+ct+"'";
+		msg="WHERE p_category ="+ct;
+	}
+	
+	
+	
+	
+	
+	int total=0;
+	try {
+		conn=dbconn.getConnection();
+		String sql= "Select CEIL(COUNT(*)/"+ROW_SIZE+") FROM product_detail "+msg;
+		ps=conn.prepareStatement(sql);
+		
+		ResultSet rs= ps.executeQuery();
+		rs.next();
+		total = rs.getInt(1);
+	
 		rs.close();
 		
 		

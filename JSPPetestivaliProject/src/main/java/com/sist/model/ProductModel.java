@@ -22,8 +22,8 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 	String strpage=request.getParameter("page");
 	String ct=request.getParameter("ct");
 	String rt=request.getParameter("rt");
+	List<ProductVO>list=null;
 	
-
 	ProductDAO dao=ProductDAO.newInstace();
 	if (strpage==null) {
 		strpage="1";
@@ -37,7 +37,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 	}
 
 	int curpage=Integer.parseInt(strpage);
-	int totalpage=dao.productTotalPage(ct,rt);
+	int totalpage=dao.productTotalPage(ct);
 	
 	final int block=10;
 	int start = ((curpage-1)/block*block)+1;
@@ -46,10 +46,27 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 		end=totalpage;
 	}
 		
-	List<ProductVO>list  =dao.productList(ct, curpage,rt);
+	if(rt.equals("p_stack")) {
+		list=dao.productBystackList(ct, curpage);
+		totalpage=dao.productByStackTotalPage(ct);
+		if(end>totalpage) {
+			end=totalpage;
+		}
+	}
+	else if (rt.equals("p_intprice")) {
+		list=dao.productByASCList(ct, curpage,rt);
+	
+	}
+	else {
+		list=dao.productByDescList(ct, curpage, rt);
+	
+	}
+	
+	
+	
 	List<Integer>catenumList=dao.ProductCateNum();	
 		
-		
+		System.out.println(totalpage);
 		
 		
 		request.setAttribute("product_jsp", "../product/ProductList.jsp");
