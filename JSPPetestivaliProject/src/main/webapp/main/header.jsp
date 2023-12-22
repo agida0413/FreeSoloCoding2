@@ -137,7 +137,7 @@
                             <li style="text-indent: 20px"><a href="#">보호중인 유기 동물</a></li>
                             <li style="text-indent: 20px"><a href="#">보호 동물 입양</a></li>
                             <li style="font-weight: 700;"><a href="#"><i class="xi-walk"></i>&nbsp;반려동물 산책로</a></li>
-                            <li style="text-indent: 20px"><a href="#">가까운 산책로 찾기</a></li>
+                            <li style="text-indent: 20px"><a href="../walk/walkList.do">가까운 산책로 찾기</a></li>
                             <li style="font-weight: 700;"><a href="#"><i class="xi-heart"></i>&nbsp;마이펫 관리</a></li>
                             <li style="text-indent: 20px"><a href="../mypage/petreg.do">마이펫 등록</a></li>
                             <li style="text-indent: 20px"><a href="#">마이펫 관리</a></li>

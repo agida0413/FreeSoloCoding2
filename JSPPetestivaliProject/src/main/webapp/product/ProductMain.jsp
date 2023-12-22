@@ -13,9 +13,7 @@
 </head>
 <body>
 <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
+  
 
 <section class="breadcrumb-section set-bg" data-setbg="../img/breadcrumb.jpg">
         <div class="container">

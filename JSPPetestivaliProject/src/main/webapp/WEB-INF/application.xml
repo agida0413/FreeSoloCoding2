@@ -7,4 +7,5 @@
    <bean id="Hospital" class="com.sist.model.HospitalModel"></bean>
    <bean id="user" class="com.sist.model.UserModel"></bean>
     <bean id="mypage" class="com.sist.model.MypageModel"></bean>
+    <bean id="walk" class="com.sist.model.WalkModel"></bean>
 </beans>

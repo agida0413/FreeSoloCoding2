@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+
+.ky{
+	 width: 1600px;
+	 margin:0 auto;
+ }
+ 
+  .nav-pills li a {
+    display: inline-block;
+    padding: 8px 12px; /* 여백을 줄임 */
+    border: 2px solid transparent;
+    border-radius: 20px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    }
+    
+    .kyj_walk{
+		height:100%;
+	}
+	.walk_course > li{
+		display:inline;
+	}
