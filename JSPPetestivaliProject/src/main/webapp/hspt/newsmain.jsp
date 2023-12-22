@@ -30,6 +30,11 @@
 	color: #fff;
 	border: 1px solid #007bff;
 }
+.breadcrumb-section
+{
+	margin-top: 30px;
+}
+
 	</style>
 </head>
 
@@ -38,7 +43,7 @@
    
   
     <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="../img/banner_2.jpeg">
+    <section class="breadcrumb-section set-bg" data-setbg="../img/banner_2.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -116,7 +121,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-9 col-md-8 order-2">
+				<div class="col-lg-9 col-md-8 order-2" >
                 <div class="row">
                     <c:forEach var="vo" items="${list3}" varStatus="loopStatus">
                         <div class="col-lg-4 col-md-6 col-sm-6">
@@ -148,12 +153,7 @@
                         </c:if>
                     </c:forEach>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="" style="margin: 0px auto; text-align: center;">
+                <div class="order-3" style="margin:0px auto; text-align: center;">
 				<div class="product__pagination">
 					<c:if test="${startPage>1 }">
 						<a href="newsmain.do?page=${startPage-1}"><i
@@ -175,6 +175,12 @@
 					</c:if>
 				</div>
 			</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
     <!-- Blog Section End -->
 
   

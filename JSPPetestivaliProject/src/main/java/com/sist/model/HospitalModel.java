@@ -14,6 +14,57 @@ import com.sist.dao.HospitalDAO;
 import com.sist.vo.*;
 
 public class HospitalModel {
+	@RequestMapping("hspt/hsptmain.do")
+	public String hsptMainList(HttpServletRequest request,HttpServletResponse response)
+	{
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		String page=request.getParameter("page");
+		if(page==null)
+			page="1";
+		String fd=request.getParameter("fd");
+		String st=request.getParameter("st"); // 파라미터값을 받음
+		 
+		HospitalDAO dao=new HospitalDAO(); 
+		List<HospitalVO> list=new ArrayList<HospitalVO>();
+		int totalpage=0;
+		int curpage=Integer.parseInt(page); 
+		List<HospitalVO> statelist=dao.HsptStateData();
+		
+		if(st==null && fd==null) // 검색하지 않았을 때
+		{	
+			totalpage=dao.hsptTotalPage();
+			list = dao.hsptTotalList(curpage);
+		}
+
+		final int BLOCK=10;
+		int startPage=((curpage-1)/BLOCK*BLOCK)+1;
+		int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK;
+		
+		if(endPage>totalpage)
+		{
+			endPage=totalpage;
+		}
+
+		request.setAttribute("curpage", curpage);
+		request.setAttribute("totalpage", totalpage);
+		request.setAttribute("startPage", startPage);
+		request.setAttribute("endPage", endPage);
+		request.setAttribute("list", list);
+		request.setAttribute("statelist", statelist);
+	
+	request.setAttribute("hspt_jsp", "../hspt/find.jsp");
+	request.setAttribute("main_jsp", "../hspt/hsptmain.jsp");
+
+		return "../main/main.jsp";
+	}
+	
 @RequestMapping("hspt/find.do")
 	public String hsptTotalList(HttpServletRequest request,HttpServletResponse response)
 	{
@@ -40,7 +91,7 @@ public class HospitalModel {
 	if(st==null && fd==null) // 검색하지 않았을 때
 	{	
 		totalpage=dao.hsptTotalPage();
-		list = dao.hsptTotalList(totalpage);
+		list = dao.hsptTotalList(curpage);
 	}
 
 	final int BLOCK=10;
@@ -58,7 +109,7 @@ public class HospitalModel {
 	request.setAttribute("endPage", endPage);
 	request.setAttribute("list", list);
 	request.setAttribute("statelist", statelist);
-	request.setAttribute("hspt_jsp", "../hspt/find.jsp");
+	request.setAttribute("hspt_jsp", "../hspt/hsptsearch.jsp");
 	request.setAttribute("main_jsp", "../hspt/hsptmain.jsp");
 
 		return "../main/main.jsp";

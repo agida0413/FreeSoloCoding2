@@ -9,8 +9,8 @@ public class HospitalDAO {
 	private PreparedStatement ps;
 	private CreateDBCPconnection dbconn=new CreateDBCPconnection();
 	private static HospitalDAO dao;
-	private int row_size=12;
 	
+	private int row_size=12;
 	public static HospitalDAO newInstance()
 	{
 		if(dao==null)
@@ -21,6 +21,7 @@ public class HospitalDAO {
 	public List<HospitalVO> hsptTotalList(int page)
 	{
 		List<HospitalVO> list=new ArrayList<HospitalVO>();
+		
 		int start=(page*row_size)-(row_size-1);
 		int end=(page*row_size);
 		try
@@ -63,6 +64,7 @@ public class HospitalDAO {
 	public int hsptTotalPage()
 	{
 		int total=0;
+		
 		try
 		{
 			conn=dbconn.getConnection();
@@ -87,7 +89,7 @@ public class HospitalDAO {
 	// 병원 검색 페이지 출력 
 	public List<HospitalVO> hsptSearchList(int page,String fd,String st)
 	{
-	
+		
 		List<HospitalVO> list=new ArrayList<HospitalVO>();
 		try
 		{
@@ -150,6 +152,7 @@ public class HospitalDAO {
 	// 병원 검색 전체 페이지 
 			public int hsptSearchTotalPage(String fd, String st)
 			{
+			
 				int total=0;
 				try
 				{
@@ -253,6 +256,7 @@ public class HospitalDAO {
 	// 뉴스 전체 데이터
 	public List<HospitalVO> hsptNewsList(int page)
 	{
+		
 		List<HospitalVO> list=new ArrayList<HospitalVO>();
 		try
 		{
@@ -292,7 +296,7 @@ public class HospitalDAO {
 	}
 	// 뉴스 검색 전체 페이지 
 				public int newsearchTotalPage()
-				{
+				{	
 					int total=0;
 					try
 					{

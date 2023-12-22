@@ -17,10 +17,9 @@
 	color: #fff;
 	border: 1px solid #007bff;
 }
-
-
-.search_1 {
-	
+.breadcrumb-section
+{
+	margin-top: 30px;
 }
 .search_2 {
 	float: right;
@@ -32,7 +31,7 @@
 <div id="preloder">
 		<div class="loader"></div>
 	</div>
-	<section class="breadcrumb-section set-bg" data-setbg="../img/banner_2.jpeg">
+	<section class="breadcrumb-section set-bg" data-setbg="../img/banner_2.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -47,30 +46,26 @@
             </div>
         </div>
     </section>
-    
-	<section class="blog-details spad">
+
 		<div class="container">
-			
 				<div class="blog__sidebar__search">
 				<form method="post" action="hsptsearch.do">
 				 
-					<div class="col-lg-4 col-md-5 order-md-1 order-1" style="margin-left: 550px;">
-							<div class="search_1">
+					<div class="col-lg-4 col-md-5 order-md-1 order-1" style="margin-left: 655px; margin-top: 30px;">
+							<div class="search_1" style="display: flex; align-items: center;">
 							<select id="state" name="st">
 								<option value="전체" ${st eq "전체"?"selected":""}>전체</option>
 								<c:forEach var="vo" items="${statelist}">
 									<option value="${vo.state }" ${st eq vo.state ? "selected" : ""}>
 									${vo.state}</option>
 								</c:forEach>
-								</div>
+								
 							</select>
-							<div class="blog__sidebar__search">
-							<div class="search_2">
+							
 								<input type="text" placeholder="Search..." name="fd"
-									value="${fd eq null?"":fd }"
-											style="width: 250px;">
+									value="${fd eq null?"":fd }">
 										
-								<button type="submit" style="height: ">
+								<button type="submit">
 									<span class="icon_search" ></span>
 								</button>
 								</div>
@@ -79,11 +74,8 @@
 					
 					</form>
 				</div>
-				
-	
-	
-	</div>
-	<jsp:include page="${hspt_jsp }"></jsp:include>
-	</section>
+				</div>
+ 	<jsp:include page="${hspt_jsp }"></jsp:include>
+
 </body>
 </html>

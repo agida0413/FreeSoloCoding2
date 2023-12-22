@@ -11,6 +11,9 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Ogani | Template</title>
 <style type="text/css">
+.blog-details{
+	padding: 0px;
+}
 .product__pagination a.selected {
 	background-color: #007bff;
 	color: #fff;
@@ -21,6 +24,16 @@
 	margin-right: 140px;
 }
 </style>
+<script type="text/javascript">
+window.onload=function(){
+
+	let post=document.querySelector("#post")
+	
+	post.addEventListener("click",()=>{
+		window.open('detail.jsp','post','width=480px,height=350px,scrollbars=yes,location=no')
+	})
+}
+</script>
 
 </head>
 
@@ -33,31 +46,34 @@
 
 			<!-- 검색바 -->
 			
-			<div class="blog__sidebar__item">
-		<h2 style="text-align: center;">병원찾기 목록</h2>
+			<div class="blog__sidebar__item" style="width: 1030px; height: 800px;">
+		<h2 style="text-align: center; margin-top: -18px; margin-bottom: 30px;" >병원목록</h2>
+		<div class="row" style="margin-top: 10px;">
 		<table class="table">
 			<tr class="success">
 				<th width=10% class="text-center">번호</th>
-				<th width=30% class="text-center">병원명</th>
+				<th width=35% class="text-center">병원명</th>
 				<th width=40% class="text-center">주소</th>
-				<th width=20% class="text-center">전화번호</th>
+				<th width=15% class="text-center">전화번호</th>
 			</tr>
 			<c:forEach var="vo" items="${list }">
 				<tr>
 					<td width=10% class="text-center">${vo.no }</td>
-					<td width=30% class="text-center"><a
+					<td width=35% class="text-center" id="post"><a
 						href="../hspt/detail.do?no=${vo.no }">${vo.hospital_name }</a></td>
 					<td width=40% class="text-center">${vo.hospital_address }</td>
-					<td width=20% class="text-center">${vo.hospital_phone }</td>
+					<td width=15% class="text-center">${vo.hospital_phone }</td>
 				</tr>
 			</c:forEach>
 		</table>
-	</div>
-			
-			<div class="order-3" style="margin: 0 auto;">
+		</div>
+
+
+			<div class="row">
+			<div class="order-3" style="margin: 0 auto; padding: 10px 0px 20px 0px;">
 				<div class="product__pagination">
 					<c:if test="${startPage>1 }">
-						<a href="find.do?page=${startPage-1}?fd="""><i
+						<a href="find.do?page=${startPage-1}"><i
 							class="fa fa-long-arrow-left"></i></a>
 					</c:if>
 					<c:forEach var="i" begin="${startPage }" end="${endPage }">
@@ -78,6 +94,7 @@
 			</div>
 		</div>
 		</div>
+	
 	</section>
 	<!-- Blog Details Section End -->
 
