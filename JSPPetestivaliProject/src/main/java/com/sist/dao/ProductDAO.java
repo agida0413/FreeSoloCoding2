@@ -331,7 +331,7 @@ public ProductVO productDetail(int pno) {
 		ps=conn.prepareStatement(sql);
 		ps.executeUpdate();
 		
-		sql="SELECT pno,p_name,p_lower_price,p_percent,p_category,p_hit,p_image,p_intprice,p_price,p_detail_text,p_expire_date,p_shipment,p_stack,p_like,p_detail_image from product_detail where pno="+pno;
+		sql="SELECT pno,p_name,p_lower_price,p_percent,p_category,p_hit,p_image,p_intprice,p_price,p_expire_date,p_shipment,p_stack,p_like,p_detail_image from product_detail where pno="+pno;
 			ps=conn.prepareStatement(sql);
 			ResultSet rs=ps.executeQuery();
 			rs.next();
@@ -345,12 +345,12 @@ public ProductVO productDetail(int pno) {
  
 			vo.setP_intprice(rs.getInt(8));
 			vo.setP_price(rs.getString(9));
-			vo.setP_detail_text(rs.getString(10));
-			vo.setP_expire_date(rs.getString(11));
-			vo.setP_shipment(rs.getString(12));
-			vo.setP_stack(rs.getInt(13));
-			vo.setP_like(rs.getInt(14));
-			vo.setP_detail_image(rs.getString(15));
+			
+			vo.setP_expire_date(rs.getString(10));
+			vo.setP_shipment(rs.getString(11));
+			vo.setP_stack(rs.getInt(12));
+			vo.setP_like(rs.getInt(13));
+			vo.setP_detail_image(rs.getString(14));
 			rs.close();
 		
 	} catch (Exception e) {
