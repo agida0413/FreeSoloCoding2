@@ -128,7 +128,7 @@
                             <div class="blog__item">
                                 <div class="blog__item__pic">
                                     <a href="#">
-                                        <img src="${vo.news_img}" style="max-width: 100%; max-height: 100%;" alt="${vo.news_subject}">
+                                        <img src="${vo.news_img}" style="max-width: 100%; max-height: 100%; border-radius: 10px; overflow: hidden;" alt="${vo.news_subject}">
                                         <div class="blog__item__text">
                                             <h5>
                                                 <a href="#">${vo.news_subject}</a>

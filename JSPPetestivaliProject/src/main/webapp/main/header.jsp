@@ -27,7 +27,7 @@
                         
                         <c:if test="${not empty sessionScope.id}">
                             <div class="header__top__right__auth">
-                            <a href="../mypage/mypagemain.do"><i class="fa fa-user"></i> Mypage</a>
+                            <a href="../mypage/mypage_main.do"><i class="fa fa-user"></i> Mypage</a>
                             </div>
                             &nbsp;&nbsp;
                             <div class="header__top__right__auth">
@@ -139,7 +139,7 @@
                             <li style="font-weight: 700;"><a href="#"><i class="xi-walk"></i>&nbsp;반려동물 산책로</a></li>
                             <li style="text-indent: 20px"><a href="../walk/walkList.do">가까운 산책로 찾기</a></li>
                             <li style="font-weight: 700;"><a href="#"><i class="xi-heart"></i>&nbsp;마이펫 관리</a></li>
-                            <li style="text-indent: 20px"><a href="../mypage/petreg.do">마이펫 등록</a></li>
+                            <li style="text-indent: 20px"><a href="../mypage/mypetreg.do">마이펫 등록</a></li>
                             <li style="text-indent: 20px"><a href="#">마이펫 관리</a></li>
                         </ul>
                     </div>

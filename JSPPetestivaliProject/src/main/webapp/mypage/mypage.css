@@ -1,0 +1,117 @@
+@charset "UTF-8";
+
+
+/* General Styles */
+body {
+    margin: 0;
+}
+
+/* Header Styles */
+#grid {
+    display: grid;
+    grid-template-columns: 70px 250px 580px 500px 420px;
+    grid-template-row: 50px;
+    margin-top: 20px;
+}
+
+#grid #logo {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    text-align: center;
+    font-size: 18px;
+    background-color: powderblue;
+    border-top-left-radius: 20px 20px;
+}
+
+#grid #seach {
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    padding: 15px;
+    padding-right: 0px;
+    text-align: start;
+    margin: 0px;
+}
+
+#grid #seachicon {
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    text-align: left;
+    padding: 12.5px 12.5px 12.5px 0px;
+}
+
+#grid #mypage {
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-top-right-radius: 20px 20px;
+    text-align: right;
+}
+
+/* Left Menu Styles */
+#gridmain #leftcolor {
+    grid-row-stat: 1;
+    grid-columns: 1;
+    background: linear-gradient(60deg, #71C5EE, #025091);
+    border-bottom-left-radius: 20px 20px;
+}
+
+#gridmain #gridleft {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    display: grid;
+    grid-template-rows: 150px 60px 60px 60px 60px 120px 150px 100px;
+    float: left;
+    padding-top: 20px;
+    border-bottom-left-radius: 20px 20px;
+    background-color: powderblue;
+}
+
+#leftinner {
+    text-align: left;
+    font-size: 25px;
+}
+
+#leftinner #icon {
+    float: left;
+    width: 30px;
+    margin-left: 30px;
+    padding-right: 20px;
+}
+
+/* Middle Grid Styles */
+#gridmain #gridemiddle {
+    display: grid;
+    grid-template-rows: 20px 20px 20px 240px 100px 20px 20px 340px 20px;
+    grid-template-columns: 70px 200px 125px 125px 50px 380px 100px;
+    border-bottom: 1px solid black;
+}
+
+.middelp {
+    margin: 0px;
+}
+
+#gridemiddle #menu,
+#gridemiddle #menu1,
+#gridemiddle #menu2 {
+    border: 1px solid blue;
+    text-align: center;
+}
+
+#gridemiddle #content,
+#gridemiddle #content1,
+#gridemiddle #content2 {
+    border: 1px solid blue;
+}
+
+/* Right Grid Styles */
+#gridmain #grideright {
+    display: grid;
+    grid-template-row: 5;
+    font-size: 15px;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom-right-radius: 20px 20px;
+}
