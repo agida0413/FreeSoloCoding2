@@ -6,6 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.prod_page a:hover
+  		{
+  		  background-color: #333;
+    color: #fff;
+    border-color: #333;
+  		}
+  		
+  	
+
+</style>
 
 </head>
 <body>
@@ -33,7 +44,7 @@
                         
                         <div class="col-lg-12">
                             
-                            <div class="product__pagination blog__pagination">
+                            <div class="product__pagination blog__pagination prod_page">
                                <center>
                     <c:if test="${start > 1}">
                         <a href="../walk/walkList.do?page=${start-1 }&loc=${loc}"><i class="fa fa-long-arrow-left"></i></a>
@@ -41,8 +52,8 @@
                         <c:forEach var="i" begin="${start }" end="${end }">
                         	
                           <c:choose>
-									<c:when test="${i eq page}">
-									 <a href="../walk/walkList.do?page=${i }&loc=${loc}" class="selected">${i }</a>
+									<c:when test="${i eq curpage}">
+									 <a href="../walk/walkList.do?page=${i }&loc=${loc}" class="kyj_selected">${i }</a>
 										
 									</c:when>
 									<c:otherwise>

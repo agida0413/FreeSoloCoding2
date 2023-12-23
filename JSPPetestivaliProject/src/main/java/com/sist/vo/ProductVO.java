@@ -24,9 +24,15 @@ public class ProductVO {
 		this.pno = pno;
 	}
 	private double p_grade;
-	private String p_name,p_price,p_image,p_percent,p_lower_price,p_shipment,p_category,p_expire_date,p_detail_image,p_detail_text;
+	private String p_name,p_price,p_image,p_percent,p_lower_price,p_shipment,p_category,p_expire_date,p_detail_image,p_detail_text,p_sub_image;
 	public String getP_detail_text() {
 		return p_detail_text;
+	}
+	public String getP_sub_image() {
+		return p_sub_image;
+	}
+	public void setP_sub_image(String p_sub_image) {
+		this.p_sub_image = p_sub_image;
 	}
 	public void setP_detail_text(String p_detail_text) {
 		this.p_detail_text = p_detail_text;

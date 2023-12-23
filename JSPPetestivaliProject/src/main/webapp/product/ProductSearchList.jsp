@@ -32,7 +32,7 @@
     color:black;
     
     }
-    .selected{
+    .kyj_selected{
     background-color: blue;
     }
     </style>
@@ -92,7 +92,7 @@
                         
                               <c:choose>
 									<c:when test="${i eq page}">
-									<a href="../product/ProductSearchList.do?page=${i }&ct=${ct}&rt=${rt}" class="selected">${i }</a>
+									<a href="../product/ProductSearchList.do?page=${i }&ct=${ct}&rt=${rt}" class="kyj_selected">${i }</a>
 										
 									</c:when>
 									<c:otherwise>
@@ -116,7 +116,7 @@
                         
                         <c:choose>
 									<c:when test="${i eq page}">
-									<a href="../product/ProductSearchList.do?page=${i }&sct=${sct}&ss=${ss}" class="selected">${i }</a>
+									<a href="../product/ProductSearchList.do?page=${i }&sct=${sct}&ss=${ss}" class="kyj_selected">${i }</a>
 										
 									</c:when>
 									<c:otherwise>

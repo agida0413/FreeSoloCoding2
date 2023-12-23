@@ -66,7 +66,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 	
 	List<Integer>catenumList=dao.ProductCateNum();	
 		
-		System.out.println(totalpage);
+	
 		
 		
 		request.setAttribute("product_jsp", "../product/ProductList.jsp");
@@ -82,6 +82,10 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 	
 	return "../main/main.jsp";
 }
+	
+	
+	
+	
 	
 	
 	
@@ -107,6 +111,9 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 		
 			ProductDAO dao=ProductDAO.newInstace();
 			ProductVO vo =dao.productDetail(Integer.parseInt(pno));
+			List<ProductVO>subImageList=dao.productSubImage(Integer.parseInt(pno));
+			
+			request.setAttribute("subImageList", subImageList);
 			request.setAttribute("vo", vo);
 			request.setAttribute("main_jsp", "../product/productDetail.jsp");
 			request.setAttribute("page", strpage);
@@ -114,6 +121,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 			request.setAttribute("rt", rt);
 			request.setAttribute("lcount",lcount);//목록으로 돌아가는 카운트
 			request.setAttribute("ss", ss);
+			
 			
 			List<ProductVO>clist=new ArrayList<ProductVO>();
 			try {
@@ -207,7 +215,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 		try {
 			ss=java.net.URLEncoder.encode(ss,"UTF-8");
 			ct=java.net.URLEncoder.encode(ct,"UTF-8");
-			System.out.println(ct);
+			
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -224,7 +232,7 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 		send="redirect:../product/ProductList.do";
 	}
 	else if(lcount.equals("2")) {	
-		System.out.println(ss);
+		
 	send="redirect:../product/ProductSearchList.do?page="+strpage+"&sct="+ct+"&ss="+ss;
 	
 	}

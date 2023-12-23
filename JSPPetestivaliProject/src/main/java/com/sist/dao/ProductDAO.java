@@ -136,8 +136,7 @@ public List<ProductVO> productByASCList(String ct,int page,String rt){
 	try {
 		int start=(ROW_SIZE*page)-(ROW_SIZE-1);
 		int end= ROW_SIZE*page;
-		System.out.println(start);
-		System.out.println(end);
+		
 		conn= dbconn.getConnection();
 		String sql="SELECT pno,p_name,p_image,p_percent,p_lower_price,p_category,p_stack num "
 					+"FROM (SELECT pno,p_name,p_image,p_percent,p_lower_price,p_category,p_stack,rownum as num "
@@ -419,6 +418,33 @@ public List<Integer> ProductCateNum(){
 			
 		}
 		rs.close();
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	
+	return list;
+}
+
+public List<ProductVO> productSubImage(int pno){
+	
+	List<ProductVO>list= new ArrayList<ProductVO>();
+	try {
+		conn=dbconn.getConnection();
+		String sql="SELECT P_SUB_IMAGE FROM PRODUCT_SUB_IMAGE WHERE pno="+pno;
+		ps=conn.prepareStatement(sql);
+		
+		ResultSet rs=ps.executeQuery();
+		while(rs.next()) {
+			ProductVO vo=new ProductVO();
+			vo.setP_sub_image(rs.getString(1));
+			list.add(vo);
+		}
+		rs.close();
+		
 	} catch (Exception e) {
 		// TODO: handle exception
 		e.printStackTrace();

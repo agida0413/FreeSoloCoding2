@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 
-  .selected {
+  .kyj_selected {
   background-color: #c0c0c0; /* 약간 흐릿한 회색 배경색 */
   border-radius: 5px; /* 모서리를 둥글게 */
   padding: 5px 10px; /* 여백 설정 */
@@ -11,7 +11,7 @@
   transition: background-color 0.3s ease; /* 부드러운 전환 효과 */
 }
 
-.selected:hover {
+.kyj_selected:hover {
   background-color: #a9a9a9; /* 호버 시 약간 진한 회색 */
   color: #fff; /* 호버 시 텍스트 색상을 흰색으로 변경 */
 }
@@ -32,13 +32,13 @@
       margin-left:290px;
   }
 
-  .nav-pills li {
+  .p_rank li {
     display: inline;
 
      /* 간격을 더 좁게 조정 */
   }
 
-  .nav-pills li a {
+  .p_rank li a {
     display: inline-block;
     padding: 8px 12px; /* 여백을 줄임 */
     border: 2px solid transparent;
@@ -49,8 +49,10 @@
       
     
   }
+  
+  
 
-  .nav-pills li a:hover {
+  .p_rank li a:hover {
     background-color: #333;
     color: #fff;
     border-color: #333;
@@ -83,6 +85,19 @@
 		 margin-top:20px auto 0;
 		
 	 } 
+	 
+	 .p_cate > li > a:hover
+    	{
+	  background-color: #333;
+    color: #fff;
+    border-color: #333;
+  		}
+  		.prod_page a:hover
+  		{
+  		  background-color: #333;
+    color: #fff;
+    border-color: #333;
+  		}
 	 
 	
 	  

@@ -50,7 +50,20 @@ function requestPay() {
 	});
 }
 </script>
-
+<script type="text/javascript">
+window.onload=function(){
+	let subimgArr=document.querySelectorAll('.detail_sub_image .col-2 img')
+	let mainimg=document.querySelector('.customimage')
+	
+	subimgArr.forEach(function(subimg){
+			subimg.addEventListener('mouseover',function(){
+				mainimg.src=this.src;
+			})
+	})
+	
+	
+}
+</script>
 <style type="text/css">
 
 </style>
@@ -101,14 +114,20 @@ function requestPay() {
                 
                     <div class="product__details__pic">
                   
-              		            <div class="product__details__pic__item" style="margin:0 auto;">
+              		            <div class="product__details__pic__item">
                
                            			 <img class="customimage product__details__pic__item--large"
                               		   src="${vo.p_image }" alt="">
                       
                                   </div>
                                  
-                  <div class="detail_sub_image"> </div>
+                  				 <div class="row detail_sub_image">
+                  				 		<c:forEach var="subVo" items="${subImageList }">
+                  				 		  <div class="col-2">
+                  				 		  	<img src="${subVo.p_sub_image }">
+                  				 		  </div>
+										</c:forEach> 	
+                  				 </div>
                       </div>
                   
                 </div>
