@@ -1,10 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+<script src="../js/walkReply.js"></script>
+<style type="text/css">
+.comment-header span {
+  font-size: small; /* 작은 폰트 크기 */
+  opacity: 0.7; /* 투명도로 흐릿한 효과 */
+}
 
+/* 버튼 스타일 */
+.comment-actions button {
+  font-weight: bold; /* 진한 글씨체 */
+  font-size: large; /* 큰 폰트 크기 */
+  margin-left: 5px; /* 버튼 간격 조정 */
+}
 
+/* 내용 스타일 */
+.comment .comment-content {
+  font-weight: bold; /* 진한 글씨체 */
+  font-size: larger; /* 큰 폰트 크기 */
+}
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
   <link rel="stylesheet" href="../css/walk.css" type="text/css">
@@ -119,60 +138,78 @@ geocoder.addressSearch('${vo.address}', function(result, status) {
     <!-- Related Blog Section Begin -->
     <section class="related-blog spad">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title related-blog-title">
-                        <h2>Post You May Like</h2>
-                    </div>
+           <div class="row">
+           		<div class="comment-section" style="width:100%">
+    <h3>댓글(${replyAmount})</h3>
+    <c:if test="${sessionScope.id !=null }">
+    <form id="commentForm" action="replyInsert.do" method="post">
+        <div class="input-group">
+            <input type="text" size="95" name="rcontent" id="rcontent" placeholder="댓글을 입력해주세요" required>
+            <input type="password" size="10" name="password" id="password" placeholder="비밀번호" required>
+            <input type="hidden" name="wno" value="${vo.wno}">
+            <input type="hidden" name="page" value="${curpage}">
+            <input type="hidden" name="loc" value="${loc}">
+            <input type="submit" value="등록">
+        </div>
+    </form>
+    </c:if>
+
+    <div class="comment-list">
+        <c:forEach var="rvo" items="${rlist}" varStatus="loop" >
+           <div class="comment" data-index="${loop.index}">
+   			 <div class="comment-header">
+       		 <span>${rvo.userid }</span>, <span>${rvo.dbday}</span>
+   			     <div class="comment-actions" style="float:right;">
+   			     
+   			     <c:if test="${sessionScope.id eq rvo.userid }">
+            <button class="modifyBtn">수정</button>
+            <button class="deleteBtn">삭제</button>
+            </c:if>
+           <c:if test="${sessionScope.id != rvo.userid && sessionScope.id != null}">
+            <button class="replyBtn">답글</button>
+            </c:if>
+        </div>
+    </div>
+    <p>${rvo.rcontent}</p>
+   					
+                <div style="display: none;" class="addreply">
+                    <form action="replyInsert.do" method="post">
+                        <input type="text" size="80" name="rcontent" placeholder="댓글을 입력해주세요" required>
+                        <input type="password" name="password" placeholder="비밀번호" required>
+                        <input type="hidden" name="wno" value="${vo.wno}">
+                        <input type="hidden" name="page" value="${curpage}">
+                        <input type="hidden" name="loc" value="${loc}">
+                        <input type="submit" value="등록">
+                    </form>
                 </div>
+               
+                
+              
+                	 	<form action="replyInsert.do" method="post">
+                	 	<div class="dpassword" style="display:none;">
+                		<input type="password" name="dpassword" placeholder="비밀번호"  required>
+                		<button>삭제</button>
+                		</div>
+                	</form>
+                	
+                	
+                	<div  style="display: none;"class="modifyreply">
+                    <form action="replyInsert.do" method="post">
+                        <input type="text" size="80" name="rcontent" value="${rvo.rcontent }" required>
+                        <input type="password" name="password" placeholder="비밀번호" required>
+                        <input type="hidden" name="wno" value="${vo.wno}">
+                        <input type="hidden" name="page" value="${curpage}">
+                        <input type="hidden" name="loc" value="${loc}">
+                        <input type="submit" value="등록">
+                    </form>
+                </div>
+                
+                 <hr>
             </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic">
-                            <img src="../img/blog/blog-1.jpg" alt="">
-                        </div>
-                        <div class="blog__item__text">
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
-                            </ul>
-                            <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic">
-                            <img src="../img/blog/blog-2.jpg" alt="">
-                        </div>
-                        <div class="blog__item__text">
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
-                            </ul>
-                            <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
-                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic">
-                            <img src="../img/blog/blog-3.jpg" alt="">
-                        </div>
-                        <div class="blog__item__text">
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
-                            </ul>
-                            <h5><a href="#">Visit the clean farm in the US</a></h5>
-                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </c:forEach>
+    </div>
+</div>
+           </div>
         </div>
     </section>
     <!-- Related Blog Section End -->

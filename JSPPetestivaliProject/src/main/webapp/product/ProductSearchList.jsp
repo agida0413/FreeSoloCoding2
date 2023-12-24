@@ -74,23 +74,7 @@
                         
                         </c:forEach>
                             </div>
-                        
-                                  
-                        
-                     
-                      	 	
-                    		 
-                    		  
-                    		  
-                       
-                    	
-               
-                                  
-                                
-                              
-                        
-                        
-                              <c:choose>
+              					 <c:choose>
 									<c:when test="${i eq page}">
 									<a href="../product/ProductSearchList.do?page=${i }&ct=${ct}&rt=${rt}" class="kyj_selected">${i }</a>
 										
@@ -100,13 +84,7 @@
 									</c:otherwise>
 								</c:choose>
                            
-                  
-                        
-                        
-                                
-                                
-                            
-                               
+                    
                     <div class="product__pagination">   
                     <center>
                     <c:if test="${start > 1}">

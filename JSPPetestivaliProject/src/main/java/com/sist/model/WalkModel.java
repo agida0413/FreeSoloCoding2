@@ -1,6 +1,7 @@
 package com.sist.model;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpSession;
 import com.sist.controller.RequestMapping;
 import com.sist.dao.UserDAO;
 import com.sist.dao.WalkDAO;
+import com.sist.dao.*;
+import com.sist.vo.ReplyVO;
 import com.sist.vo.UserVO;
 import com.sist.vo.WalkVO;
 
@@ -64,10 +67,15 @@ public class WalkModel {
 		
 		WalkVO vo=dao.walkDetail(Integer.parseInt(wno));
 		
-		
+		List<ReplyVO>rlist=dao.walkReplyListData(Integer.parseInt(wno));
+		int replyAmount=dao.walkReplyAmount(Integer.parseInt(wno));
 			
 		
 		//코스별 기능구현 에이젝스.....
+		request.setAttribute("replyAmount", replyAmount);
+		request.setAttribute("rlist", rlist);
+		request.setAttribute("loc", loc);
+		request.setAttribute("curpage", page);
 		request.setAttribute("vo", vo);
 		request.setAttribute("main_jsp", "../walk/walkDetail.jsp");
 			
@@ -76,4 +84,53 @@ public class WalkModel {
 		return "../main/main.jsp";
 	
 }
+	@RequestMapping("walk/replyInsert.do")
+	public String replyInsert(HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String wno=request.getParameter("wno");
+		String pwd=request.getParameter("password");
+		String rcontent=request.getParameter("rcontent");
+		String loc=request.getParameter("loc");
+		System.out.println(loc);
+		
+		try {
+			loc=URLEncoder.encode(loc,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		String page=request.getParameter("page");
+		
+		WalkDAO dao=WalkDAO.newInstance();
+		
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		
+	ReplyVO vo =new ReplyVO();
+	System.out.println("통과");
+		
+		
+		vo.setBno(Integer.parseInt(wno));
+		
+		vo.setRcontent(rcontent);
+		
+		vo.setUserid(id);
+		vo.getUserid();
+		
+		
+				dao.walkReplyInsert(vo, pwd);
+		
+		return "redirect:../walk/walkDetail.do?wno="+wno+"&loc="+loc+"&page="+page;
+	
+	}
 }

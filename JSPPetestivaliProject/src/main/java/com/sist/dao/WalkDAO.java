@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sist.dbcp.CreateDBCPconnection;
+import com.sist.dao.*;
 import com.sist.vo.ProductVO;
+import com.sist.vo.ReplyVO;
 import com.sist.vo.WalkVO;
 
 public class WalkDAO {
@@ -155,6 +157,7 @@ public WalkVO walkDetail(int wno) {
 			vo.setAddress(rs.getString(4));
 			vo.setcLa(rs.getString(5));
 			vo.setcLo(rs.getString(6));
+			rs.close();
 	} catch (Exception e) {
 		// TODO: handle exception
 		e.printStackTrace();
@@ -163,6 +166,87 @@ public WalkVO walkDetail(int wno) {
 		dbconn.disConnection(conn, ps);
 	}
 	return vo;
+}
+
+public void walkReplyInsert(ReplyVO vo,String pwd) {
+	try {
+		conn=dbconn.getConnection();
+		String sql="INSERT INTO board_reply(rno,rcontent,group_id,userid,bno,pwd,typeno) "
+					+"VALUES(board_reply_seq.nextval,?,(SELECT NVL((MAX(group_id)+1),1) FROM board_reply),?,?,?,2)";
+		ps=conn.prepareStatement(sql);
+		ps.setString(1,vo.getRcontent());
+		ps.setString(2, vo.getUserid());
+		ps.setInt(3, vo.getBno());
+		ps.setString(4, pwd);
+		
+		ps.executeUpdate();
+	} catch (Exception e) {
+		// TODO: handle exception
+	e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+
+	
+}
+
+public List<ReplyVO> walkReplyListData(int wno){
+	List<ReplyVO>list=new ArrayList<ReplyVO>();
+	try {
+		conn=dbconn.getConnection();
+		String sql="SELECT rno,rcontent,TO_CHAR(rdate,'YYYY-MM-dd'),like_count,group_tab,userid,bno,num "
+					+"FROM (SELECT rno,rcontent,rdate,like_count,group_tab,userid,bno,rownum as num "
+					+"FROM (SELECT rno,rcontent,rdate,like_count,group_tab,userid,bno "
+					+"FROM BOARD_REPLY WHERE typeno=2 AND bno="+wno+" ORDER BY GROUP_ID DESC,GROUP_STEP ASC)) "
+					+"WHERE num BETWEEN 1 AND 5";
+		ps=conn.prepareStatement(sql);
+		
+		ResultSet rs=ps.executeQuery();
+
+		while(rs.next()) {
+			ReplyVO vo=new ReplyVO();
+			vo.setRno(rs.getInt(1));
+			vo.setRcontent(rs.getString(2));
+			vo.setDbday(rs.getString(3));
+			vo.setLike_count(rs.getInt(4));
+			vo.setGroup_tab(rs.getInt(5));
+			vo.setUserid(rs.getString(6));
+			vo.setBno(rs.getInt(7));
+			list.add(vo);
+		}
+		rs.close();
+		
+					
+	} catch (Exception e) {
+		e.printStackTrace();
+		// TODO: handle exception
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	return list;
+}
+
+public int walkReplyAmount(int wno) {
+	int replyAmount=0;
+	try {
+		conn=dbconn.getConnection();
+		String sql="SELECT COUNT(*) FROM BOARD_REPLY WHERE typeno=2 AND bno="+wno;
+		ps=conn.prepareStatement(sql);
+		ResultSet rs= ps.executeQuery();
+		rs.next();
+		replyAmount=rs.getInt(1);
+		rs.close();
+		} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	
+	return replyAmount;
 }
  
 
