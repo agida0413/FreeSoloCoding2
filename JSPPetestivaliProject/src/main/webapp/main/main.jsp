@@ -56,7 +56,7 @@
     <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../css/style.css" type="text/css">
         <link rel="stylesheet" href="../css/product.css" type="text/css">
-        <link rel="stylesheet" href="../css/product_detail.css?no=123213144444" type="text/css">
+        <link rel="stylesheet" href="../css/product_detail.css?no=112" type="text/css">
         <link rel="stylesheet" href="../css/walk.css" type="text/css">
         <link rel="stylesheet" href="../css/productCategory.css">
          <link rel="stylesheet" href="../css/walk.css" type="text/css">
@@ -82,5 +82,6 @@
     <script src="../js/product_detail.js"></script>
    <script src="../js/productCategory.js"></script>
      <script src="../js/walkReply.js"></script>
+        <script src="../js/product_calculate.js"></script>
 </body>
 </html>
