@@ -6,12 +6,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="../css/product_detail.css">
-<script src="../js/product_detail.js"></script>
+<style type="text/css">
+/* Your CSS File */
+
+/* Your CSS File */
+
+
+
+
+
+</style>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
+$(document).ready(function() {
+    let price = parseFloat($('#detail_p_price').attr('data-price'));
+    let quantity = parseInt($(".kyj__calculate").val());
+    let target = $('#kyj_total_price');
 
+    function calculateTotal() {
+        let totalprice = price * quantity;
+        target.text(formatCurrency(totalprice));
+    }
+
+    $(".kyj__increaseBtn").click(function() {
+        quantity++;
+        calculateTotal();
+    });
+
+    $(".kyj__decreaseBtn").click(function() {
+        quantity = quantity > 1 ? quantity - 1 : 1;
+        calculateTotal();
+    });
+
+    function formatCurrency(amount) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
+    }
+
+    calculateTotal(); // 페이지 로드시 초기 총액 계산 및 표시
+});
+</script>
+<script type="text/javascript">
 var IMP = window.IMP; // 생략 가능
 IMP.init("imp36070644"); // 예: imp00000000
 function requestPay() {
@@ -52,9 +87,7 @@ function requestPay() {
 }
 </script>
 
-<style type="text/css">
 
-</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -81,15 +114,13 @@ function requestPay() {
     
     <div class="container">
    
-    <div class="row">
-     <span class="category-tag" style="margin-left:30px; margin-bottom:10px;"><a href="ProductList.do?ct=${vo.p_category }">${vo.p_category }</a></span>
-    </div>
+    
    		 <table class="up_to_image" style="margin-left:20px;">
    		 	
    			 <tr>
    			 
     			<td>
-     					 <span class="top_link"><a href="${url}"><img src="../img/left.png.svg" alt="">목록</a></span>
+     					 <span id="kyj_top_link"><a href="${url}"><img src="../img/left.png.svg" alt="">목록</a></span>
      			    
                    
                    </td>
@@ -100,31 +131,28 @@ function requestPay() {
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                 
-                    <div class="product__details__pic">
-                  
-              		            <div class="product__details__pic__item">
-               
-                           			 <img class="customimage product__details__pic__item--large"
-                              		   src="${vo.p_image }" alt="">
-                      
-                                  </div>
-                                 
-                  				 <div class="row detail_sub_image">
-                  				 		<c:forEach var="subVo" items="${subImageList }">
-                  				 		  <div class="col-2">
-                  				 		  	<img src="${subVo.p_sub_image }">
-                  				 		  </div>
-										</c:forEach> 	
-                  				 </div>
-                      </div>
+                    <div class="product__details__pic__item">
+    <img class="customimage product__details__pic__item--large" src="${vo.p_image}" alt="">
+</div>
+
+<div class="row detail_sub_image">
+    <c:forEach var="subVo" items="${subImageList}" varStatus="loop">
+        <div class="col-2">
+            <img src="${subVo.p_sub_image}" class="sub-image" data-index="${loop.index}">
+        </div>
+    </c:forEach>
+</div>
                   
                 </div>
                  
                 <div class="col-lg-6 col-md-6">
-                    <div class="product__details__text" style="padding-left:20px; padding-top:50px;" >
+                    <div class="product__details__text" style="padding-left:20px;" >
                     	
+                    	<div>
+                    	<span class="category-tag" style="margin-bottom:10px;"><a href="ProductList.do?ct=${vo.p_category }">${vo.p_category }</a></span>
+                         <span class="hit-wrapper hit-number">조회수${vo.p_hit}</span>
                         <h3 id="title">${vo.p_name }</h3>
-                    
+                    </div>
 
 
                         
@@ -134,20 +162,21 @@ function requestPay() {
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star-half-o"></i>
-                          
+                       
                             <span>(18 reviews)</span>
-                              <span class="hit-wrapper hit-number">조회수${vo.p_hit}</span>
+                             
                         </div>
                        
                         <p>
                         
-                     <div id="price" class="product__details__price" data-price="${vo.p_intprice }">
+                     <div id="detail_p_price" class="product__details__price" data-price="${vo.p_intlowerprice }">
                       	   <c:if test="${not empty vo.p_percent}">
   						  		<div class="discounted-price">
      						 		  <span class="p_original_price">${vo.p_price}</span>
        						 		   <span class="product__details__discount">${vo.p_percent}</span>
    								  </div>
 				      	   </c:if>
+				      	  
 							<div class="product__details__price">${vo.p_lower_price}</div>
 					 </div>
       							
@@ -165,18 +194,27 @@ function requestPay() {
                            	</ul>
                            		
                           	  <ul> 	</ul>
-                        
-                        			<div class="product__details__quantity">
-                            <div class="quantity">
-                                <div class="pro-qty">
-                                    <input type="text" value="1">
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#" class="primary-btn">장바구니</a>
-                          <a href="#" class="primary-btn" onclick="requestPay()">구매하기</a>
-                          <button>좋아요 자리</button>
-                      
+      <div class="kyj_calBox">
+    <div class="kyj__details__quantity">
+        <div class="kyj__quantity">
+            <div class="kyj__input-container">
+                <button class="kyj__decreaseBtn">-</button>
+                <input type="text" value="1" class="kyj__calculate">
+                <button class="kyj__increaseBtn">+</button>
+            </div>
+        </div>
+         <h2><span id="kyj_total_price"></span></h2><!-- 총액 계싼 -->
+    </div>
+   
+</div>
+			<div style="height:15px;"></div>
+
+					<div class="bottom_cate" style=" ">
+						
+                        <a href="#" class="primary-btn text-center" style="width: 190px;">장바구니</a>
+                          <a href="#" class="primary-btn text-center" style="width: 190px;" onclick="requestPay()">구매하기</a>
+                         	<button>좋아요 예정</button>
+                      </div>
       			
       					
                       
@@ -200,59 +238,12 @@ function requestPay() {
                     </div>
                       
                 </div>
-                <div class="col-lg-12">
-                 
-                    <div class="product__details__tab">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
-                                    aria-selected="true">상품상세정보</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
-                                    aria-selected="false">상품후기</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                                    aria-selected="false">상품문의 <span>(1)</span></a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                <div class="product__details__tab__desc">
-                                    <h6>상품상세정보</h6>
-                                    <p>
-                                    <img src="${vo.p_detail_image }" style="width:100%">
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="tabs-2" role="tabpanel">
-                                <div class="product__details__tab__desc">
-                                    <h6>상품후기</h6>
-                                    <p>상품후기
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="tabs-3" role="tabpanel">
-                                <div class="product__details__tab__desc">
-                                    <h6>문의하기</h6>
-                                    <p>문의하기</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Product Details Section End -->
-
-    <!-- Related Product Section Begin -->
-    <section class="related-product">
-        <div class="container">
+                
+                <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title related__product__title">
+                    	<hr>
                         <h2>최근본상품</h2>
                     </div>
                 </div>
@@ -279,6 +270,7 @@ function requestPay() {
                             </ul>
                         </div>
                         <div class="product__item__text">
+                        
                             <h6><a href="#">${cvo.p_name }</a></h6>
                             </a>
                             <h5>${cvo.p_lower_price }</h5>
@@ -290,7 +282,103 @@ function requestPay() {
               
             </div>
         </div>
+        
+         <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title related__product__title">
+                    	<hr>
+                        <h2>관련상품</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+           
+              <c:forEach var="rvo" items="${rlist }" begin="1" end="${rlistSize }" >
+                <div class="col-lg-3 col-md-4 col-sm-6">
+               
+                    <div class="product__item">
+                   
+                    		<c:url value="DetailBefore.do?count=1" var="rurl">
+              				<c:param name="pno" value="${rvo.pno }"/>
+              				<c:param name="ct" value="${ct}"/>
+              				<c:param name="rt" value="${rt}"/>
+              				<c:param name="page" value="${page}"/>
+              				</c:url>
+                    
+                        <div class="product__item__pic set-bg"><a href="<c:out value="${rurl}" />"><img class="customimage" src="${rvo.p_image }">
+                            <ul class="product__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                        
+                            <h6><a href="#">${rvo.p_name }</a></h6>
+                            </a>
+                            <h5>${rvo.p_lower_price }</h5>
+                        </div>
+                    </div>
+                    
+                </div>
+                </c:forEach>
+              
+            </div>
         </div>
+        
+        
+                <div class="col-lg-12">
+                 
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                                    aria-selected="true">상품상세정보</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                                    aria-selected="false">상품후기</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                                    aria-selected="false">상품문의 <span>(1)</span></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    <h6>상품상세정보</h6>
+                                    <p>
+                                    <img src="${vo.p_detail_image }" style="width:100%;">
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-2" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    <h6>상품후기</h6>
+                                    <p>상품후기
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    <h6>문의하기</h6>
+                                    <p>문의하기</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Details Section End -->
+
+    <!-- Related Product Section Begin -->
+    <section class="related-product">
+      
+      
        
     </section>
     <!-- Related Product Section End -->

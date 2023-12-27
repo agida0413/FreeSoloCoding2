@@ -195,11 +195,11 @@ public List<ReplyVO> walkReplyListData(int wno){
 	List<ReplyVO>list=new ArrayList<ReplyVO>();
 	try {
 		conn=dbconn.getConnection();
-		String sql="SELECT rno,rcontent,TO_CHAR(rdate,'YYYY-MM-dd'),like_count,group_tab,userid,bno,num "
+		String sql="SELECT rno,rcontent,TO_CHAR(rdate,'YYYY-MM-dd HH24:MI:SS'),like_count,group_tab,userid,bno,num "
 					+"FROM (SELECT rno,rcontent,rdate,like_count,group_tab,userid,bno,rownum as num "
 					+"FROM (SELECT rno,rcontent,rdate,like_count,group_tab,userid,bno "
 					+"FROM BOARD_REPLY WHERE typeno=2 AND bno="+wno+" ORDER BY GROUP_ID DESC,GROUP_STEP ASC)) "
-					+"WHERE num BETWEEN 1 AND 5";
+					+"WHERE num BETWEEN 1 AND 10";
 		ps=conn.prepareStatement(sql);
 		
 		ResultSet rs=ps.executeQuery();
@@ -248,6 +248,179 @@ public int walkReplyAmount(int wno) {
 	
 	return replyAmount;
 }
+
+
+public void walkAddReplyInsert(String pwd,ReplyVO vo) {
+	try {
+		conn=dbconn.getConnection();
+		
+		int db_gstep=0;
+		int db_gi=0;
+		int db_gtab=0;
+		int bno=0;
+		int rno=vo.getRno();
+	String	sql="SELECT group_id,group_tab ,group_step,bno FROM BOARD_REPLY WHERE typeno=2 AND rno="+rno;
+	
+				
+		ps=conn.prepareStatement(sql);
+		ResultSet rs=ps.executeQuery();
+		rs.next();
+		db_gi=rs.getInt(1);
+		db_gtab=rs.getInt(2);
+		db_gstep=rs.getInt(3);
+		bno=rs.getInt(4);
+		
+		rs.close();
+		
+		
+		
+		
+		sql="INSERT INTO BOARD_REPLY (rno,rcontent,group_id,group_step,group_tab,root,userid,pwd,bno,typeno) "
+				+"VALUES(board_reply_seq.nextval,?,?,?,?,?,?,?,?,2)";
+		
+		ps=conn.prepareStatement(sql);
+		ps.setString(1,vo.getRcontent());
+		ps.setInt(2,db_gi);
+		ps.setInt(3, db_gstep+1);
+		ps.setInt(4, db_gtab+1);
+		ps.setInt(5, rno);
+		ps.setString(6, vo.getUserid());
+		ps.setString(7, pwd);
+		ps.setInt(8, bno);
+		
+		
+		ps.executeUpdate();
+		
+		sql="UPDATE BOARD_REPLY SET "
+				+"depth=depth+1 "
+				+"WHERE rno="+rno;
+		ps=conn.prepareStatement(sql);
+		ps.executeUpdate();
+		
+		} catch (Exception e) {
+		// TODO: handle exception
+	e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	
+	
+}
+
+public boolean walkDeleteReply(int rno,String pwd) {
+	boolean bCheck=false;
+	String db_pwd="";
+	
+	String msg="관리자가 삭제한 게시물입니다.";
+	try {
+		conn=dbconn.getConnection();
+		
+			String sql="SELECT pwd FROM BOARD_REPLY WHERE rno="+rno;
+			ps=conn.prepareStatement(sql);
+			ResultSet rs=ps.executeQuery();
+			rs.next();
+			db_pwd=rs.getString(1);
+			rs.close();
+			
+			
+		
+	if(db_pwd.equals(pwd)) {		
+				
+		int db_root=0;
+		int db_depth=0;
+		
+		sql="select root,depth FROM BOARD_REPLY WHERE rno="+rno;
+		ps=conn.prepareStatement(sql);
+		rs=ps.executeQuery();
+		rs.next();
+		db_root=rs.getInt(1);
+		db_depth=rs.getInt(2);
+		rs.close();
+		
+		if (db_depth==0) {
+				sql="DELETE FROM BOARD_REPLY WHERE rno="+rno;
+					ps=conn.prepareStatement(sql);
+
+					ps.executeUpdate();
+		}
+		
+		else {
+			
+			
+			sql="UPDATE BOARD_REPLY SET "
+					+"rcontent=? "
+				+"WHERE rno="+rno;
+			ps=conn.prepareStatement(sql);
+			ps.setString(1,msg);
+			
+			ps.executeUpdate();
+		}
+		 sql="UPDATE BOARD_REPLY SET "
+					+"depth=depth-1 "
+					+"WHERE rno=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, db_root);
+			ps.executeUpdate();
+		
+		
+				bCheck=true;
+			
+		}
+	}
+	catch (Exception e) {
+		// TODO: handle exception
+	e.printStackTrace();
+	}
+	finally {
+	dbconn.disConnection(conn, ps);
+	}
+	
+	
+
+	return bCheck;
+	
+}
+
+public boolean walkReplyUpdate(ReplyVO vo,String pwd) {
+	
+	boolean bCheck=false;
+	String db_pwd="";
+	int rno=vo.getRno();
+	try {
+		conn=dbconn.getConnection();
+		String sql="SELECT pwd FROM BOARD_REPLY WHERE rno="+rno;
+		ps=conn.prepareStatement(sql);
+		ResultSet rs=ps.executeQuery();
+		rs.next();
+		db_pwd=rs.getString(1);
+		rs.close();
+		
+		if(db_pwd.equals(pwd)) {
+		
+			sql="UPDATE BOARD_REPLY SET "
+				+"rcontent=?, "
+				+"rdate= sysdate "	
+				+"WHERE rno="+rno;
+		ps=conn.prepareStatement(sql);
+		ps.setString(1, vo.getRcontent());
+		
+		ps.executeUpdate();
+		bCheck=true;
+		
+		}
+		} catch (Exception e) {
+		// TODO: handle exception
+	e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	
+	
+	return bCheck;
+}
+
  
 
 }

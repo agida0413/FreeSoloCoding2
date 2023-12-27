@@ -65,10 +65,11 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 	
 	
 	List<Integer>catenumList=dao.ProductCateNum();	
-		
+	List<ProductVO>highSaleList=dao.highSaleList();
 	
-		
-		
+	
+
+		request.setAttribute("highSaleList", highSaleList);
 		request.setAttribute("product_jsp", "../product/ProductList.jsp");
 		request.setAttribute("main_jsp", "../product/ProductMain.jsp");
 		request.setAttribute("list", list);
@@ -124,6 +125,9 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 			
 			
 			List<ProductVO>clist=new ArrayList<ProductVO>();
+			List<ProductVO>rlist=dao.productRelativeList(Integer.parseInt(pno));
+			request.setAttribute("rlist", rlist);
+			request.setAttribute("rlistSize", rlist.size());
 			try {
 			
 				Cookie[] cookies=request.getCookies();
@@ -239,7 +243,6 @@ public String productList(HttpServletRequest request, HttpServletResponse respon
 		
 		return send;
 	}
-	
 	
 	
 	

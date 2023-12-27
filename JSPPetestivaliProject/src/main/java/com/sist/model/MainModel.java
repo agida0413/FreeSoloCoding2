@@ -5,13 +5,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sist.controller.RequestMapping;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import com.sist.dao.*;
 import com.sist.vo.*;
 
 public class MainModel {
+	
+	
+	
 	@RequestMapping("main/main.do")
 	public String main_main(HttpServletRequest request, HttpServletResponse response)
 	{	
+		
+		
 		String LogoutMsg=(String)request.getAttribute("LogoutMsg");
 		if (LogoutMsg!=null) {
 			request.setAttribute("LogoutMsg", LogoutMsg);

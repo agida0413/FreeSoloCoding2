@@ -4,29 +4,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<script src="../js/walkReply.js"></script>
 <style type="text/css">
-.comment-header span {
-  font-size: small; /* 작은 폰트 크기 */
-  opacity: 0.7; /* 투명도로 흐릿한 효과 */
-}
 
-/* 버튼 스타일 */
-.comment-actions button {
-  font-weight: bold; /* 진한 글씨체 */
-  font-size: large; /* 큰 폰트 크기 */
-  margin-left: 5px; /* 버튼 간격 조정 */
-}
 
-/* 내용 스타일 */
-.comment .comment-content {
-  font-weight: bold; /* 진한 글씨체 */
-  font-size: larger; /* 큰 폰트 크기 */
-}
-</style>
+	
+	
+	
+</style>	
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
-  <link rel="stylesheet" href="../css/walk.css" type="text/css">
+ 
 </head>
 <body>
     
@@ -140,71 +128,153 @@ geocoder.addressSearch('${vo.address}', function(result, status) {
         <div class="container">
            <div class="row">
            		<div class="comment-section" style="width:100%">
-    <h3>댓글(${replyAmount})</h3>
+    <h3 style="margin-bottom:20px;">댓글(${replyAmount})</h3>
     <c:if test="${sessionScope.id !=null }">
     <form id="commentForm" action="replyInsert.do" method="post">
         <div class="input-group">
-            <input type="text" size="95" name="rcontent" id="rcontent" placeholder="댓글을 입력해주세요" required>
-            <input type="password" size="10" name="password" id="password" placeholder="비밀번호" required>
+           
+            <textarea rows="4" cols="130" name="rcontent" id="rcontent" placeholder="댓글을 입력해주세요" required></textarea>
+           	 <div class="row" style="margin-top:5px; margin-left:1010px; margin-bottom:10px;">
+        	 <input type="password" size="10" name="password" id="password" placeholder="비밀번호" required>
+        	   <input type="submit" value="등록">
+
+        </div>    
             <input type="hidden" name="wno" value="${vo.wno}">
             <input type="hidden" name="page" value="${curpage}">
             <input type="hidden" name="loc" value="${loc}">
-            <input type="submit" value="등록">
+          
         </div>
+       <hr>
     </form>
     </c:if>
 
     <div class="comment-list">
         <c:forEach var="rvo" items="${rlist}" varStatus="loop" >
            <div class="comment" data-index="${loop.index}">
+   			
    			 <div class="comment-header">
-       		 <span>${rvo.userid }</span>, <span>${rvo.dbday}</span>
-   			     <div class="comment-actions" style="float:right;">
+       		 <span>
+       		 <c:if test="${rvo.group_tab>0 }">
+       		
+       		 
+       		 <c:forEach var="i" begin="1" end="${rvo.group_tab }">
+   			 &nbsp;&nbsp;&nbsp;
+   			 </c:forEach>
+   			 
+       		 
+       	
+   			 </c:if>
+       		
+       		 ${rvo.userid }
+       		 
+       		 </span> 
+   			     <div class="comment-actions" style="float:right; height:20px;">
    			     
    			     <c:if test="${sessionScope.id eq rvo.userid }">
-            <button class="modifyBtn">수정</button>
-            <button class="deleteBtn">삭제</button>
+            <button class="modifyBtn btn btn-sm btn-info">수정</button>
+            <button class="deleteBtn btn btn-sm btn-info">삭제</button>
             </c:if>
            <c:if test="${sessionScope.id != rvo.userid && sessionScope.id != null}">
-            <button class="replyBtn">답글</button>
+            <button class="replyBtn btn btn-sm btn-info">답글</button>
+           
             </c:if>
+            
         </div>
+        
     </div>
-    <p>${rvo.rcontent}</p>
-   					
-                <div style="display: none;" class="addreply">
-                    <form action="replyInsert.do" method="post">
-                        <input type="text" size="80" name="rcontent" placeholder="댓글을 입력해주세요" required>
-                        <input type="password" name="password" placeholder="비밀번호" required>
-                        <input type="hidden" name="wno" value="${vo.wno}">
-                        <input type="hidden" name="page" value="${curpage}">
-                        <input type="hidden" name="loc" value="${loc}">
-                        <input type="submit" value="등록">
-                    </form>
-                </div>
-               
+   				
+   			
+   				
+   			<div class="mainContent">
+   			<c:if test="${rvo.group_tab>0 }">
+       		 <c:forEach var="i" begin="1" end="${rvo.group_tab }">
+   			 &nbsp;&nbsp;&nbsp;
+   			 </c:forEach>
+   			 </c:if>
+   			
+  			  <span class="mc">${rvo.rcontent}</span>
+    			  <span style="float:right;" class="dbday">${rvo.dbday }</span>
+   			</div>
+   			
+   			
+   			
                 
+               
+         <div style="display: none;" class="addreply">
+           
+           <form id="commentForm" action="addReply.do" method="post">
+         <c:if test="${rvo.group_tab>0 }">
+       		 <c:forEach var="i" begin="1" end="${rvo.group_tab }">
+   			 &nbsp;&nbsp;&nbsp;
+   			 </c:forEach>
+   			 </c:if>	
+        	<textarea rows="4" cols="70" name="addcontent" id="addcontent" placeholder="답변을 입력해주세요" required></textarea>
+           	 <div class="row" style="margin-top:5px; margin-left:555px; margin-bottom:10px;">
+           	 <c:if test="${rvo.group_tab>0 }">
+       		 <c:forEach var="i" begin="1" end="${rvo.group_tab }">
+   			 &nbsp;&nbsp;&nbsp;
+   			 </c:forEach>
+   			 </c:if>	
+        		 <input type="password" size="10" name="addpassword" id="addrpassword" placeholder="비밀번호" required>
+        	     <input type="submit" value="등록">
+       	    </div>    
+          	  <input type="hidden" name="wno" value="${vo.wno}">
+          	  <input type="hidden" name="page" value="${curpage}">
+          	  <input type="hidden" name="loc" value="${loc}">
+          	  <input type="hidden" name="rno" value="${rvo.rno}">
+    	</form>
+       </div>
+      
               
-                	 	<form action="replyInsert.do" method="post">
+              
+                	 	<form action="replyDelete.do" method="post">
                 	 	<div class="dpassword" style="display:none;">
+                	 	<c:if test="${rvo.group_tab>0 }">
+       						 <c:forEach var="i" begin="1" end="${rvo.group_tab }">
+   								 &nbsp;&nbsp;&nbsp;
+   							 </c:forEach>
+   				 	   </c:if>
                 		<input type="password" name="dpassword" placeholder="비밀번호"  required>
+                		 <input type="hidden" name="wno" value="${vo.wno}">
+          				  <input type="hidden" name="page" value="${curpage}">
+          				  <input type="hidden" name="loc" value="${loc}">
+          	 			 <input type="hidden" name="rno" value="${rvo.rno}">
                 		<button>삭제</button>
                 		</div>
                 	</form>
                 	
                 	
-                	<div  style="display: none;"class="modifyreply">
-                    <form action="replyInsert.do" method="post">
-                        <input type="text" size="80" name="rcontent" value="${rvo.rcontent }" required>
-                        <input type="password" name="password" placeholder="비밀번호" required>
-                        <input type="hidden" name="wno" value="${vo.wno}">
-                        <input type="hidden" name="page" value="${curpage}">
-                        <input type="hidden" name="loc" value="${loc}">
-                        <input type="submit" value="등록">
-                    </form>
-                </div>
                 
-                 <hr>
+                
+         <div style="display: none;" class="modifyreply">
+         	
+         	
+           <form id="commentForm" action="replyUpdate.do" method="post">
+           		<c:if test="${rvo.group_tab>0 }">
+       		 <c:forEach var="i" begin="1" end="${rvo.group_tab }">
+   			 &nbsp;&nbsp;&nbsp;
+   			 </c:forEach>
+   			 </c:if>
+           
+            	<textarea rows="4" cols="70" name="upcontent" id="upcontent"  required>${rvo.rcontent }</textarea>
+           	 <div class="row" style="margin-top:5px; margin-left:555px; margin-bottom:10px;">
+           	 			<c:if test="${rvo.group_tab>0 }">
+       		 <c:forEach var="i" begin="1" end="${rvo.group_tab }">
+   			 &nbsp;&nbsp;&nbsp;
+   			 </c:forEach>
+   			 </c:if>
+           	 
+        		 <input type="password" size="10" name="uppassword" id="uppassword" placeholder="비밀번호" required>
+        	     <input type="submit" value="수정">
+
+       	    </div>    
+          	  <input type="hidden" name="wno" value="${vo.wno}">
+          	  <input type="hidden" name="page" value="${curpage}">
+          	  <input type="hidden" name="loc" value="${loc}">
+          	   <input type="hidden" name="rno" value="${rvo.rno}">
+    	  </form>
+       </div>
+          <hr>
             </div>
         </c:forEach>
     </div>

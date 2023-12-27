@@ -330,7 +330,7 @@ public ProductVO productDetail(int pno) {
 		ps=conn.prepareStatement(sql);
 		ps.executeUpdate();
 		
-		sql="SELECT pno,p_name,p_lower_price,p_percent,p_category,p_hit,p_image,p_intprice,p_price,p_expire_date,p_shipment,p_stack,p_like,p_detail_image from product_detail where pno="+pno;
+		sql="SELECT pno,p_name,p_lower_price,p_percent,p_category,p_hit,p_image,p_intprice,p_price,p_expire_date,p_shipment,p_stack,p_like,p_detail_image,p_intlowerprice from product_detail where pno="+pno;
 			ps=conn.prepareStatement(sql);
 			ResultSet rs=ps.executeQuery();
 			rs.next();
@@ -350,6 +350,7 @@ public ProductVO productDetail(int pno) {
 			vo.setP_stack(rs.getInt(12));
 			vo.setP_like(rs.getInt(13));
 			vo.setP_detail_image(rs.getString(14));
+			vo.setP_intlowerprice(rs.getInt(15));
 			rs.close();
 		
 	} catch (Exception e) {
@@ -445,6 +446,93 @@ public List<ProductVO> productSubImage(int pno){
 		}
 		rs.close();
 		
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	
+	return list;
+}
+
+public List<ProductVO> productRelativeList(int pno){
+	List<ProductVO>list =new ArrayList<ProductVO>();
+		try {
+			
+			conn=dbconn.getConnection();
+		
+			String sql="SELECT p_category FROM product_detail where pno="+pno;
+			ps=conn.prepareStatement(sql);
+			ResultSet rs=ps.executeQuery();
+			rs.next();
+			String ct=rs.getString(1);
+			rs.close();
+			
+			
+			sql="SELECT pno,p_image,p_name,p_lower_price,num "
+						+"FROM(SELECT pno,p_image,p_name,p_lower_price,ROWNUM as num "
+						+"FROM (SELECT pno,p_image,p_name,p_lower_price FROM product_detail "
+						+"WHERE p_category=? ORDER BY p_hit DESC)) "
+						+"WHERE num BETWEEN 1 AND 5";
+			
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, ct);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				ProductVO vo =new ProductVO();
+				
+				vo.setPno(rs.getInt(1));
+				vo.setP_image(rs.getString(2));
+				vo.setP_name(rs.getString(3));
+				vo.setP_lower_price(rs.getString(4));
+
+				list.add(vo);	
+				
+			}
+			rs.close();
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally {
+			dbconn.disConnection(conn, ps);
+		}
+	
+	return list;
+}
+
+
+public List<ProductVO> highSaleList(){
+	List<ProductVO> list= new ArrayList<ProductVO>();
+	try {
+		conn=dbconn.getConnection();
+		String sql="SELECT pno,p_image,p_name,p_price,p_lower_price,p_percent,num "
+					+"FROM(SELECT pno,p_image,p_name,p_price,p_lower_price,p_percent,ROWNUM as num "
+					+"FROM (SELECT pno,p_image,p_name,p_price,p_lower_price,p_percent "
+					+"FROM product_detail "
+					+"ORDER BY p_intpercent DESC))"
+					+"WHERE num BETWEEN 1 AND 9";
+		
+		ps=conn.prepareStatement(sql);
+		ResultSet rs=ps.executeQuery();
+		
+		while(rs.next()) {
+			ProductVO vo=new ProductVO();
+			vo.setPno(rs.getInt(1));
+			vo.setP_image(rs.getString(2));
+			vo.setP_name(rs.getString(3));
+			vo.setP_price(rs.getString(4));
+			vo.setP_lower_price(rs.getString(5));
+			vo.setP_percent(rs.getString(6));
+			list.add(vo);
+			
+		}
+		rs.close();
+					
 	} catch (Exception e) {
 		// TODO: handle exception
 		e.printStackTrace();

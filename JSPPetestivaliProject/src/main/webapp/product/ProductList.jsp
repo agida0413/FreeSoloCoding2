@@ -122,32 +122,11 @@
                         </center>
                     </div>
                        
-                    	
-               
-                                  
-                                
-                              
-                        
-                        
-                              
-                           
-                  
-                      
-                        
-                                
-                                
-                            
-                               
+                    
                    
                 </div>
     
     <!-- Product Section End -->
-
-   
-
-    
-    
-
 
 </body>
 

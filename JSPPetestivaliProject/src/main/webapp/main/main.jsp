@@ -56,8 +56,11 @@
     <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../css/style.css" type="text/css">
         <link rel="stylesheet" href="../css/product.css" type="text/css">
-        <link rel="stylesheet" href="../css/product_detail.css" type="text/css">
+        <link rel="stylesheet" href="../css/product_detail.css?no=123213144444" type="text/css">
         <link rel="stylesheet" href="../css/walk.css" type="text/css">
+        <link rel="stylesheet" href="../css/productCategory.css">
+         <link rel="stylesheet" href="../css/walk.css" type="text/css">
+        	
 </head>
 <body>
 	<!-- header -->
@@ -76,5 +79,8 @@
     <script src="../js/mixitup.min.js"></script>
     <script src="../js/owl.carousel.min.js"></script>
     <script src="../js/main.js"></script>
+    <script src="../js/product_detail.js"></script>
+   <script src="../js/productCategory.js"></script>
+     <script src="../js/walkReply.js"></script>
 </body>
 </html>

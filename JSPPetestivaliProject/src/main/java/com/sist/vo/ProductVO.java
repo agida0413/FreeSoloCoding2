@@ -4,7 +4,7 @@ public class ProductVO {
 
 	
 
-	private int p_stack,p_like,p_hit,p_review_num,pno,p_intprice,p_intpercent;
+	private int p_stack,p_like,p_hit,p_review_num,pno,p_intprice,p_intpercent,p_intlowerprice;
 	public int getPno() {
 		return pno;
 	}
@@ -13,6 +13,12 @@ public class ProductVO {
 	}
 	public void setP_intprice(int p_intprice) {
 		this.p_intprice = p_intprice;
+	}
+	public int getP_intlowerprice() {
+		return p_intlowerprice;
+	}
+	public void setP_intlowerprice(int p_intlowerprice) {
+		this.p_intlowerprice = p_intlowerprice;
 	}
 	public int getP_intpercent() {
 		return p_intpercent;
