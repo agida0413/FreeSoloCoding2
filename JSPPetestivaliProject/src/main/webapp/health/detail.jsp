@@ -119,7 +119,7 @@
 						<td width="35%" align="center"><span class="icon_clock_alt"></span>
 							<h4>Reservation</h4> <a href="#">예약하기</a></td>
 				</table>
-				<a href="../hspt/find.do" class="primary-btn">목 록</a>
+				<a href="../health/find.do" class="primary-btn">목 록</a>
 			</div>
 		</div>
 	</section>

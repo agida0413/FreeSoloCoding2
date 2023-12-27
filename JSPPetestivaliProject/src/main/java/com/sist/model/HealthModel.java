@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sist.controller.RequestMapping;
-import com.sist.dao.HospitalDAO;
+import com.sist.dao.HealthDAO;
 import com.sist.vo.*;
 
-public class HospitalModel {
-	@RequestMapping("hspt/hsptmain.do")
+public class HealthModel {
+	@RequestMapping("health/hsptmain.do")
 	public String hsptMainList(HttpServletRequest request,HttpServletResponse response)
 	{
 		try {
@@ -31,11 +31,11 @@ public class HospitalModel {
 		String fd=request.getParameter("fd");
 		String st=request.getParameter("st"); // 파라미터값을 받음
 		 
-		HospitalDAO dao=new HospitalDAO(); 
-		List<HospitalVO> list=new ArrayList<HospitalVO>();
+		HealthDAO dao=new HealthDAO(); 
+		List<HealthVO> list=new ArrayList<HealthVO>();
 		int totalpage=0;
 		int curpage=Integer.parseInt(page); 
-		List<HospitalVO> statelist=dao.HsptStateData();
+		List<HealthVO> statelist=dao.HsptStateData();
 		
 		if(st==null && fd==null) // 검색하지 않았을 때
 		{	
@@ -59,13 +59,13 @@ public class HospitalModel {
 		request.setAttribute("list", list);
 		request.setAttribute("statelist", statelist);
 	
-	request.setAttribute("hspt_jsp", "../hspt/find.jsp");
-	request.setAttribute("main_jsp", "../hspt/hsptmain.jsp");
+	request.setAttribute("hspt_jsp", "../health/find.jsp");
+	request.setAttribute("main_jsp", "../health/hsptmain.jsp");
 
 		return "../main/main.jsp";
 	}
 	
-@RequestMapping("hspt/find.do")
+@RequestMapping("health/find.do")
 	public String hsptTotalList(HttpServletRequest request,HttpServletResponse response)
 	{
 	try {
@@ -82,11 +82,11 @@ public class HospitalModel {
 	String fd=request.getParameter("fd");
 	String st=request.getParameter("st"); // 파라미터값을 받음
 	 
-	HospitalDAO dao=new HospitalDAO(); 
-	List<HospitalVO> list=new ArrayList<HospitalVO>();
+	HealthDAO dao=new HealthDAO(); 
+	List<HealthVO> list=new ArrayList<HealthVO>();
 	int totalpage=0;
 	int curpage=Integer.parseInt(page); 
-	List<HospitalVO> statelist=dao.HsptStateData();
+	List<HealthVO> statelist=dao.HsptStateData();
 	
 	if(st==null && fd==null) // 검색하지 않았을 때
 	{	
@@ -109,13 +109,13 @@ public class HospitalModel {
 	request.setAttribute("endPage", endPage);
 	request.setAttribute("list", list);
 	request.setAttribute("statelist", statelist);
-	request.setAttribute("hspt_jsp", "../hspt/hsptsearch.jsp");
-	request.setAttribute("main_jsp", "../hspt/hsptmain.jsp");
+	request.setAttribute("hspt_jsp", "../health/hsptsearch.jsp");
+	request.setAttribute("main_jsp", "../health/hsptmain.jsp");
 
 		return "../main/main.jsp";
 	}
 
-@RequestMapping("hspt/hsptsearch.do")
+@RequestMapping("health/hsptsearch.do")
 public String hsptSearchDetail(HttpServletRequest request,HttpServletResponse response)
 {
 try {
@@ -132,9 +132,9 @@ if(page==null)
 int curpage=Integer.parseInt(page); 
 String fd=request.getParameter("fd");
 String st=request.getParameter("st"); // 파라미터값을 받음
-System.out.println(st);
-HospitalDAO dao=new HospitalDAO(); 
-List<HospitalVO> list=new ArrayList<HospitalVO>();
+//System.out.println(st);
+HealthDAO dao=new HealthDAO(); 
+List<HealthVO> list=new ArrayList<HealthVO>();
 int totalpage=dao.hsptSearchTotalPage(fd, st);
 
 if(st==null) // 검색하지 않았을 때
@@ -143,12 +143,12 @@ if(st==null) // 검색하지 않았을 때
 }
 
 list=dao.hsptSearchList(curpage,fd, st);
-System.out.println(list.size());
+//System.out.println(list.size());
 
 
 	
 
-List<HospitalVO> statelist=dao.HsptStateData();
+List<HealthVO> statelist=dao.HsptStateData();
 
 
 final int BLOCK=10;
@@ -169,27 +169,27 @@ request.setAttribute("startPage", startPage);
 request.setAttribute("endPage", endPage);
 request.setAttribute("list", list);
 request.setAttribute("statelist", statelist);
-request.setAttribute("hspt_jsp", "../hspt/hsptsearch.jsp");
-request.setAttribute("main_jsp", "../hspt/hsptmain.jsp");
+request.setAttribute("hspt_jsp", "../health/hsptsearch.jsp");
+request.setAttribute("main_jsp", "../health/hsptmain.jsp");
 
 	return "../main/main.jsp";
 }
 
-@RequestMapping("hspt/detail.do")
+@RequestMapping("health/detail.do")
 public String hsptDetailList(HttpServletRequest request,HttpServletResponse response)
 {
 	String no=request.getParameter("no");
-	HospitalDAO dao=HospitalDAO.newInstance();
-	HospitalVO vo=dao.hsptDetailList(Integer.parseInt(no));
+	HealthDAO dao=HealthDAO.newInstance();
+	HealthVO vo=dao.hsptDetailList(Integer.parseInt(no));
 	
 	request.setAttribute("no", no);
 	request.setAttribute("vo", vo);
 	
-	request.setAttribute("main_jsp", "../hspt/detail.jsp");
+	request.setAttribute("main_jsp", "../health/detail.jsp");
 	return "../main/main.jsp";
 }
 
-@RequestMapping("hspt/newsmain.do")
+@RequestMapping("health/newsmain.do")
 public String hsptNewsMain(HttpServletRequest request, HttpServletResponse response)
 {
 	String page=request.getParameter("page");
@@ -197,8 +197,8 @@ public String hsptNewsMain(HttpServletRequest request, HttpServletResponse respo
 		page="1";
 	int curpage=Integer.parseInt(page);
 	
-	HospitalDAO dao=new HospitalDAO();
-	List<HospitalVO> list3=dao.hsptNewsList(curpage);
+	HealthDAO dao=new HealthDAO();
+	List<HealthVO> list3=dao.hsptNewsList(curpage);
 	int totalpage=dao.newsearchTotalPage();
 	
 	final int BLOCK=10;
@@ -215,18 +215,17 @@ public String hsptNewsMain(HttpServletRequest request, HttpServletResponse respo
 	request.setAttribute("totalpage", totalpage);
 	request.setAttribute("curpage", curpage);
 	request.setAttribute("list3", list3);
-	request.setAttribute("main_jsp", "../hspt/newsmain.jsp");
+	request.setAttribute("main_jsp", "../health/newsmain.jsp");
 	return "../main/main.jsp";
 }
-@RequestMapping("hspt/newsdetail.do")
+@RequestMapping("health/newsdetail.do")
 public String newsDetailList(HttpServletRequest request,HttpServletResponse response)
 {
 	
 	
 	String no=request.getParameter("no");
-	System.out.println(no);
-	HospitalDAO dao=HospitalDAO.newInstance();
-	HospitalVO vo=dao.NewsDetailList(Integer.parseInt(no));
+	HealthDAO dao=HealthDAO.newInstance();
+	HealthVO vo=dao.NewsDetailList(Integer.parseInt(no));
 	
 	
 //	System.out.println(dao);
@@ -235,7 +234,7 @@ public String newsDetailList(HttpServletRequest request,HttpServletResponse resp
 	request.setAttribute("no", no);
 	request.setAttribute("vo", vo);
 	
-	request.setAttribute("main_jsp", "../hspt/newsdetail.jsp");
+	request.setAttribute("main_jsp", "../health/newsdetail.jsp");
 	return "../main/main.jsp";
 }
 

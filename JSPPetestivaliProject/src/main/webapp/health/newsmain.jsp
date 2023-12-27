@@ -135,7 +135,7 @@
                                             </h5>
                                         </div>
                                        
-                                        <a href="../hspt/newsdetail.do?no=${vo.no2 }" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
+                                        <a href="../health/newsdetail.do?no=${vo.no2 }" class="blog__btn">READ MORE <span class="arrow_right"></span></a>
                                     </a>
                                 </div>
                             </div>

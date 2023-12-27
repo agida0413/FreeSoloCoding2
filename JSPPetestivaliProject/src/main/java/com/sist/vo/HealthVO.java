@@ -1,6 +1,6 @@
 package com.sist.vo;
 
-public class HospitalVO {
+public class HealthVO {
 	private int no;
 	private String hospital_name,hospital_phone,hospital_address, state;
 	

@@ -18,6 +18,12 @@
 .contact-form{
 padding: 0px;
 }
+.blog__details__text img{
+	border-radius: 10px;
+	width: 800px;
+	height: 500px;
+	
+}
 </style>
   
 </head>
@@ -51,7 +57,7 @@ padding: 0px;
                             <div class="blog__sidebar__recent">
                                 <a href="#" class="blog__sidebar__recent__item">
                                     <div class="blog__sidebar__recent__item__pic">
-                                        <img src="# alt="">
+                                        <img src="#" alt="">
                                     </div>
                                     <div class="blog__sidebar__recent__item__text">
                                         <h6>09 Kinds Of Vegetables<br /> Protect The Liver</h6>
@@ -83,17 +89,14 @@ padding: 0px;
                 </div>
                 <div class="col-lg-8 col-md-7 order-md-1 order-1">
                     <div class="blog__details__text">
-                        <img src="../img/do.jpg" alt="">
-                        
+                        <img src=${vo.news_img }>
+                         <h4>
+                        ${vo.news_subject }
+                        </h4><br>
                         <p>
                         ${vo.news_content }
                         </p>
-                        <h3>The corner window forms a place within a place that is a resting point within the large
-                            space.</h3>
-                        <p>The study area is located at the back with a view of the vast nature. Together with the other
-                            buildings, a congruent story has been managed in which the whole has a reinforcing effect on
-                            the components. The use of materials seeks connection to the main house, the adjacent
-                            stables</p>
+                        
                     </div>
                   
                 </div>

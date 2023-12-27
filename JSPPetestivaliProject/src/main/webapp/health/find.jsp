@@ -60,7 +60,7 @@ window.onload=function(){
 				<tr>
 					<td width=10% class="text-center">${vo.no }</td>
 					<td width=35% class="text-center" id="post"><a
-						href="../hspt/detail.do?no=${vo.no }">${vo.hospital_name }</a></td>
+						href="../health/detail.do?no=${vo.no }">${vo.hospital_name }</a></td>
 					<td width=40% class="text-center">${vo.hospital_address }</td>
 					<td width=15% class="text-center">${vo.hospital_phone }</td>
 				</tr>

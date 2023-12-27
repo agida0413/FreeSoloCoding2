@@ -2,25 +2,25 @@ package com.sist.dao;
 import java.util.*;
 import java.sql.*;
 import com.sist.dbcp.*;
-import com.sist.vo.HospitalVO;
+import com.sist.vo.HealthVO;
 
-public class HospitalDAO {
+public class HealthDAO {
 	private Connection conn;
 	private PreparedStatement ps;
 	private CreateDBCPconnection dbconn=new CreateDBCPconnection();
-	private static HospitalDAO dao;
+	private static HealthDAO dao;
 	
 	private int row_size=12;
-	public static HospitalDAO newInstance()
+	public static HealthDAO newInstance()
 	{
 		if(dao==null)
-			dao=new HospitalDAO();
+			dao=new HealthDAO();
 		return dao;
 	}
 	// 병원 전체 리스트 출력
-	public List<HospitalVO> hsptTotalList(int page)
+	public List<HealthVO> hsptTotalList(int page)
 	{
-		List<HospitalVO> list=new ArrayList<HospitalVO>();
+		List<HealthVO> list=new ArrayList<HealthVO>();
 		
 		int start=(page*row_size)-(row_size-1);
 		int end=(page*row_size);
@@ -38,7 +38,7 @@ public class HospitalDAO {
 				ResultSet rs=ps.executeQuery();
 				while(rs.next())
 				{
-					HospitalVO vo=new HospitalVO();
+					HealthVO vo=new HealthVO();
 					vo.setNo(rs.getInt(1));
 					vo.setHospital_name(rs.getString(2));
 					vo.setHospital_address(rs.getString(3));
@@ -87,10 +87,10 @@ public class HospitalDAO {
 		return total;
 	}
 	// 병원 검색 페이지 출력 
-	public List<HospitalVO> hsptSearchList(int page,String fd,String st)
+	public List<HealthVO> hsptSearchList(int page,String fd,String st)
 	{
 		
-		List<HospitalVO> list=new ArrayList<HospitalVO>();
+		List<HealthVO> list=new ArrayList<HealthVO>();
 		try
 		{
 			conn=dbconn.getConnection();
@@ -129,7 +129,7 @@ public class HospitalDAO {
 	        }
 			ResultSet rs = ps.executeQuery();
 	        while (rs.next()) {
-	            HospitalVO vo = new HospitalVO();
+	            HealthVO vo = new HealthVO();
 	            vo.setNo(rs.getInt(1));
 	            vo.setHospital_name(rs.getString(2));
 	            vo.setHospital_address(rs.getString(3));
@@ -193,9 +193,9 @@ public class HospitalDAO {
 
 	
 	// 병원찾기상세페이지 출력
-	public HospitalVO hsptDetailList(int no)
+	public HealthVO hsptDetailList(int no)
 	{
-		HospitalVO vo=new HospitalVO();
+		HealthVO vo=new HealthVO();
 		try
 		{
 			conn=dbconn.getConnection();
@@ -222,9 +222,9 @@ public class HospitalDAO {
 	}
 		
 		// 병원 시도 정보 (Model=>list2)
-		public List<HospitalVO> HsptStateData()
+		public List<HealthVO> HsptStateData()
 		{
-			List<HospitalVO> list=new ArrayList<HospitalVO>();
+			List<HealthVO> list=new ArrayList<HealthVO>();
 			try
 			{
 				conn=dbconn.getConnection();
@@ -235,7 +235,7 @@ public class HospitalDAO {
 				   
 				   while(rs.next())
 				   {
-					   HospitalVO vo=new HospitalVO();
+					   HealthVO vo=new HealthVO();
 					   vo.setState(rs.getString(1));
 					   list.add(vo);
 				   }
@@ -254,18 +254,18 @@ public class HospitalDAO {
 		}
 	
 	// 뉴스 전체 데이터
-	public List<HospitalVO> hsptNewsList(int page)
+	public List<HealthVO> hsptNewsList(int page)
 	{
 		
-		List<HospitalVO> list=new ArrayList<HospitalVO>();
+		List<HealthVO> list=new ArrayList<HealthVO>();
 		try
 		{
 			conn=dbconn.getConnection();
-			String sql="SELECT no,news_subject,news_img,num "
-					+ "FROM(SELECT no,news_subject,news_img,ROWNUM AS num "
-					+ "FROM(SELECT no,news_subject,news_img "
+			String sql="SELECT pno,news_subject,news_img,num "
+					+ "FROM(SELECT pno,news_subject,news_img,ROWNUM AS num "
+					+ "FROM(SELECT pno,news_subject,news_img "
 					+ "FROM petnews "
-					+ "ORDER BY no ASC)) "
+					+ "ORDER BY pno ASC)) "
 					+ "WHERE num BETWEEN ? AND ?";
 			int start=(page*row_size)-(row_size-1);
 			int end=(page*row_size);
@@ -275,7 +275,7 @@ public class HospitalDAO {
 			ResultSet rs=ps.executeQuery();
 			while(rs.next())
 			{
-				HospitalVO vo=new HospitalVO();
+				HealthVO vo=new HealthVO();
 				vo.setNo2(rs.getInt(1));
 				vo.setNews_subject(rs.getString(2));
 				vo.setNews_img(rs.getString(3));
@@ -332,14 +332,16 @@ public class HospitalDAO {
 					return total;
 				}
 
-	public HospitalVO NewsDetailList(int no)
+	public HealthVO NewsDetailList(int no)
 	{
-		HospitalVO vo=new HospitalVO();
+		HealthVO vo=new HealthVO();
 		try
 		{
 			conn=dbconn.getConnection();
-			String sql="SELECT * FROM petnews "
-					+ "WHERE no="+no;
+			String sql="SELECT pn.pno,news_subject,news_img,news_content "
+					+ "FROM petnews pn "
+					+ "INNER JOIN petnews_sub pns ON pn.pno=pns.pno "
+					+ "WHERE pn.pno="+no;
 			ps=conn.prepareStatement(sql);
 			ResultSet rs=ps.executeQuery();
 			rs.next();
@@ -347,7 +349,6 @@ public class HospitalDAO {
 			vo.setNews_subject(rs.getString(2));
 			vo.setNews_img(rs.getString(3));
 			vo.setNews_content(rs.getString(4));
-			vo.setNews_subtitle(rs.getString(5));
 			rs.close();	
 		}
 		catch(Exception ex)

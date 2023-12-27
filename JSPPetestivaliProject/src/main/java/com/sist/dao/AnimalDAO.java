@@ -2,8 +2,7 @@ package com.sist.dao;
 import java.util.*;
 
 import com.sist.dbcp.CreateDBCPconnection;
-import com.sist.vo.AnimalVO;
-
+import com.sist.vo.*;
 import java.sql.*;
 public class AnimalDAO {
 	private Connection conn;

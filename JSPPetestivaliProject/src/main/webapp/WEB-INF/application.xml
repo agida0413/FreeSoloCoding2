@@ -4,7 +4,7 @@
    <bean id="funeralDetail" class="com.sist.model.FuneralDetailModel"></bean>
    <bean id="animal" class="com.sist.model.AnimalModel"></bean>
    <bean id="product" class="com.sist.model.ProductModel"></bean>
-   <bean id="Hospital" class="com.sist.model.HospitalModel"></bean>
+   <bean id="Health" class="com.sist.model.HealthModel"></bean>
    <bean id="user" class="com.sist.model.UserModel"></bean>
     <bean id="mypage" class="com.sist.model.MypageModel"></bean>
     <bean id="walk" class="com.sist.model.WalkModel"></bean>
