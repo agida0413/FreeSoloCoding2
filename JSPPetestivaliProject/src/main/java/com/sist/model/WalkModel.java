@@ -1,5 +1,6 @@
 package com.sist.model;
 
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import com.sist.dao.*;
 import com.sist.vo.ReplyVO;
 import com.sist.vo.UserVO;
 import com.sist.vo.WalkVO;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class WalkModel {
 	@RequestMapping("walk/walkList.do")
@@ -72,6 +75,7 @@ public class WalkModel {
 			
 		
 		//코스별 기능구현 에이젝스.....
+		
 		request.setAttribute("replyAmount", replyAmount);
 		request.setAttribute("rlist", rlist);
 		request.setAttribute("loc", loc);
@@ -84,55 +88,6 @@ public class WalkModel {
 		return "../main/main.jsp";
 	
 }
-	@RequestMapping("walk/replyInsert.do")
-	public String replyInsert(HttpServletRequest request, HttpServletResponse response) {
-		
-		
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		String wno=request.getParameter("wno");
-		String pwd=request.getParameter("password");
-		String rcontent=request.getParameter("rcontent");
-		String loc=request.getParameter("loc");
-		System.out.println(loc);
-		
-		try {
-			loc=URLEncoder.encode(loc,"UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		String page=request.getParameter("page");
-		
-		WalkDAO dao=WalkDAO.newInstance();
-		
-		HttpSession session=request.getSession();
-		String id=(String)session.getAttribute("id");
-		
-	ReplyVO vo =new ReplyVO();
-	
-		
-		
-		vo.setBno(Integer.parseInt(wno));
-		
-		vo.setRcontent(rcontent);
-		
-		vo.setUserid(id);
-		vo.getUserid();
-		
-		
-				dao.walkReplyInsert(vo, pwd);
-		
-		return "redirect:../walk/walkDetail.do?wno="+wno+"&loc="+loc+"&page="+page;
-	
-	}
 	
 	
 	
@@ -267,4 +222,99 @@ public class WalkModel {
 		return "redirect:../walk/walkDetail.do?wno="+wno+"&loc="+loc+"&page="+page;
 	
 	}
+	
+	@RequestMapping("walk/walkReplyAjaxList.do")
+	public void walkReplyAjaxList(HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		  try
+		  {
+			  request.setCharacterEncoding("UTF-8");
+		  }catch(Exception ex) {}
+		  String wno=request.getParameter("wno");
+		  System.out.println("dong:"+wno);
+		  WalkDAO dao=WalkDAO.newInstance();
+		 
+		  int replyAmount=dao.walkReplyAmount(Integer.parseInt(wno));
+		  HttpSession session =request.getSession();
+		  // JSON변경 
+		  // VO => {} ==> JSONObject
+		  // List => [{},{}...] ==> JSONArray
+		  JSONArray arr=new JSONArray();//[]
+		  //[{count:0},]
+		  if(replyAmount==0)
+		  {
+			  JSONObject obj=new JSONObject();
+			  obj.put("replyAmount", replyAmount);
+			  arr.add(obj);
+		  }
+		  else
+		  {
+			  int i=0;
+			  List<ReplyVO>list= dao.walkReplyListData(Integer.parseInt(wno));
+			  for(ReplyVO vo:list)
+			  {
+				  JSONObject obj=new JSONObject();
+				  // {zipcode:111,address:'...',count:2},{}
+				  obj.put("rno", vo.getRno());
+				  obj.put("rcontent", vo.getRcontent());
+				  obj.put("dbday", vo.getDbday());
+				  obj.put("like_count", vo.getLike_count());
+				  obj.put("group_tab", vo.getGroup_tab());
+				  obj.put("userid", vo.getUserid());
+				  obj.put("bno", vo.getBno());
+				  
+
+
+
+				  if(i==0)
+				  {
+					  obj.put("replyAmount", replyAmount);
+					  obj.put("sessionID", session.getAttribute("id"));
+				  }
+				  arr.add(obj);
+				  i++;
+			  }
+		  }
+		  System.out.println(arr.toJSONString());
+		  try
+		  {
+			  response.setContentType("application/x-www-form-urlencoded; charset=UTF-8");
+			  PrintWriter out=response.getWriter();
+			  out.write(arr.toJSONString());
+		  }catch(Exception ex) {}
+		  
+		
+	
+	}
+	
+	
+	@RequestMapping("walk/walkReplyAjaxAdd.do")
+	public void walkReplyAjaxAdd(HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		  try
+		  {
+			  request.setCharacterEncoding("UTF-8");
+		  }catch(Exception ex) {}
+		String rcontent=request.getParameter("rcontent");
+		String pwd=request.getParameter("pwd");
+		String wno=request.getParameter("wno");
+		System.out.println(rcontent+pwd);
+		 
+		WalkDAO dao=WalkDAO.newInstance();
+		 ReplyVO vo=new ReplyVO();
+		 HttpSession session =request.getSession();
+		 String id=(String)session.getAttribute("id");
+		  
+		vo.setUserid(id);
+		vo.setRcontent(rcontent);
+		vo.setBno(Integer.parseInt(wno));
+		dao.walkReplyInsert(vo, pwd);
+		  
+		
+
+	
+}
+	
 }
