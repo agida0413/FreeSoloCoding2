@@ -91,96 +91,9 @@ public class WalkModel {
 	
 	
 	
-	@RequestMapping("walk/addReply.do")
-	public String addRePly(HttpServletRequest request, HttpServletResponse response) {
-		
-		
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String rno=request.getParameter("rno");
-		String wno=request.getParameter("wno");
-		String addpwd=request.getParameter("addpassword");
-		String addcontent=request.getParameter("addcontent");
-		String loc=request.getParameter("loc");
-		String page=request.getParameter("page");
-		
-		WalkDAO dao=WalkDAO.newInstance();
-		
-		
-		
-		try {
-			loc=URLEncoder.encode(loc,"UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		HttpSession session=request.getSession();
-		String id=(String)session.getAttribute("id");
-		
-		ReplyVO vo =new ReplyVO();
-		
-		
-		
-		
 
 	
-		
-		
-		vo.setBno(Integer.parseInt(wno));
-		vo.setRno(Integer.parseInt(rno));
-		vo.setRcontent(addcontent);
-		
-		vo.setUserid(id);
 	
-		dao.walkAddReplyInsert(addpwd, vo);
-	
-		
-		return "redirect:../walk/walkDetail.do?wno="+wno+"&loc="+loc+"&page="+page;
-	
-	}
-	
-	
-	@RequestMapping("walk/replyDelete.do")
-	public String replytDelete(HttpServletRequest request, HttpServletResponse response) {
-		
-		
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String rno=request.getParameter("rno");
-		String wno=request.getParameter("wno");
-		String dpwd=request.getParameter("dpassword");
-		String loc=request.getParameter("loc");
-		String page=request.getParameter("page");
-		
-		WalkDAO dao=WalkDAO.newInstance();
-		
-		
-		
-		try {
-			loc=URLEncoder.encode(loc,"UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-			dao.walkDeleteReply(Integer.parseInt(rno), dpwd);
-		
-	
-		return "redirect:../walk/walkDetail.do?wno="+wno+"&loc="+loc+"&page="+page;
-	
-	}
 	
 	
 	
@@ -252,8 +165,13 @@ public class WalkModel {
 		  {
 			  int i=0;
 			  List<ReplyVO>list= dao.walkReplyListData(Integer.parseInt(wno));
+			  
 			  for(ReplyVO vo:list)
 			  {
+				  String rootId="";
+				  if(vo.getRoot()!=0) {
+				rootId= dao.rootId(vo.getRoot());
+				  }
 				  JSONObject obj=new JSONObject();
 				  // {zipcode:111,address:'...',count:2},{}
 				  obj.put("rno", vo.getRno());
@@ -263,6 +181,10 @@ public class WalkModel {
 				  obj.put("group_tab", vo.getGroup_tab());
 				  obj.put("userid", vo.getUserid());
 				  obj.put("bno", vo.getBno());
+				  obj.put("rootId", rootId);
+				  obj.put("root", vo.getRoot());
+				  obj.put("group_id", vo.getGroup_id());
+				
 				  
 
 
@@ -276,7 +198,7 @@ public class WalkModel {
 				  i++;
 			  }
 		  }
-		  System.out.println(arr.toJSONString());
+		 
 		  try
 		  {
 			  response.setContentType("application/x-www-form-urlencoded; charset=UTF-8");
@@ -311,6 +233,131 @@ public class WalkModel {
 		vo.setRcontent(rcontent);
 		vo.setBno(Integer.parseInt(wno));
 		dao.walkReplyInsert(vo, pwd);
+		  
+		
+
+	
+}
+	
+	
+	@RequestMapping("walk/walkReplyMoreAdd.do")
+	public void walkReplyMoreAjaxAdd(HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		  try
+		  {
+			  request.setCharacterEncoding("UTF-8");
+		  }catch(Exception ex) {}
+		String rcontent=request.getParameter("rcontent");
+		String pwd=request.getParameter("pwd");
+		String wno=request.getParameter("wno");
+		String rno=request.getParameter("rno");
+		 
+		WalkDAO dao=WalkDAO.newInstance();
+		 ReplyVO vo=new ReplyVO();
+		 HttpSession session =request.getSession();
+		 String id=(String)session.getAttribute("id");
+		  
+		vo.setUserid(id);
+		vo.setRcontent(rcontent);
+		vo.setBno(Integer.parseInt(wno));
+		vo.setRno(Integer.parseInt(rno));
+		
+		dao.walkAddReplyInsert(pwd, vo);
+		  
+		
+
+	
+}
+	
+	
+	@RequestMapping("walk/walkReplyDelete.do")
+	public void walkReplyDeleteAjax(HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		  try
+		  {
+			  request.setCharacterEncoding("UTF-8");
+		  }catch(Exception ex) {}
+		
+		String pwd=request.getParameter("pwd");
+		String msg="";
+		String rno=request.getParameter("rno");
+		 	boolean pCheck=false;
+		WalkDAO dao=WalkDAO.newInstance();
+		JSONObject obj=new JSONObject();
+		
+		pCheck = dao.walkDeleteReply(Integer.parseInt(rno), pwd);
+		
+		if (pCheck==false) {
+			msg="비밀번호가 틀렸습니다.";
+			
+			obj.put("msg", msg);
+		}
+		
+		
+		
+		  try
+		  {
+			  response.setContentType("application/x-www-form-urlencoded; charset=UTF-8");
+			  PrintWriter out=response.getWriter();
+			  out.write(obj.toJSONString());
+		  }catch(Exception ex) {}
+		
+		
+		
+		
+	
+		  
+		
+
+	
+}
+	
+	
+	@RequestMapping("walk/walkReplyUpdate.do")
+	public void walkReplyUpdateAjax(HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		  try
+		  {
+			  request.setCharacterEncoding("UTF-8");
+		  }catch(Exception ex) {}
+		
+		String pwd=request.getParameter("pwd");
+		String msg="";
+		String rno=request.getParameter("rno");
+		String upcontent=request.getParameter("upcontent");
+		 	boolean pCheck=false;
+		WalkDAO dao=WalkDAO.newInstance();
+		JSONObject obj=new JSONObject();
+		
+		ReplyVO vo=new ReplyVO();
+		vo.setRno(Integer.parseInt(rno));
+		vo.setRcontent(upcontent);
+		
+		
+		pCheck = dao.walkReplyUpdate(vo, pwd);
+		
+		if (pCheck==false) {
+			msg="비밀번호가 틀렸습니다.";
+			
+			obj.put("msg", msg);
+		}
+		
+		
+		
+		  try
+		  {
+			  response.setContentType("application/x-www-form-urlencoded; charset=UTF-8");
+			  PrintWriter out=response.getWriter();
+			  out.write(obj.toJSONString());
+		  }catch(Exception ex) {}
+		
+		
+		
+		
+	
 		  
 		
 

@@ -195,13 +195,13 @@ public List<ReplyVO> walkReplyListData(int wno){
 	List<ReplyVO>list=new ArrayList<ReplyVO>();
 	try {
 		conn=dbconn.getConnection();
-		String sql="SELECT rno,rcontent,TO_CHAR(rdate,'YYYY-MM-dd HH24:MI:SS'),like_count,group_tab,userid,bno,num "
-					+"FROM (SELECT rno,rcontent,rdate,like_count,group_tab,userid,bno,rownum as num "
-					+"FROM (SELECT rno,rcontent,rdate,like_count,group_tab,userid,bno "
-					+"FROM BOARD_REPLY WHERE typeno=2 AND bno="+wno+" ORDER BY GROUP_ID DESC,GROUP_STEP ASC)) "
+		String sql="SELECT rno,rcontent,TO_CHAR(rdate,'YYYY-MM-dd HH24:MI:SS'),like_count,group_tab,userid,bno,root,group_id,num "
+					+"FROM (SELECT rno,rcontent,rdate,like_count,group_tab,userid,bno,root,group_id,rownum as num "
+					+"FROM (SELECT rno,rcontent,rdate,like_count,group_tab,userid,bno,root,group_id "
+					+"FROM BOARD_REPLY WHERE typeno=2 AND bno=? ORDER BY GROUP_ID DESC,GROUP_STEP ASC)) "
 					+"WHERE num BETWEEN 1 AND 10";
 		ps=conn.prepareStatement(sql);
-		
+		ps.setInt(1, wno);
 		ResultSet rs=ps.executeQuery();
 
 		while(rs.next()) {
@@ -213,6 +213,8 @@ public List<ReplyVO> walkReplyListData(int wno){
 			vo.setGroup_tab(rs.getInt(5));
 			vo.setUserid(rs.getString(6));
 			vo.setBno(rs.getInt(7));
+			vo.setRoot(rs.getInt(8));
+			vo.setGroup_id(rs.getInt(9));
 			list.add(vo);
 		}
 		rs.close();
@@ -232,12 +234,15 @@ public int walkReplyAmount(int wno) {
 	int replyAmount=0;
 	try {
 		conn=dbconn.getConnection();
-		String sql="SELECT COUNT(*) FROM BOARD_REPLY WHERE typeno=2 AND bno="+wno;
+		String sql="SELECT COUNT(*) FROM BOARD_REPLY WHERE typeno=2 AND bno=?";
 		ps=conn.prepareStatement(sql);
+		ps.setInt(1, wno);
 		ResultSet rs= ps.executeQuery();
-		rs.next();
+		if(rs.next()) {
 		replyAmount=rs.getInt(1);
+		}
 		rs.close();
+		
 		} catch (Exception e) {
 		// TODO: handle exception
 		e.printStackTrace();
@@ -259,20 +264,31 @@ public void walkAddReplyInsert(String pwd,ReplyVO vo) {
 		int db_gtab=0;
 		int bno=0;
 		int rno=vo.getRno();
-	String	sql="SELECT group_id,group_tab ,group_step,bno FROM BOARD_REPLY WHERE typeno=2 AND rno="+rno;
+	String	sql="SELECT group_id,group_tab ,group_step,bno FROM BOARD_REPLY WHERE typeno=2 AND rno=?";
+	
 	
 				
 		ps=conn.prepareStatement(sql);
+		ps.setInt(1, rno);
 		ResultSet rs=ps.executeQuery();
-		rs.next();
+		
+		if(rs.next()) {
+		
 		db_gi=rs.getInt(1);
 		db_gtab=rs.getInt(2);
 		db_gstep=rs.getInt(3);
 		bno=rs.getInt(4);
-		
+		}
 		rs.close();
 		
+		sql="UPDATE BOARD_REPLY SET "
+				+"group_step=group_step+1 "
+				+"WHERE group_id=? AND group_step>?";
 		
+		ps=conn.prepareStatement(sql);
+		ps.setInt(1, db_gi);
+		ps.setInt(2, db_gstep);
+		ps.executeUpdate();
 		
 		
 		sql="INSERT INTO BOARD_REPLY (rno,rcontent,group_id,group_step,group_tab,root,userid,pwd,bno,typeno) "
@@ -293,8 +309,9 @@ public void walkAddReplyInsert(String pwd,ReplyVO vo) {
 		
 		sql="UPDATE BOARD_REPLY SET "
 				+"depth=depth+1 "
-				+"WHERE rno="+rno;
+				+"WHERE rno=?";
 		ps=conn.prepareStatement(sql);
+		ps.setInt(1, rno);
 		ps.executeUpdate();
 		
 		} catch (Exception e) {
@@ -312,15 +329,19 @@ public boolean walkDeleteReply(int rno,String pwd) {
 	boolean bCheck=false;
 	String db_pwd="";
 	
-	String msg="관리자가 삭제한 게시물입니다.";
+	String msg="삭제한 댓글입니다.";
 	try {
 		conn=dbconn.getConnection();
 		
-			String sql="SELECT pwd FROM BOARD_REPLY WHERE rno="+rno;
+			String sql="SELECT pwd FROM BOARD_REPLY WHERE rno=?";
 			ps=conn.prepareStatement(sql);
+			ps.setInt(1, rno);
 			ResultSet rs=ps.executeQuery();
-			rs.next();
+		
+			if(rs.next()) {
+			
 			db_pwd=rs.getString(1);
+			}
 			rs.close();
 			
 			
@@ -330,17 +351,20 @@ public boolean walkDeleteReply(int rno,String pwd) {
 		int db_root=0;
 		int db_depth=0;
 		
-		sql="select root,depth FROM BOARD_REPLY WHERE rno="+rno;
+		sql="select root,depth FROM BOARD_REPLY WHERE rno=?";
 		ps=conn.prepareStatement(sql);
+		ps.setInt(1, rno);
 		rs=ps.executeQuery();
-		rs.next();
+	if(rs.next()) {
 		db_root=rs.getInt(1);
 		db_depth=rs.getInt(2);
+	}
 		rs.close();
 		
 		if (db_depth==0) {
-				sql="DELETE FROM BOARD_REPLY WHERE rno="+rno;
+				sql="DELETE FROM BOARD_REPLY WHERE rno=?";
 					ps=conn.prepareStatement(sql);
+					ps.setInt(1, rno);
 
 					ps.executeUpdate();
 		}
@@ -350,12 +374,16 @@ public boolean walkDeleteReply(int rno,String pwd) {
 			
 			sql="UPDATE BOARD_REPLY SET "
 					+"rcontent=? "
-				+"WHERE rno="+rno;
+				+"WHERE rno=?";
 			ps=conn.prepareStatement(sql);
 			ps.setString(1,msg);
+			ps.setInt(2, rno);
 			
 			ps.executeUpdate();
 		}
+		
+		if(db_depth==0) {
+			
 		 sql="UPDATE BOARD_REPLY SET "
 					+"depth=depth-1 "
 					+"WHERE rno=?";
@@ -363,6 +391,7 @@ public boolean walkDeleteReply(int rno,String pwd) {
 			ps.setInt(1, db_root);
 			ps.executeUpdate();
 		
+		}		
 		
 				bCheck=true;
 			
@@ -389,11 +418,15 @@ public boolean walkReplyUpdate(ReplyVO vo,String pwd) {
 	int rno=vo.getRno();
 	try {
 		conn=dbconn.getConnection();
-		String sql="SELECT pwd FROM BOARD_REPLY WHERE rno="+rno;
+		String sql="SELECT pwd FROM BOARD_REPLY WHERE rno=?";
 		ps=conn.prepareStatement(sql);
+		ps.setInt(1, rno);
 		ResultSet rs=ps.executeQuery();
-		rs.next();
+		
+		if(rs.next()) {
+		
 		db_pwd=rs.getString(1);
+		}
 		rs.close();
 		
 		if(db_pwd.equals(pwd)) {
@@ -401,10 +434,11 @@ public boolean walkReplyUpdate(ReplyVO vo,String pwd) {
 			sql="UPDATE BOARD_REPLY SET "
 				+"rcontent=?, "
 				+"rdate= sysdate "	
-				+"WHERE rno="+rno;
+				+"WHERE rno=?";
 		ps=conn.prepareStatement(sql);
-		ps.setString(1, vo.getRcontent());
 		
+		ps.setString(1, vo.getRcontent());
+		ps.setInt(2, rno);
 		ps.executeUpdate();
 		bCheck=true;
 		
@@ -419,6 +453,32 @@ public boolean walkReplyUpdate(ReplyVO vo,String pwd) {
 	
 	
 	return bCheck;
+}
+
+
+public String rootId(int root) {
+	String rootId="";
+	try {
+		conn=dbconn.getConnection();
+		String sql="SELECT userid FROM BOARD_REPLY WHERE rno=?";
+		ps=conn.prepareStatement(sql);
+		ps.setInt(1, root);
+		ResultSet rs=ps.executeQuery();
+		if(rs.next()) {
+		rootId=rs.getString(1);
+		}
+		rs.close();
+
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	
+	return rootId;
 }
 
  
