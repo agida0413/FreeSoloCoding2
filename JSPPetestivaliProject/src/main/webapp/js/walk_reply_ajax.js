@@ -8,10 +8,10 @@
    
 		
 	 
-	    let wno = $('#selectWno').attr('data-wno');
+	    
     // 댓글 목록을 받아오는 함수
     function getComments() {
-     
+     let wno = $('#selectWno').attr('data-wno');
       
 
         $.ajax({
@@ -189,7 +189,7 @@
                 $('.comment-section').html(commentListHtml);
                 
               
-
+					
             }
         });
         
@@ -205,6 +205,7 @@
     
    
     function clickBtn(){
+		let wno = $('#selectWno').attr('data-wno');
    let passwordErrorState = {};
     let UpdatepasswordErrorState = {};
    
@@ -248,6 +249,7 @@
     			$.ajax({
 					type:'post',
 					url:'walkReplyAjaxAdd.do',
+					  
 					data:{"pwd":pwd,"rcontent":rcontent,"wno":wno},
 					success:function(addJson){
 						let addRes=JSON.parse(addJson)
@@ -261,6 +263,7 @@
         
         
          $('.comment-section').on('click', '#addReplyBtn', function() {
+			 
 			 
 			 		
     		 let addpassword = $(this).closest('.addreply').find('#addpassword').val();
@@ -415,8 +418,8 @@
 	
 
     // 댓글 받아오는 함수 호출
- getComments();
-  clickBtn();
+ getComments(clickBtn());
+ 
   	
   	 	
 
