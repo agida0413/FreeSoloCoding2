@@ -4,30 +4,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<style type="text/css">
-
-</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+ <style type="text/css">
  
+ 
+ 
+ 
+ </style>
 </head>
 <body>
     
 
    
 
-    <!-- Blog Details Hero Begin -->
-    <section class="blog-details-hero set-bg" data-setbg="../img/blog/details/details-hero.jpg">
+   <section class="breadcrumb-section set-bg" data-setbg="../img/breadcrumb.jpg">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="blog__details__hero__text">
-                        <h2>The Moment You Need To Remove Garlic From The Menu</h2>
-                        <ul>
-                            <li>By Michael Scofield</li>
-                            <li>January 14, 2019</li>
-                            <li>8 Comments</li>
-                        </ul>
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>산책</h2>
+                        <div class="breadcrumb__option">
+                            <a href="./index.html">산책을 느껴보세요</a>
+                            <span>산책</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -38,23 +38,73 @@
     <!-- Blog Details Section Begin -->
     <section class="blog-details spad">
         <div class="container">
+         <span class="back_walk_list"><a href="../walk/walkList.do?page=${param.page }&loc=${param.loc}"><img src="../img/left.png.svg" alt="">목록</a></span>
         
             <div class="row">
             
                 <div class="col-lg-4 col-md-5 order-md-1 order-2">
                     <div class="blog__sidebar kyj_walk"><!--산책로 디테일 왼쪽 사이드메뉴 -->
-                        <span class="top_link"><a href="../walk/walkList.do?page=${param.page }&loc=${param.loc}"><img src="../img/left.png.svg" alt="">목록</a></span>
-                        <a href="https://map.kakao.com/link/to/${vo.wname },${vo.cLa },${vo.cLo}" target="_blank">길찾기</a>
-                     	<a href="https://map.kakao.com/link/roadview/${vo.cLa },${vo.cLo}" target="_blank">로드뷰 보기</a>
+                       <div id="course_detail_inform" style="width:100%; height:95%; margin-top:45px;">
+                       		<div style="text-align:center; margin-bottom:20px;" class="hidden_title"><h3 id="level"></h3></span>
+                       		<div class="data_place" id="level_image" style="text-align: center;"><img src="../img/levelA.png" height="120" ></div>
+                       		</div>
+                       		<hr class="hidden_title">
+                       		
+                       		<div style="text-align:center;" class="hidden_title"><span class="control_title"><h4>&#128054;코스이름</h4></span>
+                       		<div class="data_place" id="course_name"></div>
+                       		</div>
+                       		<hr class="hidden_title">
+                       		
+                       		<div style="text-align:center;" class="hidden_title"><span class="control_title"><h4>&#128054;경로</h4></span>
+                       		<div id="course_way" class="data_place"></div>
+                       		</div>
+                       		<hr class="hidden_title">
+                       		
+                       		<div style="text-align:center;" class="hidden_title"><span class="control_title"><h4>&#128054;위치</h4></span>
+                       		<div id="detail_address" class="data_place"></div>
+                       		</div>
+                       		<hr class="hidden_title">
+                       		
+                       		<div style="text-align:center;" class="hidden_title"><span class="control_title"><h4>&#128054;코스길이</h4></span>
+                       		
+                       		<div id="course_length_detail" class="data_place"></div>
+                       		 </div>
+                       		 <hr class="hidden_title">
+                       		
+                       		
+                       			<div style="text-align:center;" class="hidden_title"><span class="control_title"><h4>&#128054;소요시간</h4></span>
+                       		<div id="course_time" class="data_place"></div>
+                       		</div>
+                       		<hr class="hidden_title">
+                       		
+                       		
+                       		<div style="text-align:center;" class="hidden_title"><span class="control_title"><h4>&#128054;근처 약수터</h4></span>
+                       		<div id="optn_dc" class="data_place"></div><!--약수터 정보 -->
+                       		</div>
+                       		<hr class="hidden_title">
+                       		
+                       		<div style="text-align:center;" class="hidden_title"><span class="control_title"><h4>&#128054;근처 화장실</h4></span>
+                       		<div id="toilet_dc" class="data_place"></div>
+                       		</div>
+                       		<hr class="hidden_title">
+                       		
+                       		<div style="text-align:center;" class="hidden_title"><span class="control_title"><h4>&#128054;근처 편의시설/문화지</h4></span>
+                       		<div id="conventional_name" class="data_place"></div>
+                       		</div>
+                       		
+                      
                         
                     </div>
                     
                 </div>
+                </div>
                 <div class="col-lg-8 col-md-7 order-md-1 order-1">
                     <div class="blog__details__text">
-                         
+                         <center><h2 id="selectWno" data-wno="${vo.wno }">${vo.wname }</h2><h5>(${vo.signgu_name })</h5></center>
      
-<div id="map" style="width:100%;height:300px;"></div>
+<div id="map" style="width:100%;height:600px; margin-top:17px;">
+  
+</div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	c2368186c0091fdb14d91b7b4aa613ff&libraries=services"></script>
 <script>
@@ -96,25 +146,33 @@ geocoder.addressSearch('${vo.address}', function(result, status) {
 });    
 </script>
      
-               
+     
+                 <div class="find_Load_view">
+                    
+                       <span><a href="https://map.kakao.com/link/to/${vo.wname },${vo.cLa },${vo.cLo}" target="_blank" class="btn btn-success">길찾기</a></span>
+                     	<span> <a href="https://map.kakao.com/link/roadview/${vo.cLa },${vo.cLo}" target="_blank"  class="btn btn-success">로드뷰 보기</a></span> 
+                    </div>
                       
                     </div>
-                    <h1  id="selectWno" data-wno="${vo.wno }">${vo.wname }</h1>
-                    <div>
-						<ul class="walk_course"> <!-- 코스이름별 에이젝스 이용 코스정보출력예정-->
-							<li><a href="#">코스이름</a></li>
-							<li><a href="#">코스이름</a></li>
-							<li><a href="#">코스이름</a></li>
-							<li><a href="#">코스이름</a></li>
-							
-						</ul>
-						
-					</div>
                     
+              
+                    
+                    <div class="course-container">
+                    <c:if test="${csSize==0}">
+                    <h1>코스정보가 없습니다.</h1>
+                    </c:if>
+  			<ul class="walk_course" data-size="${csSize }">
+  			<c:forEach var="courseVo" items="${courseList }">
+        <li class="get_wcno" data-wcno="${courseVo.wcno }"><button class="show_corsue btn btn-info">${courseVo.w_course_name }(${courseVo.course_length })</button></li>
+        
+       </c:forEach>
+    </ul>
+                      </div>
                    
                 </div>
             </div>
         </div>
+    
     </section>
     <!-- Blog Details Section End -->
 
@@ -128,6 +186,7 @@ geocoder.addressSearch('${vo.address}', function(result, status) {
 				</div>
            </div>
         </div>
+     
     </section>
     <!-- Related Blog Section End -->
 

@@ -26,7 +26,7 @@
                 let replyAmount = res[0].replyAmount;
                 let id = res[0].sessionID;
                 let totalpage=res[0].totalpage;
-                let commentListHtml = '<h3 style="margin-bottom:20px;">댓글(' + replyAmount + ')</h3>';
+                let commentListHtml = '<h2 style="margin-bottom:20px;">댓글(' + replyAmount + ')</h2>';
          
                
                 if (id !== null) {
@@ -39,7 +39,7 @@
                 }
                 
                 if(replyAmount===0){
-               commentListHtml+='댓글이 없습니다.</div>'
+               commentListHtml+='<h2 class="text-center">댓글이 없습니다.<h2></div>'
             }
             else{
                   

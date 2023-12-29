@@ -63,6 +63,7 @@ public class WalkModel {
 	
 	@RequestMapping("walk/walkDetail.do")
 	public String walkDetail(HttpServletRequest request, HttpServletResponse response) {
+		
 		String wno=request.getParameter("wno");
 		String page=request.getParameter("page");
 		String loc=request.getParameter("loc");
@@ -70,10 +71,11 @@ public class WalkModel {
 		WalkDAO dao=WalkDAO.newInstance();
 		
 		WalkVO vo=dao.walkDetail(Integer.parseInt(wno));
+		List<WalkVO>courseList =dao.walkCourseData(Integer.parseInt(wno));
 		
 		//코스별 기능구현 에이젝스.....
-		
-			
+			request.setAttribute("csSize", courseList.size());
+			request.setAttribute("courseList", courseList);
 		request.setAttribute("loc", loc);
 		request.setAttribute("curpage", page);
 		request.setAttribute("vo", vo);
@@ -118,6 +120,7 @@ public class WalkModel {
 		  {
 			  JSONObject obj=new JSONObject();
 			  obj.put("replyAmount", replyAmount);
+			  obj.put("sessionID", session.getAttribute("id"));
 			  arr.add(obj);
 		  }
 		  else
@@ -143,6 +146,7 @@ public class WalkModel {
 				  obj.put("rootId", rootId);
 				  obj.put("root", vo.getRoot());
 				  obj.put("group_id", vo.getGroup_id());
+				  
 				
 				  
 
@@ -305,6 +309,52 @@ public class WalkModel {
 			obj.put("msg", msg);
 		}
 		
+		
+		
+		  try
+		  {
+			  response.setContentType("application/x-www-form-urlencoded; charset=UTF-8");
+			  PrintWriter out=response.getWriter();
+			  out.write(obj.toJSONString());
+		  }catch(Exception ex) {}
+		
+		
+		
+		
+	
+		  
+		
+
+	
+}
+	
+	
+	@RequestMapping("walk/walkCourseAjaxInform.do")
+	public void walkCourseAjaxInform(HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		  try
+		  {
+			  request.setCharacterEncoding("UTF-8");
+		  }catch(Exception ex) {}
+		
+		String wcno=request.getParameter("wcno");
+		 	
+		WalkDAO dao=WalkDAO.newInstance();
+		JSONObject obj=new JSONObject();
+		
+		WalkVO vo=dao.walkCourseAjaxInform(Integer.parseInt(wcno));
+		
+		obj.put("level_image", vo.getLevel_image());
+		obj.put("w_course_name", vo.getW_course_name());
+		obj.put("course_inform",vo.getCourse_inform());
+		obj.put("address", vo.getAddress());
+		obj.put("course_length_detail", vo.getCourse_lengthDetail());
+		obj.put("course_time", vo.getCourse_time());
+		obj.put("optn", vo.getOptn());
+		obj.put("toilet", vo.getToilet());
+		obj.put("conventionName", vo.getConventionName());
+		obj.put("course_level", vo.getCourse_level());
 		
 		
 		  try

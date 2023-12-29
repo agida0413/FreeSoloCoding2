@@ -7,14 +7,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-.prod_page a:hover
-  		{
-  		  background-color: #333;
-    color: #fff;
-    border-color: #333;
-  		}
+
   		
   	
+  	
+   
 
 </style>
 
@@ -28,16 +25,19 @@
                     <div class="row">
                     	<c:forEach var="vo" items="${list }">
                         <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="blog__item">
+                        <a href="../walk/walkDetail.do?wno=${vo.wno }&page=${curpage}&loc=${loc}">
+                            <div class="blog__item walk_wrapper">
                                 
-                                <div class="blog__item__text">
+                                <div class="blog__item__text walk_list_style">
                                    
-                                    <h5><a href="#">${vo.wname }</a></h5>
-                                    <p>${vo.signgu_name }</p>
-                                    <p>${vo.address }</p>
-                                    <a href="../walk/walkDetail.do?wno=${vo.wno }&page=${curpage}&loc=${loc}" class="blog__btn">더보기 ...<span class="arrow_right"></span></a>
+                                    <h3 class="name_overflow">${vo.wname }</h3>
+                                    <p></p>
+                                    <p class="name_overflow">${vo.signgu_name }</p>
+                                    <p class="name_overflow">${vo.address }</p>
+                                   
                                 </div>
                             </div>
+                            </a>
                         </div>
                         </c:forEach>
                    

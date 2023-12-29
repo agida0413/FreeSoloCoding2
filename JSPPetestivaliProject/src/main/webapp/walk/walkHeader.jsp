@@ -7,22 +7,22 @@
 <title>Insert title here</title>
 </head>
 <body>
- <section class="blog-details-hero set-bg" data-setbg="../img/blog/details/details-hero.jpg">
+ <section class="breadcrumb-section set-bg" data-setbg="../img/breadcrumb.jpg">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="blog__details__hero__text">
-                        <h2>The Moment You Need To Remove Garlic From The Menu</h2>
-                        <ul>
-                            <li>By Michael Scofield</li>
-                            <li>January 14, 2019</li>
-                            <li>8 Comments</li>
-                        </ul>
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>산책</h2>
+                        <div class="breadcrumb__option">
+                            <a href="./index.html">산책을 느껴보세요</a>
+                            <span>산책</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <div style="margin-top:30px;">
 <ul class="nav nav-pills walk_cate" style="margin-bottom: 30px;">
   	 						    <li><a href="../walk/walkList.do?" class="${loc eq '전체' ? 'kyj_selected' : ''}">전체</a></li>
                                 <li><a href="../walk/walkList.do?loc=서울" class="${loc eq '서울' ? 'kyj_selected' : ''}">서울</a></li>
@@ -44,6 +44,6 @@
                                 <li><a href="../walk/walkList.do?loc=제주" class="${loc eq '제주' ? 'kyj_selected' : ''}">제주</a></li>
 	    </ul> 
 
-
+</div>
 </body>
 </html>

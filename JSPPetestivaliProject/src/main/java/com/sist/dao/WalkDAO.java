@@ -157,6 +157,7 @@ public WalkVO walkDetail(int wno) {
 			vo.setAddress(rs.getString(4));
 			vo.setcLa(rs.getString(5));
 			vo.setcLo(rs.getString(6));
+			
 			rs.close();
 	} catch (Exception e) {
 		// TODO: handle exception
@@ -165,6 +166,71 @@ public WalkVO walkDetail(int wno) {
 	finally {
 		dbconn.disConnection(conn, ps);
 	}
+	return vo;
+}
+
+public List<WalkVO> walkCourseData(int wno){
+	List<WalkVO>list =new ArrayList<WalkVO>();
+	
+	try {
+		conn=dbconn.getConnection();
+		String sql="SELECT wcno,w_course_name,course_length FROM WALK_COURSE_INFO WHERE wno=?";
+		ps=conn.prepareStatement(sql);
+		ps.setInt(1, wno);
+		ResultSet rs=ps.executeQuery();
+		
+		while(rs.next()) {
+			WalkVO vo=new WalkVO();
+			vo.setWcno(rs.getInt(1));
+			vo.setW_course_name(rs.getString(2));
+			vo.setCourse_length(rs.getString(3));
+			
+			list.add(vo);
+		}
+		rs.close();
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	
+	return list;
+}
+
+
+public synchronized WalkVO walkCourseAjaxInform(int wcno) {
+	WalkVO vo =new WalkVO();
+try {
+	conn=dbconn.getConnection();
+	String sql="SELECT w_course_name,course_inform,lnm_addr,course_length_detail,course_time,optn_dc,toilet_dc,conventional_name,level_image,course_level "
+			+"FROM WALK_COURSE_INFO WHERE wcno=?";
+	
+	ps=conn.prepareStatement(sql);
+	ps.setInt(1, wcno);
+	
+	ResultSet rs =ps.executeQuery();
+	if(rs.next()) {
+		vo.setW_course_name(rs.getString(1));
+		vo.setCourse_inform(rs.getString(2));
+		vo.setAddress(rs.getString(3));
+		vo.setCourse_lengthDetail(rs.getString(4)+"km");
+		vo.setCourse_time(rs.getString(5));
+		vo.setOptn(rs.getString(6));
+		vo.setToilet(rs.getString(7));
+		vo.setConventionName(rs.getString(8));
+		vo.setLevel_image(rs.getString(9));
+		vo.setCourse_level(rs.getString(10));
+		
+	}
+} catch (Exception e) {
+	// TODO: handle exception
+	e.printStackTrace();
+}
+finally {
+	dbconn.disConnection(conn, ps);
+}
 	return vo;
 }
 
