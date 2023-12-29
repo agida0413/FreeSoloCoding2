@@ -3,7 +3,7 @@
  */
 
  $(document).ready(function() {
-	 
+	  
 	
    
 		
@@ -11,7 +11,7 @@
 	    
     // 댓글 목록을 받아오는 함수
     function getComments() {
-     let wno = $('#selectWno').attr('data-wno');
+    let wno = $('#selectWno').attr('data-wno');
       
 
         $.ajax({
@@ -206,6 +206,7 @@
    
     function clickBtn(){
 		let wno = $('#selectWno').attr('data-wno');
+	
    let passwordErrorState = {};
     let UpdatepasswordErrorState = {};
    
@@ -214,7 +215,7 @@
             $('.addreply').eq(index).toggle();
             $('.dpassword').eq(index).hide();
             $('.modifyreply').eq(index).hide();
-            subclick();
+         
         });
 
         $('.comment-section').on('click', '.deleteBtn', function() {
@@ -251,13 +252,14 @@
 					url:'walkReplyAjaxAdd.do',
 					  
 					data:{"pwd":pwd,"rcontent":rcontent,"wno":wno},
-					success:function(addJson){
-						let addRes=JSON.parse(addJson)
+					success:function(){
+						getComments();
 					
 					}
 				})
     			
-    			 getComments();
+    			
+    			
 		});
         
         
@@ -285,13 +287,14 @@
 					type:'post',
 					url:'walkReplyMoreAdd.do',
 					data:{"pwd":addpassword,"rcontent":addcontent,"wno":wno,"rno":rno},
-					success:function(addJson){
-						let addRes=JSON.parse(addJson)
+					success:function(){
+						getComments();
 					
 					}
 				})
     			
-    			 getComments();
+    			
+    		
 		});
          
          let stopGetComments = false; // getComments() 실행 여부를 제어하는 플래그

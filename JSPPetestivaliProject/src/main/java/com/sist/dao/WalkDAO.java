@@ -168,7 +168,7 @@ public WalkVO walkDetail(int wno) {
 	return vo;
 }
 
-public void walkReplyInsert(ReplyVO vo,String pwd) {
+public synchronized void walkReplyInsert(ReplyVO vo,String pwd) {
 	try {
 		System.out.println("오류발생지점1");
 		
@@ -222,7 +222,7 @@ public void walkReplyInsert(ReplyVO vo,String pwd) {
 	
 }
 
-public List<ReplyVO> walkReplyListData(int wno){
+public synchronized List<ReplyVO> walkReplyListData(int wno){
 	List<ReplyVO>list=new ArrayList<ReplyVO>();
 	try {
 		conn=dbconn.getConnection();
@@ -262,7 +262,7 @@ public List<ReplyVO> walkReplyListData(int wno){
 	return list;
 }
 
-public int walkReplyAmount(int wno) {
+public synchronized int walkReplyAmount(int wno) {
 	int replyAmount=0;
 	try {
 		conn=dbconn.getConnection();
@@ -287,7 +287,7 @@ public int walkReplyAmount(int wno) {
 }
 
 
-public void walkAddReplyInsert(String pwd,ReplyVO vo) {
+public synchronized void walkAddReplyInsert(String pwd,ReplyVO vo) {
 	try {
 		conn=dbconn.getConnection();
 		
@@ -370,7 +370,7 @@ public void walkAddReplyInsert(String pwd,ReplyVO vo) {
 	
 }
 
-public boolean walkDeleteReply(int rno,String pwd) {
+public  synchronized boolean walkDeleteReply(int rno,String pwd) {
 	boolean bCheck=false;
 	String db_pwd="";
 	
@@ -475,7 +475,7 @@ public boolean walkDeleteReply(int rno,String pwd) {
 	
 }
 
-public boolean walkReplyUpdate(ReplyVO vo,String pwd) {
+public synchronized boolean walkReplyUpdate(ReplyVO vo,String pwd) {
 	
 	boolean bCheck=false;
 	String db_pwd="";
@@ -525,7 +525,7 @@ public boolean walkReplyUpdate(ReplyVO vo,String pwd) {
 }
 
 
-public String rootId(int root) {
+public synchronized String rootId(int root) {
 	String rootId="";
 	try {
 		conn=dbconn.getConnection();
