@@ -180,6 +180,8 @@ public void walkReplyInsert(ReplyVO vo,String pwd) {
 		ps.setString(4, pwd);
 		
 		ps.executeUpdate();
+		
+		ps.close();
 	} catch (Exception e) {
 		// TODO: handle exception
 	e.printStackTrace();
@@ -217,6 +219,7 @@ public List<ReplyVO> walkReplyListData(int wno){
 			vo.setGroup_id(rs.getInt(9));
 			list.add(vo);
 		}
+		ps.close();
 		rs.close();
 		
 					
@@ -242,7 +245,7 @@ public int walkReplyAmount(int wno) {
 		replyAmount=rs.getInt(1);
 		}
 		rs.close();
-		
+		ps.close();
 		} catch (Exception e) {
 		// TODO: handle exception
 		e.printStackTrace();
@@ -280,6 +283,10 @@ public void walkAddReplyInsert(String pwd,ReplyVO vo) {
 		bno=rs.getInt(4);
 		}
 		rs.close();
+		ps.close();
+		
+		dbconn.disConnection(conn, ps);
+		conn=dbconn.getConnection();
 		
 		sql="UPDATE BOARD_REPLY SET "
 				+"group_step=group_step+1 "
@@ -289,7 +296,10 @@ public void walkAddReplyInsert(String pwd,ReplyVO vo) {
 		ps.setInt(1, db_gi);
 		ps.setInt(2, db_gstep);
 		ps.executeUpdate();
+		ps.close();
 		
+		dbconn.disConnection(conn, ps);
+		conn=dbconn.getConnection();
 		
 		sql="INSERT INTO BOARD_REPLY (rno,rcontent,group_id,group_step,group_tab,root,userid,pwd,bno,typeno) "
 				+"VALUES(board_reply_seq.nextval,?,?,?,?,?,?,?,?,2)";
@@ -306,6 +316,10 @@ public void walkAddReplyInsert(String pwd,ReplyVO vo) {
 		
 		
 		ps.executeUpdate();
+		ps.close();
+		
+		dbconn.disConnection(conn, ps);
+		conn=dbconn.getConnection();
 		
 		sql="UPDATE BOARD_REPLY SET "
 				+"depth=depth+1 "
@@ -313,7 +327,7 @@ public void walkAddReplyInsert(String pwd,ReplyVO vo) {
 		ps=conn.prepareStatement(sql);
 		ps.setInt(1, rno);
 		ps.executeUpdate();
-		
+		ps.close();
 		} catch (Exception e) {
 		// TODO: handle exception
 	e.printStackTrace();
@@ -343,8 +357,10 @@ public boolean walkDeleteReply(int rno,String pwd) {
 			db_pwd=rs.getString(1);
 			}
 			rs.close();
+			ps.close();
 			
-			
+			dbconn.disConnection(conn, ps);
+			conn=dbconn.getConnection();
 		
 	if(db_pwd.equals(pwd)) {		
 				
@@ -360,13 +376,20 @@ public boolean walkDeleteReply(int rno,String pwd) {
 		db_depth=rs.getInt(2);
 	}
 		rs.close();
+		ps.close();
 		
+		dbconn.disConnection(conn, ps);
+		conn=dbconn.getConnection();
 		if (db_depth==0) {
 				sql="DELETE FROM BOARD_REPLY WHERE rno=?";
 					ps=conn.prepareStatement(sql);
 					ps.setInt(1, rno);
 
 					ps.executeUpdate();
+					ps.close();
+					
+					dbconn.disConnection(conn, ps);
+					conn=dbconn.getConnection();
 		}
 		
 		else {
@@ -380,6 +403,10 @@ public boolean walkDeleteReply(int rno,String pwd) {
 			ps.setInt(2, rno);
 			
 			ps.executeUpdate();
+			ps.close();
+			
+			dbconn.disConnection(conn, ps);
+			conn=dbconn.getConnection();
 		}
 		
 		if(db_depth==0) {
@@ -390,6 +417,10 @@ public boolean walkDeleteReply(int rno,String pwd) {
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, db_root);
 			ps.executeUpdate();
+			ps.close();
+			
+			dbconn.disConnection(conn, ps);
+			conn=dbconn.getConnection();
 		
 		}		
 		
@@ -428,6 +459,7 @@ public boolean walkReplyUpdate(ReplyVO vo,String pwd) {
 		db_pwd=rs.getString(1);
 		}
 		rs.close();
+		ps.close();
 		
 		if(db_pwd.equals(pwd)) {
 		
@@ -440,6 +472,8 @@ public boolean walkReplyUpdate(ReplyVO vo,String pwd) {
 		ps.setString(1, vo.getRcontent());
 		ps.setInt(2, rno);
 		ps.executeUpdate();
+		ps.close();
+		
 		bCheck=true;
 		
 		}
@@ -468,6 +502,7 @@ public String rootId(int root) {
 		rootId=rs.getString(1);
 		}
 		rs.close();
+		ps.close();
 
 		
 	} catch (Exception e) {
