@@ -36,7 +36,7 @@ public class WalkModel {
 		
 		int curpage=Integer.parseInt(strpage);
 		int totalpage=dao.walkTotalPage(loc);
-		System.out.println(totalpage);
+		
 		final int block=10;
 		int start = ((curpage-1)/block*block)+1;
 		int end = ((curpage-1)/block*block)+10;
@@ -66,18 +66,14 @@ public class WalkModel {
 		String wno=request.getParameter("wno");
 		String page=request.getParameter("page");
 		String loc=request.getParameter("loc");
+		
 		WalkDAO dao=WalkDAO.newInstance();
 		
 		WalkVO vo=dao.walkDetail(Integer.parseInt(wno));
 		
-		List<ReplyVO>rlist=dao.walkReplyListData(Integer.parseInt(wno));
-		int replyAmount=dao.walkReplyAmount(Integer.parseInt(wno));
-			
-		
 		//코스별 기능구현 에이젝스.....
 		
-		request.setAttribute("replyAmount", replyAmount);
-		request.setAttribute("rlist", rlist);
+			
 		request.setAttribute("loc", loc);
 		request.setAttribute("curpage", page);
 		request.setAttribute("vo", vo);
@@ -91,50 +87,8 @@ public class WalkModel {
 	
 	
 	
-
 	
 	
-	
-	
-	
-	@RequestMapping("walk/replyUpdate.do")
-	public String replyUpdate(HttpServletRequest request, HttpServletResponse response) {
-		
-		
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String rno=request.getParameter("rno");
-		String wno=request.getParameter("wno");
-		String uppwd=request.getParameter("uppassword");
-		String loc=request.getParameter("loc");
-		String page=request.getParameter("page");
-		String upcontent=request.getParameter("upcontent");
-		WalkDAO dao=WalkDAO.newInstance();
-		
-		
-		
-		try {
-			loc=URLEncoder.encode(loc,"UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		ReplyVO vo=new ReplyVO();
-		vo.setRno(Integer.parseInt(rno));
-		vo.setRcontent(upcontent);
-		
-		
-		dao.walkReplyUpdate(vo, uppwd);
-		
-	
-		return "redirect:../walk/walkDetail.do?wno="+wno+"&loc="+loc+"&page="+page;
-	
-	}
 	
 	@RequestMapping("walk/walkReplyAjaxList.do")
 	public void walkReplyAjaxList(HttpServletRequest request, HttpServletResponse response) {
@@ -145,9 +99,14 @@ public class WalkModel {
 			  request.setCharacterEncoding("UTF-8");
 		  }catch(Exception ex) {}
 		  String wno=request.getParameter("wno");
-		  System.out.println("dong:"+wno);
+		  String strpage=request.getParameter("page");
+		  
+			
+			int curpage=Integer.parseInt(strpage);
 		  WalkDAO dao=WalkDAO.newInstance();
-		 
+		  
+		  
+		 int totalpage=dao.walkReplyTotalPage(Integer.parseInt(wno));
 		  int replyAmount=dao.walkReplyAmount(Integer.parseInt(wno));
 		  HttpSession session =request.getSession();
 		  // JSON변경 
@@ -164,7 +123,7 @@ public class WalkModel {
 		  else
 		  {
 			  int i=0;
-			  List<ReplyVO>list= dao.walkReplyListData(Integer.parseInt(wno));
+			  List<ReplyVO>list=dao.walkReplyListData(Integer.parseInt(wno),curpage);
 			  
 			  for(ReplyVO vo:list)
 			  {
@@ -193,6 +152,7 @@ public class WalkModel {
 				  {
 					  obj.put("replyAmount", replyAmount);
 					  obj.put("sessionID", session.getAttribute("id"));
+					  obj.put("totalpage", totalpage);
 				  }
 				  arr.add(obj);
 				  i++;
@@ -222,7 +182,7 @@ public class WalkModel {
 		String rcontent=request.getParameter("rcontent");
 		String pwd=request.getParameter("pwd");
 		String wno=request.getParameter("wno");
-		System.out.println(rcontent+pwd);
+		
 		 
 		WalkDAO dao=WalkDAO.newInstance();
 		 ReplyVO vo=new ReplyVO();

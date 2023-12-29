@@ -183,7 +183,7 @@ public List<ProductVO> productByASCList(String ct,int page,String rt){
 
 
 public List<ProductVO> productByDescList(String ct,int page,String rt){
-	System.out.println("호출");
+	
 	List< ProductVO> list= new ArrayList<ProductVO>();
 	String msg="";
 	
@@ -205,7 +205,7 @@ public List<ProductVO> productByDescList(String ct,int page,String rt){
 					+ msg+" ORDER BY "+rt+ " DESC "
 					+")) " +"WHERE num BETWEEN ? and ?";
 		ps=conn.prepareStatement(sql);
-		System.out.println(sql);
+	
 		
 		int start=(ROW_SIZE*page)-(ROW_SIZE-1);
 		int end= ROW_SIZE*page;
@@ -263,7 +263,7 @@ public int productByStackTotalPage(String ct) {
 		ResultSet rs= ps.executeQuery();
 		rs.next();
 		total = rs.getInt(1);
-		System.out.println("테스트"+total);
+	
 		rs.close();
 		
 		

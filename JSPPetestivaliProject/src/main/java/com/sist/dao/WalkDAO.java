@@ -19,7 +19,7 @@ private Connection conn;
 private static WalkDAO dao;
 private CreateDBCPconnection dbconn = new CreateDBCPconnection();
 private final int ROW_SIZE=15;
-
+private final int REPLY_ROW_SIZE=10;
 
 public static WalkDAO newInstance() {
 	if(dao==null) {
@@ -170,45 +170,41 @@ public WalkVO walkDetail(int wno) {
 
 public synchronized void walkReplyInsert(ReplyVO vo,String pwd) {
 	try {
-		System.out.println("오류발생지점1");
+		
 		
 		conn=dbconn.getConnection();
-		System.out.println("오류발생지점2");
+		
 		
 		String sql="INSERT INTO board_reply(rno,typeno,group_id,userid,bno,pwd,rcontent) "
 					+"VALUES(board_reply_seq.nextval,2,(SELECT NVL((MAX(group_id)+1),1) FROM board_reply),?,?,?,?)";
-		System.out.println("오류발생지점3");
 		
 	
 		ps=conn.prepareStatement(sql);
 		
 		
-		System.out.println("오류발생지점4");
-		System.out.println(vo.getRcontent());
+		
+	
 		
 		ps.setString(1,vo.getUserid());
 		
 		
-		System.out.println("오류발생지점5");
-		System.out.println(vo.getUserid());
+	
 		
 		ps.setInt(2, vo.getBno());
 		
 		
-		System.out.println("오류발생지점6");
-		System.out.println(vo.getBno());
+		
 		
 		ps.setString(3, pwd);
 		
 		
-		System.out.println("오류발생지점7");
-		System.out.println(pwd);
+		
 		
 		ps.setString(4, vo.getRcontent());
-		System.out.println("오류발생지점8");
+		
 		
 		ps.executeUpdate();
-		System.out.println("오류발생지점9");
+	
 		dbconn.disConnection(conn, ps);
 		
 	} catch (Exception e) {
@@ -222,7 +218,35 @@ public synchronized void walkReplyInsert(ReplyVO vo,String pwd) {
 	
 }
 
-public synchronized List<ReplyVO> walkReplyListData(int wno){
+public synchronized int walkReplyTotalPage(int wno) {
+	
+	int totalpage=0;
+	
+	
+	try {
+		conn=dbconn.getConnection();
+		String sql="SELECT CEIL(COUNT(*)/10.0) FROM BOARD_REPLY WHERE bno=?";
+		ps=conn.prepareStatement(sql);
+		ps.setInt(1, wno);
+		ResultSet rs= ps.executeQuery();
+		if(rs.next()) {
+			totalpage=rs.getInt(1);
+		}
+		rs.close();
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	finally {
+		dbconn.disConnection(conn, ps);
+	}
+	
+	return totalpage;
+	
+}
+
+public synchronized List<ReplyVO> walkReplyListData(int wno,int page){
 	List<ReplyVO>list=new ArrayList<ReplyVO>();
 	try {
 		conn=dbconn.getConnection();
@@ -230,9 +254,14 @@ public synchronized List<ReplyVO> walkReplyListData(int wno){
 					+"FROM (SELECT rno,rcontent,rdate,like_count,group_tab,userid,bno,root,group_id,rownum as num "
 					+"FROM (SELECT rno,rcontent,rdate,like_count,group_tab,userid,bno,root,group_id "
 					+"FROM BOARD_REPLY WHERE typeno=2 AND bno=? ORDER BY GROUP_ID DESC,GROUP_STEP ASC)) "
-					+"WHERE num BETWEEN 1 AND 10";
+					+"WHERE num BETWEEN ? AND ?";
 		ps=conn.prepareStatement(sql);
+		int start=(REPLY_ROW_SIZE*page)-(REPLY_ROW_SIZE-1);
+		int end= REPLY_ROW_SIZE*page;
+		
 		ps.setInt(1, wno);
+		ps.setInt(2, start);
+		ps.setInt(3, end);
 		ResultSet rs=ps.executeQuery();
 
 		while(rs.next()) {
