@@ -190,9 +190,16 @@
             }
  
          }
-                commentListHtml +='<center><div>'
+         
+					if(replyAmount!==0){         
+                commentListHtml +='<center><div class="lastDiv" data-totalpage='+totalpage+'>'
+                				+'<span><button id="goFirstpage" class="btn btn-xs" style="float:left;">&lt;&nbsp;&nbsp;처음으로</button></span>'	
                 				+'<h3><span><button class="btn btn-lg btn-primary" id="prevBtn" style="margin-right:10px;">이전</button></span>'+page+'/'+totalpage
- 	               			    +'<span style="margin-left:10px;"><button class="btn btn-lg btn-primary" id="nextBtn">다음</button></span></h3></div></center></div>';
+ 	               			    +'<span style="margin-left:10px;"><button class="btn btn-lg btn-primary" id="nextBtn">다음</button></span>'
+ 	               			    +'<span><button id="goEndpage" class="btn btn-xs" style="float:right;">&nbsp;&nbsp;마지막으로&gt</button></span>'	
+ 	               			    +'</h3></div></center>'
+ 	               			    }
+ 	               		commentListHtml+= '</div>';
                    
                 $('.comment-section').html(commentListHtml);
                 
@@ -254,8 +261,22 @@
         
         $('.comment-section').on('click', '#nextBtn', function() {
            let changepage=$('.comment').attr('data-page')
-           
+           let checkEnd=$('.lastDiv').attr('data-totalpage')
+           if(changepage!==checkEnd){
            getComments(Number(changepage)+1)
+           }
+        });
+        
+          $('.comment-section').on('click', '#goFirstpage', function() {
+           getComments(1);
+        });
+        
+          $('.comment-section').on('click', '#goEndpage', function() {
+        
+           let checkEnd=$('.lastDiv').attr('data-totalpage')
+           
+           getComments(checkEnd)
+           
         });
         
          $('.comment-section').on('click', '#userReplyBtn', function() {
