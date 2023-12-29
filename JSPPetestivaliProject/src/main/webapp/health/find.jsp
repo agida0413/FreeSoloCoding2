@@ -10,24 +10,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<title>Ogani | Template</title>
+<link rel="stylesheet" href="../css/health.css">
 <style type="text/css">
-.blog-details{
-	padding: 0px;
-}
-.product__pagination a.selected {
-	background-color: #007bff;
-	color: #fff;
-	border: 1px solid #007bff;
-}
 
-.blog__sidebar__search button[type="text"] {
-	margin-right: 140px;
-}
-.hsptDetail:hover{
-	cursor: pointer;
-}
+
 </style>
+<title>Ogani | Template</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script type="text/javascript">
@@ -52,8 +40,29 @@ $(function() {
                 }).dialog("open");
             }
         });
+        $.ajax({
+            type: "get",
+            url: "https://dapi.kakao.com/v2/search/web",
+            headers: {"Authorization": 'KakaoAK 23e8040d553778eeeb77f0900cb92322'},
+            data: {"no": no},
+           
+            success: function(res) {
+						
+            	var hospitalAddress = res.address;
+            	
+            	displayMap(hospitalAddress);
+            	
+                $('#dialog').dialog({
+                    autoOpen: false,
+                    width: 1150,
+                    height: 650,
+                    modal: true
+                }).dialog("open");
+            }
+        });
     });
 });
+
 </script>
 
 </head>
@@ -62,40 +71,37 @@ $(function() {
 
 	<!-- Blog Details Section Begin -->
 			<section class="blog-details spad">
-				<div class="container">
-				<div class="row">
+		<div class="container" style="text-align: center;">
+			<div class="row">
 
-			<!-- 검색바 -->
 
-				<div class="blog__sidebar__item"
-					style="width: 1030px; height: 800px;">
-					<h2
-						style="text-align: center; margin-top: -18px; margin-bottom: 30px;">병원목록</h2>
+				<div class="blog__sidebar__item">
+
 					<div class="row" style="margin-top: 10px;">
-						<table class="table">
-							<tr class="success">
-								<th width=10% class="text-center">번호</th>
-								<th width=35% class="text-center" >병원명</th>
-								<th width=40% class="text-center">주소</th>
-								<th width=15% class="text-center">전화번호</th>
-							</tr>
-							<c:forEach var="vo" items="${list }">
-								<tr>
-									<td width=10% class="text-center">${vo.no }</td>
-									<td width=35% class="text-center hsptDetail"
-										data-no="${vo.no }">${vo.hospital_name }</td>
-									<td width=40% class="text-center">${vo.hospital_address }</td>
-									<td width=15% class="text-center">${vo.hospital_phone }</td>
-								</tr>
-							</c:forEach>
-						</table>
+						<div class="hspt-title">
+							<h2>병원목록</h2>
+						</div>
 					</div>
-
-
-					<div class="row">
+					<table class="hsptfind-table">
+						<tr class="success">
+							<th width=5% class="text-center">번호</th>
+							<th width=35% class="text-center">병원명</th>
+							<th width=45% class="text-center">주소</th>
+							<th width=15% class="text-center">전화번호</th>
+						</tr>
+						<c:forEach var="vo" items="${list }">
+							<tr>
+								<td width=5% class="text-center">${vo.no }</td>
+								<td width=35% class="text-center hsptDetail" data-no="${vo.no }">${vo.hospital_name }</td>
+								<td width=45% class="text-center">${vo.hospital_address }</td>
+								<td width=15% class="text-center">${vo.hospital_phone }</td>
+							</tr>
+						</c:forEach>
+					</table>
+					<div class="row" style="text-align: center;">
 						<div class="order-3"
-							style="margin: 0 auto; padding: 10px 0px 20px 0px;">
-							<div class="product__pagination">
+							style="margin: 0 auto; padding: 0px 0px 20px 0px;">
+							<div class="product__pagination" style= "margin: 10px;">
 								<c:if test="${startPage>1 }">
 									<a href="find.do?page=${startPage-1}"><i
 										class="fa fa-long-arrow-left"></i></a>
@@ -116,9 +122,14 @@ $(function() {
 								</c:if>
 							</div>
 						</div>
+
 					</div>
+
 				</div>
-				<div id="dialog" title="병원정보상세보기" style="display:none">
+
+			</div>
+				
+		<div id="dialog" title="병원정보상세보기" style="display:none">
 					<table class="table">
 					<tr>
 						<td width="35%" height="45%" align="center" >
@@ -189,6 +200,7 @@ $(function() {
 							<h4>Reservation</h4> <a href="#">예약하기</a></td>
 				</table>
 				<a href="javascript:history.back()" class="primary-btn">목 록</a>
+				</div>
 				</div>
 				</section>
 	<!-- Blog Details Section End -->

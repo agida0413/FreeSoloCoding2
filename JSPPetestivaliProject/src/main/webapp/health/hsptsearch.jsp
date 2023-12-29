@@ -105,7 +105,9 @@ h2{
 			</div>
 		</div>
 		</div>
-			
+		</div>
+		</div>
+		
 		</section>
 	<!-- Blog Details Section End -->
 
